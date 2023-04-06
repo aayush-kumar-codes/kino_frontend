@@ -10,9 +10,13 @@ Axios.interceptors.response.use(
         return response
     },
     error => {
-        if (error.response && error.response.data)
+        if (error.response.status === 401) {
+            localStorage.clear()
+            window.location.href('/')
+        }
+        else if (error.response && error.response.data)
             return Promise.reject(error.response.data)
-        else return Promise.reject({ msg: "Something went wrong" })
+        else return Promise.reject({ message: "Something went wrong" })
     }
 )
 export default Axios

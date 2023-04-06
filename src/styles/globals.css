@@ -120,7 +120,7 @@ a {
 
 .formErrorText {
   color: red;
-  padding: 5px 0;
+  margin: 5px 0;
   font-size: 14px;
   font-weight: 600;
 }

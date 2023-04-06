@@ -42,7 +42,7 @@ export function requestAccess(payload) {
     return async () => {
         dispatch(slice.actions.startLoading())
         try {
-            const response = await Axios.post('user/request/',payload)
+            const response = await Axios.post('auth/request_access/',payload)
             dispatch(slice.actions.requestAccessSuccess(response.data))
         }
 

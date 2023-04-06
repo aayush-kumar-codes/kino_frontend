@@ -35,7 +35,7 @@ const RequestAccess = () => {
 
     return (
         <div className={styles.mainDiv}>
-            <div className={styles.loginDiv}>
+            <div className={styles.inner_div}>
                 <div className={styles.leftDiv}>
                     <div className={styles.imageDiv}>
                         <Image src={"/images/circleImage.png"} width={130} height={130} alt='circle' /><Image src={"/images/dottedImage.png"} width={130} height={130} alt='circle' />
@@ -49,17 +49,16 @@ const RequestAccess = () => {
                     </div>
                     <form onSubmit={formHandler.handleSubmit}>
 
-                        {requestAccessState.isSuccess && <AlertMessage type='success' message={requestAccessState.data.msg} handler={() => dispatch(requestAccessReset())} />}
+                        {requestAccessState.isSuccess && <AlertMessage type='success' message={requestAccessState.data?.message} handler={() => dispatch(requestAccessReset())} />}
 
                         <TextField
-                            required
                             focused
                             size='small'
                             fullWidth
                             id="outlined-adornment-email"
                             label="Enter your registered email address"
                             variant="outlined"
-                            sx={{ marginBottom: '1.5rem' }}
+                            sx={{ marginBottom: '0.5rem' }}
                             InputProps={{
                                 endAdornment: <InputAdornment position="start"><AiOutlineMail color='#891B55' /></InputAdornment>,
                             }}
@@ -73,7 +72,7 @@ const RequestAccess = () => {
 
                         <Button className={stylesRequest.requestButton} type='submit' fullWidth variant='contained' sx={{ backgroundColor: '#3D5EE1', marginBottom: "1.5rem", boxShadow: 'none' }} disabled={requestAccessState.isLoading}>{requestAccessState.isLoading ? loader_text : 'Send Request'}</Button>
 
-                        {requestAccessState.isError && <p className='formErrorText'>{requestAccessState.data?.msg}</p>}
+                        {requestAccessState.isError && <p className='formErrorText'>{requestAccessState.data?.message}</p>}
 
                         <Link href="/">
                             <Button className={stylesRequest.loginButton} fullWidth variant="contained" sx={{ backgroundColor: '#18AEFA', boxShadow: 'none' }}>Login</Button>

@@ -10,12 +10,15 @@ import * as yup from 'yup'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { loader_text } from '@/utils/constant'
+import { useRouter } from 'next/router'
 
 const login = () => {
 
     const loginState = useSelector(state => state.login)
 
     const [isRemember, setIsRemember] = useState(false)
+
+    const router = useRouter()
 
     const validationSchema = yup.object({
         username: yup.string().required('Enter your username'),
@@ -41,27 +44,30 @@ const login = () => {
 
     useEffect(() => {
         if (loginState.isSuccess) {
-            alert('successfull')
+            router.push('/dashboard/admin')
             dispatch(loginReset())
         }
     }, [loginState.isSuccess])
-
+    
     return (
         <div className={styles.mainDiv}>
-            <div className={styles.loginDiv}>
+            <div className={styles.inner_div}>
                 <div className={styles.leftDiv}>
                     <div className={styles.imageDiv}>
                         <Image src={"/images/circleImage.png"} width={130} height={130} alt='circle' /><Image src={"/images/dottedImage.png"} width={130} height={130} alt='circle' />
                     </div>
 
                 </div>
+
                 <div className={styles.rightDiv}>
                     <div style={{ marginBottom: "1rem" }}>
                         <h2>Welcome to</h2>
                         <h1 style={{ marginBottom: "1.5rem" }}>KAINO</h1>
                         <h2>Sign in</h2>
                     </div>
+
                     <form onSubmit={formHandler.handleSubmit}>
+
                         <FormControl fullWidth sx={{ my: 1 }} focused size='small'>
                             <InputLabel required>Username</InputLabel>
                             <OutlinedInput
@@ -74,7 +80,9 @@ const login = () => {
                                 onChange={formHandler.handleChange}
                             />
                         </FormControl>
-                        {formHandler.errors.username && <p className='formErrorText'>{formHandler.errors.username}</p>}
+
+                        {formHandler.touched.username && formHandler.errors.username && <p className='formErrorText'>{formHandler.errors.username}</p>}
+
                         <FormControl fullWidth sx={{ my: 1 }} focused size='small'>
                             <InputLabel required>Password</InputLabel>
                             <OutlinedInput
@@ -87,7 +95,8 @@ const login = () => {
                                 onChange={formHandler.handleChange}
                             />
                         </FormControl>
-                        {formHandler.errors.password && <p className='formErrorText'>{formHandler.errors.password}</p>}
+
+                        {formHandler.touched.password && formHandler.errors.password && <p className='formErrorText'>{formHandler.errors.password}</p>}
                         <div className={styles.requestDiv}>
                             <div className={styles.rememberText}><Checkbox sx={{ padding: 0, color: '#e3e0e0' }}
                                 onChange={(e) => setIsRemember(e.target.checked)}
@@ -97,10 +106,10 @@ const login = () => {
                         </div>
 
                         <Button type='submit' fullWidth variant='contained' sx={{ backgroundColor: '#3D5EE1', boxShadow: 'none' }}
-                        disabled={loginState.isLoading}
+                            disabled={loginState.isLoading}
                         >{loginState.isLoading ? loader_text : 'Login'}</Button>
-                        
-                        {loginState.isError && <p className='formErrorText'>{loginState.data?.non_field_errors || loginState.data?.msg}</p>}
+
+                        {loginState.isError && <p className='formErrorText'>{loginState.data?.message?.non_field_errors || loginState.data?.message}</p>}
                     </form>
                 </div>
             </div>

@@ -10,14 +10,14 @@ const initialState = {
 }
 
 const slice = createSlice({
-    name: 'login',
+    name: 'resetPassword',
     initialState: initialState,
     reducers: {
         startLoading(state) {
             state.isLoading = true
             state.isError = false
         },
-        loginSuccess(state, action) {
+        resetPasswordSuccess(state, action) {
             state.isLoading = false
             state.isError = false
             state.isSuccess = true
@@ -30,7 +30,7 @@ const slice = createSlice({
             state.data = { ...action.payload }
         }
         ,
-        loginReset(state) {
+        resetPasswordReset(state) {
             state.data = {}
             state.isSuccess = false
             state.isError = false
@@ -38,12 +38,12 @@ const slice = createSlice({
     }
 })
 
-export function loginRequest(payload) {
+export function resetPasswordRequest(payload) {
     return async () => {
         dispatch(slice.actions.startLoading())
         try {
-            const response = await Axios.post('auth/login/', payload)
-            dispatch(slice.actions.loginSuccess(response.data))
+            const response = await Axios.post('auth/change_password/', payload)
+            dispatch(slice.actions.resetPasswordSuccess(response.data))
         }
 
         catch (e) {
@@ -53,4 +53,4 @@ export function loginRequest(payload) {
 }
 
 export default slice.reducer
-export const { loginReset } = slice.actions
+export const { resetPasswordReset } = slice.actions

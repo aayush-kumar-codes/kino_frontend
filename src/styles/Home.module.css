@@ -4,7 +4,7 @@
   min-height: 100vh;
 }
 
-.loginDiv {
+.inner_div {
   display: flex;
   justify-content: center;
   justify-items: center;
@@ -64,7 +64,7 @@
 }
 
 @media (max-width:1027px) {
-  .loginDiv {
+  .inner_div {
     width: 70%;
   }
 
@@ -75,7 +75,7 @@
 }
 
 @media (max-width:798px) {
-  .loginDiv {
+  .inner_div {
     width: 85%;
   }
 }
@@ -109,7 +109,7 @@
 }
 
 @media (max-width:280px) {
-  .loginDiv {
+  .inner_div {
     width: 95%;
   }
 }
