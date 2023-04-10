@@ -151,3 +151,22 @@ a {
 .ant-input {
   background: #eeeeee;
 }
+
+@media (max-width:660px) {
+  .content_container {
+    padding: 0 !important;
+    margin: 14px 6px !important;
+  }
+}
+
+.menu_left_Header {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width:870px) {
+  .menu_left_Header {
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+}

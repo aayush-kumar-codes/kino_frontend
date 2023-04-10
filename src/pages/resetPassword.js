@@ -10,7 +10,7 @@ import { loader_text } from '@/utils/constant'
 import { dispatch } from '@/redux/store'
 import { resetPasswordRequest, resetPasswordReset } from '@/redux/slices/resetPassword'
 import { useSelector } from 'react-redux'
-import AlertMessage from '@/Component/AlertMessage'
+import AlertMessage from '@/Component/Generic/AlertMessage'
 import { useRouter } from 'next/router'
 
 const resetPassword = () => {

@@ -11,7 +11,7 @@ import { EMAIL_REGX, loader_text } from '@/utils/constant'
 import { dispatch } from '@/redux/store'
 import { requestAccess, requestAccessReset } from '@/redux/slices/requestAccess'
 import { useSelector } from 'react-redux'
-import AlertMessage from '@/Component/AlertMessage'
+import AlertMessage from '@/Component/Generic/AlertMessage'
 
 const RequestAccess = () => {
 
