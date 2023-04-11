@@ -26,10 +26,10 @@
 }
 
 .rightHeader_circle {
-    height: 45px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
     background: #F7F7FA;
     margin-left: 5px;
-    border-radius: 50%;
+    border-radius: 12px;
     text-align: center;
 }

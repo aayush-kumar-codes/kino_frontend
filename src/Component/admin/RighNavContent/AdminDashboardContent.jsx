@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from '@/styles/adminDashboardContent.module.css'
-import CounterCard from '../Generic/CounterCard'
+import CounterCard from '../../Generic/CounterCard'
 import { FaRegBuilding } from 'react-icons/fa'
 import { BsTerminal } from 'react-icons/bs'
 import { AiOutlineUserAdd } from 'react-icons/ai';

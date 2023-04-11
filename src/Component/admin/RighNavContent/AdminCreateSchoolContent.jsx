@@ -7,7 +7,7 @@ import { GoLocation } from 'react-icons/go'
 function AdminCreateSchoolContent() {
   return (
     <>
-      <div style={{ marginBottom: "2rem", display: 'flex', justifyContent: 'space-between' ,padding:"0 .5rem" }}>
+      <div style={{ marginBottom: "2rem", display: 'flex', justifyContent: 'space-between', padding: "0 .5rem" }}>
         <p style={{ fontSize: '1.2rem', color: '#191919', fontWeight: '500' }}>Add School Information</p>
         <p style={{ fontSize: "1rem", color: 'gray' }}><span style={{ color: "#191919", fontWeight: "500" }}>School</span> / Edit School Information</p>
       </div>
@@ -176,18 +176,15 @@ function AdminCreateSchoolContent() {
               fullWidth
             />
           </div>
+
           <div style={{ marginTop: ".8rem" }}>
-            <TextField
-              focused
-              required
-              id="outlined-adornment-logo"
-              label="Upload School Logo (150px * 150px)"
-              variant="outlined"
-              name='school_logo'
-              type='file'
-            />
+            <p style={{ marginBottom: '1.5rem', color: "#444444", fontSize: '1rem', fontWeight: '600' }}>Upload School Logo (150px * 150px)</p>
+            <label className={styles.fileUpload}>Choose File
+              <input type='file' style={{ display: "none" }} name='school_logo' />
+            </label>
           </div>
-          <div style={{ marginTop: "1rem" }}>
+
+          <div style={{ marginTop: "2rem" }}>
             <Button variant='contained' sx={{ borderRadius: '6px', backgroundColor: "#5D79E6", width: "150px" }}>Submit</Button>
           </div>
         </form>

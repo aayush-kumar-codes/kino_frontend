@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
 import React, { useState } from 'react';
-import AdminDashboardContent from '@/Component/admin/AdminDashboardContent';
+import AdminDashboardContent from '@/Component/admin/RighNavContent/AdminDashboardContent';
 import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
@@ -11,9 +11,9 @@ const AdminDashboard = () => {
 
 
     return (
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "hidden" }}>
             <AdminLeftNav collapsed={collapsed} />
-            <Layout className="site-layout">
+            <Layout className="site-layout" style={{ maxHeight: "100vh", overflow: 'scroll', overflowX: "hidden" }}>
                 <AdminHeader collapsed={collapsed} setCollapsed={setCollapsed} headerText="Dashboard" />
                 <RightContentWrapper>
                     <AdminDashboardContent />

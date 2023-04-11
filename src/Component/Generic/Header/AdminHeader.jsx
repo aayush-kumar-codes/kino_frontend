@@ -20,6 +20,7 @@ function AdminHeader({ collapsed, setCollapsed, headerText }) {
                 justifyContent: "space-between",
                 paddingInline: "20px",
                 minHeight: '64px',
+                lineHeight:'normal'
             }}
             className='menu_left_Header'
         >

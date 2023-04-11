@@ -19,16 +19,28 @@ function AdminLeftNav({ collapsed }) {
         if (pathname) {
             if (pathname === 'create-school')
                 setDefaultSelectedItem('2')
+            else if (pathname === 'term-system')
+                setDefaultSelectedItem('3')
+            else if (pathname === 'user-roles')
+                setDefaultSelectedItem('5')
         }
         else
-        setDefaultSelectedItem('1')
+            setDefaultSelectedItem('1')
     }, [])
 
     const handleChange = ({ key }) => {
         if (key === '1')
             router.push('/dashboard/admin')
-        else if(key === '2')
-        router.push('/dashboard/admin/create-school')
+        else if (key === '2')
+            router.push('/dashboard/admin/create-school')
+        else if (key === '3')
+            router.push('/dashboard/admin/term-system')
+        else if (key === '5')
+            router.push('/dashboard/admin/user-roles')
+        else if (key === '8') {
+            localStorage.clear()
+            router.push('/')
+        }
     }
 
     return (
