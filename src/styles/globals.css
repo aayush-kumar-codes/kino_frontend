@@ -164,6 +164,22 @@ a {
   font-size: 1.5rem !important;
 }
 
+.ant-table-content {
+  overflow-y: auto;
+}
+
+hr {
+  height: 2px;
+  margin-top: 1rem;
+  background: #D4D7DE;
+  border: none;
+}
+
+.ant-table-column-sorters {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
 @media (max-width:660px) {
   .content_container {
     padding: 0 !important;

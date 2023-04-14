@@ -44,11 +44,12 @@ const login = () => {
 
     useEffect(() => {
         if (loginState.isSuccess) {
+            localStorage.setItem('token', loginState.data?.data?.access)
             router.push('/dashboard/admin')
             dispatch(loginReset())
         }
     }, [loginState.isSuccess])
-    
+
     return (
         <div className={styles.mainDiv}>
             <div className={styles.inner_div}>

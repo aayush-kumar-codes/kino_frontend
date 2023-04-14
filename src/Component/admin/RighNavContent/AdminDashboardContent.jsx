@@ -21,12 +21,14 @@ function AdminDashboardContent() {
       <div className={styles.card_container}>
         <div className={styles.card_innerContainer}>
           <CounterCard
+            to='/dashboard/admin/all-schools'
             color={'#9E4EE0'}
             icon={FaRegBuildingIcon}
             totalText={'Schools'}
             totalNo={'451'}
           />
           <CounterCard
+            to='/dashboard/admin/school-by-country'
             color={'#C6164F'}
             icon={AiOutlineUserAddIcon}
             totalText={'Students'}
@@ -53,12 +55,14 @@ function AdminDashboardContent() {
         </div>
         <div className={styles.card_innerContainer}>
           <CounterCard
+            to='/dashboard/admin/school-by-country'
             color={'#EA8858'}
             icon={BsTerminalIcon}
             totalText={'Teachers'}
             totalNo={'232'}
           />
           <CounterCard
+            to='/dashboard/admin/school-by-country'
             color={'#4EAF96'}
             icon={IoIosPeopleIcon}
             totalText={'Parents'}

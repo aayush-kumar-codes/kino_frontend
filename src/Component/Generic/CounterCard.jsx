@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from '@/styles/adminDashboardContent.module.css'
+import Link from 'next/link'
 
-function CounterCard({ color, icon, totalText, totalNo }) {
+function CounterCard({ to, color, icon, totalText, totalNo }) {
     return (
-        <div className={styles.card} style={{ background: `${color}` }}>
+        <Link href={to} className={styles.card} style={{ background: `${color}` }}>
             <div className={styles.icon_Container}>
                 {icon}
             </div>
@@ -11,7 +12,7 @@ function CounterCard({ color, icon, totalText, totalNo }) {
                 <p className={styles.totalText}>Total {totalText}</p>
                 <p className={styles.totalNumber}>{totalNo}</p>
             </div>
-        </div>
+        </Link>
     )
 }
 

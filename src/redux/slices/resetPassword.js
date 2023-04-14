@@ -42,7 +42,7 @@ export function resetPasswordRequest(payload) {
     return async () => {
         dispatch(slice.actions.startLoading())
         try {
-            const response = await Axios.post('auth/change_password/', payload)
+            const response = await Axios.post('api/auth/change_password/', payload)
             dispatch(slice.actions.resetPasswordSuccess(response.data))
         }
 

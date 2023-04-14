@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Axios from "../../utils/axios";
-import { dispatch } from '../store'
+import Axios from "@/utils/axios";
+import { dispatch } from "../../store";
 
 const initialState = {
     isLoading: false,
@@ -10,14 +10,14 @@ const initialState = {
 }
 
 const slice = createSlice({
-    name: 'requestAccess',
+    name: 'createSchool',
     initialState: initialState,
     reducers: {
         startLoading(state) {
             state.isLoading = true
             state.isError = false
         },
-        requestAccessSuccess(state, action) {
+        createSchoolSuccess(state, action) {
             state.isLoading = false
             state.isError = false
             state.isSuccess = true
@@ -30,7 +30,7 @@ const slice = createSlice({
             state.data = { ...action.payload }
         }
         ,
-        requestAccessReset(state) {
+        createSchoolReset(state) {
             state.data = {}
             state.isSuccess = false
             state.isError = false
@@ -38,12 +38,12 @@ const slice = createSlice({
     }
 })
 
-export function requestAccess(payload) {
+export function createSchoolRequest(payload) {
     return async () => {
         dispatch(slice.actions.startLoading())
         try {
-            const response = await Axios.post('api/auth/request_access/',payload)
-            dispatch(slice.actions.requestAccessSuccess(response.data))
+            const response = await Axios.post('api/create_school/', payload)
+            dispatch(slice.actions.createSchoolSuccess(response.data))
         }
 
         catch (e) {
@@ -53,4 +53,4 @@ export function requestAccess(payload) {
 }
 
 export default slice.reducer
-export const { requestAccessReset } = slice.actions
+export const { createSchoolReset } = slice.actions

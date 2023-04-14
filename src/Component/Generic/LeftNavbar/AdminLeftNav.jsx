@@ -23,6 +23,8 @@ function AdminLeftNav({ collapsed }) {
                 setDefaultSelectedItem('3')
             else if (pathname === 'user-roles')
                 setDefaultSelectedItem('5')
+            else if (pathname === 'account-settings')
+                setDefaultSelectedItem('7')
         }
         else
             setDefaultSelectedItem('1')
@@ -37,6 +39,8 @@ function AdminLeftNav({ collapsed }) {
             router.push('/dashboard/admin/term-system')
         else if (key === '5')
             router.push('/dashboard/admin/user-roles')
+        else if (key === '7')
+            router.push('/dashboard/admin/account-settings')
         else if (key === '8') {
             localStorage.clear()
             router.push('/')

@@ -52,10 +52,10 @@
 
 .tableContainer {
     max-width: 100%;
-    overflow: scroll;
     padding: 1.5rem 1rem;
     background: #fff;
     border-radius: 10px;
+    margin-bottom: 1rem;
 }
 
 .btn {

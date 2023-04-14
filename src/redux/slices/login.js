@@ -42,7 +42,7 @@ export function loginRequest(payload) {
     return async () => {
         dispatch(slice.actions.startLoading())
         try {
-            const response = await Axios.post('auth/login/', payload)
+            const response = await Axios.post('api/auth/login/', payload)
             dispatch(slice.actions.loginSuccess(response.data))
         }
 

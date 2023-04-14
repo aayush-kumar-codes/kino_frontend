@@ -3,3 +3,31 @@ export const EMAIL_REGX = /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$
 export const baseUrl = process.env.HOST
 
 export const loader_text = 'Please wait....'
+
+export const flagLink = {
+    tanzania: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/1200px-Flag_of_Tanzania.svg.png",
+    s_africa: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/188px-Flag_of_South_Africa.svg.png",
+    s_sudan: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Flag_of_South_Sudan.svg/188px-Flag_of_South_Sudan.svg.png",
+    rwanda: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Rwanda.svg/188px-Flag_of_Rwanda.svg.png",
+    kenya: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/188px-Flag_of_Kenya.svg.png",
+    uganda: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/188px-Flag_of_Uganda.svg.png",
+    ghana: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/188px-Flag_of_Ghana.svg.png",
+    nigeria: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/188px-Flag_of_Nigeria.svg.png"
+}
+
+export const countries = ['Tanzania', 'S.Africa', 'S.Sudan', 'Rwanda', 'Kenya', 'Uganda', 'Ghana', 'Nigeria']
+
+export const kaino_plans = [
+    {
+        name: 'KAINO BASIC',
+        value: 'KAINO_BASIC'
+    },
+    {
+        name: 'KAINO PLUS',
+        value: 'KAINO_PLUS'
+    },
+    {
+        name: 'KAINO SOCIAL',
+        value: 'KAINO_SOCIAL'
+    }
+]
