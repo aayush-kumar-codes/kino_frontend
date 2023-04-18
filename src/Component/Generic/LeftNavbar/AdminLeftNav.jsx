@@ -21,6 +21,8 @@ function AdminLeftNav({ collapsed }) {
                 setDefaultSelectedItem('2')
             else if (pathname === 'term-system')
                 setDefaultSelectedItem('3')
+            else if (pathname === 'manage-lessons')
+                setDefaultSelectedItem('4')
             else if (pathname === 'user-roles')
                 setDefaultSelectedItem('5')
             else if (pathname === 'account-settings')
@@ -37,6 +39,8 @@ function AdminLeftNav({ collapsed }) {
             router.push('/dashboard/admin/create-school')
         else if (key === '3')
             router.push('/dashboard/admin/term-system')
+        else if (key === '4')
+            router.push('/dashboard/admin/manage-lessons')
         else if (key === '5')
             router.push('/dashboard/admin/user-roles')
         else if (key === '7')
@@ -96,7 +100,7 @@ function AdminLeftNav({ collapsed }) {
                         key: '4',
                         icon: <GoBook size={"1.6rem"} />,
                         style: { width: "100%" },
-                        label: 'Lessions',
+                        label: 'Lessons',
                     },
                     {
                         key: '5',

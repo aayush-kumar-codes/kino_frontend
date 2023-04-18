@@ -29,7 +29,7 @@ const AdminAllSchoolsContent = () => {
     }, [getAllSchoolsState.isSuccess])
 
     const handlePagination = (requestUrl) => {
-        dispatch(getAllSchoolsRequest(requestUrl.split('?')[1]))
+        dispatch(getAllSchoolsRequest(`?${requestUrl.split('?')[1]}`))
     }
 
     return (

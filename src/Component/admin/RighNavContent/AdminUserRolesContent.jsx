@@ -1,14 +1,32 @@
 import { Button } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '@/styles/adminUserRoles.module.css'
 import { Avatar, Tabs } from 'antd'
 import { AiOutlineUser } from 'react-icons/ai'
 import AdministratorsTable from '../Table/AdministratorsTable'
 import AddAdminModal from '../Modal/AddAdminModal'
+import { dispatch } from '@/redux/store'
+import { getAllUsersRequest, getAllUsersReset } from '@/redux/slices/admin/getAllUsers'
+import { useSelector } from 'react-redux'
 
 function AdminUserRolesContent() {
+    const getAllUsersState = useSelector(state => state.getAllUsers)
 
+    const [data, setData] = useState([])
+    const [response, setResponse] = useState()
     const [isModal, setIsModal] = useState(false)
+
+    useEffect(() => {
+        dispatch(getAllUsersRequest())
+    }, [])
+
+    useEffect(() => {
+        if (getAllUsersState.isSuccess) {
+            setResponse(getAllUsersState.data?.data)
+            setData(getAllUsersState.data?.data?.results?.data)
+            dispatch(getAllUsersReset())
+        }
+    }, [getAllUsersState.isSuccess])
 
     return (
         <div>
@@ -27,10 +45,16 @@ function AdminUserRolesContent() {
 
                     <div className={styles.card} style={{ background: '#4EAF96' }}>
                         <div style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'wrap', gap: '5px' }}>
-                            <p>2 ACCOUNTS</p>
+                            <p>{response?.results?.admin || 0} ACCOUNTS</p>
                             <div>
-                                <Avatar size="small" icon={<AiOutlineUser />} />
-                                <Avatar size="small" icon={<AiOutlineUser />} />
+                                {
+                                    data?.filter(item => item.role === 1).map((item, key) =>
+                                        <Avatar
+                                            key={key}
+                                            size="small"
+                                            src={item?.profile_img}
+                                        />)
+                                }
                             </div>
                         </div>
                         <p style={{ marginTop: "1rem", fontWeight: '700', fontSize: '1rem' }}>Super Admin</p>
@@ -39,9 +63,16 @@ function AdminUserRolesContent() {
 
                     <div className={styles.card} style={{ background: '#3A93D6' }}>
                         <div style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'wrap', gap: '5px' }}>
-                            <p>1 ACCOUNTS</p>
+                            <p>{response?.results?.head_of_curicullum || 0} ACCOUNTS</p>
                             <div>
-                                <Avatar size="small" icon={<AiOutlineUser />} />
+                                {
+                                    data?.filter(item => item.role === 5).map((item, key) =>
+                                        <Avatar
+                                            key={key}
+                                            size="small"
+                                            src={item?.profile_img}
+                                        />)
+                                }
                             </div>
                         </div>
                         <p style={{ marginTop: "1rem", fontWeight: '700', fontSize: '1rem' }}>Head of Curicullum</p>
@@ -50,12 +81,16 @@ function AdminUserRolesContent() {
 
                     <div className={styles.card} style={{ background: '#9E4EE0' }}>
                         <div style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'wrap', gap: '5px' }}>
-                            <p>4 ACCOUNTS</p>
+                            <p>{response?.results?.content_creater || 0} ACCOUNTS</p>
                             <dir>
-                                <Avatar size="small" icon={<AiOutlineUser />} />
-                                <Avatar size="small" icon={<AiOutlineUser />} />
-                                <Avatar size="small" icon={<AiOutlineUser />} />
-                                <Avatar size="small" icon={<AiOutlineUser />} />
+                                {
+                                    data?.filter(item => item.role === 6).map((item, key) =>
+                                        <Avatar
+                                            key={key}
+                                            size="small"
+                                            src={item?.profile_img}
+                                        />)
+                                }
                             </dir>
                         </div>
                         <p style={{ marginTop: "1rem", fontWeight: '700', fontSize: '1rem' }}>Content Creator</p>
@@ -63,9 +98,16 @@ function AdminUserRolesContent() {
                     </div>
                     <div className={styles.card} style={{ background: '#EA8858' }}>
                         <div style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'wrap', gap: '5px' }}>
-                            <p>1 ACCOUNT</p>
+                            <p>{response?.results?.finance || 0} ACCOUNT</p>
                             <div>
-                                <Avatar size="small" icon={<AiOutlineUser />} />
+                                {
+                                    data?.filter(item => item.role === 7).map((item, key) =>
+                                        <Avatar
+                                            key={key}
+                                            size="small"
+                                            src={item?.profile_img}
+                                        />)
+                                }
                             </div>
                         </div>
                         <p style={{ marginTop: "1rem", fontWeight: '700', fontSize: '1rem' }}>Finance</p>
@@ -81,29 +123,29 @@ function AdminUserRolesContent() {
                     style={{ marginTop: "2rem" }}
                     items={[
                         {
-                            label: 'All (16)',
+                            label: `All (${response?.count || 0})`,
                             key: '1',
-                            children: <AdministratorsTable />,
+                            children: <AdministratorsTable data={data} />,
                         },
                         {
-                            label: 'Super Admin (2)',
+                            label: `Super Admin (${response?.results?.admin || 0})`,
                             key: '2',
-                            children: <AdministratorsTable />,
+                            children: <AdministratorsTable data={data?.filter(item => item.role === 1)} />,
                         },
                         {
-                            label: 'Head of Curicullum (1)',
+                            label: `Head of Curicullum (${response?.results?.head_of_curicullum || 0})`,
                             key: '3',
-                            children: <AdministratorsTable />,
+                            children: <AdministratorsTable data={data?.filter(item => item.role === 5)} />,
                         },
                         {
-                            label: 'Content Creator (4)',
+                            label: `Content Creator (${response?.results?.content_creater || 0})`,
                             key: '4',
-                            children: <AdministratorsTable />,
+                            children: <AdministratorsTable data={data?.filter(item => item.role === 6)} />,
                         },
                         {
-                            label: 'Finance(1)',
+                            label: `Finance(${response?.results?.finance || 0})`,
                             key: '5',
-                            children: <AdministratorsTable />,
+                            children: <AdministratorsTable data={data?.filter(item => item.role === 7)} />,
                         },
                     ]}
                 />

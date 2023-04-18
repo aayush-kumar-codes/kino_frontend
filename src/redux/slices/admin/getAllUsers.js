@@ -10,14 +10,14 @@ const initialState = {
 }
 
 const slice = createSlice({
-    name: 'getAllSchools',
+    name: 'getAllUsers',
     initialState: initialState,
     reducers: {
         startLoading(state) {
             state.isLoading = true
             state.isError = false
         },
-        getAllSchoolsSuccess(state, action) {
+        getAllUsersSuccess(state, action) {
             state.isLoading = false
             state.isError = false
             state.isSuccess = true
@@ -30,7 +30,7 @@ const slice = createSlice({
             state.data = { ...action.payload }
         }
         ,
-        getAllSchoolsReset(state) {
+        getAllUsersReset(state) {
             state.data = {}
             state.isSuccess = false
             state.isError = false
@@ -38,17 +38,12 @@ const slice = createSlice({
     }
 })
 
-export function getAllSchoolsRequest(payload) {
-    let url;
-    if (payload)
-        url = `api/school/${payload}`
-    else
-        url = 'api/school/'
+export function getAllUsersRequest(queries) {
     return async () => {
         dispatch(slice.actions.startLoading())
         try {
-            const response = await Axios.get(url)
-            dispatch(slice.actions.getAllSchoolsSuccess(response.data))
+            const response = await Axios.get(`api/auth/role/${queries ? `?${queries}` : ''}`)
+            dispatch(slice.actions.getAllUsersSuccess(response.data))
         }
 
         catch (e) {
@@ -58,4 +53,4 @@ export function getAllSchoolsRequest(payload) {
 }
 
 export default slice.reducer
-export const { getAllSchoolsReset } = slice.actions
+export const { getAllUsersReset } = slice.actions

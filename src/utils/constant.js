@@ -31,3 +31,26 @@ export const kaino_plans = [
         value: 'KAINO_SOCIAL'
     }
 ]
+
+export const rolesAccess = [
+    {
+        id: 1,
+        name: "Admin",
+        access: 'Full'
+    },
+    {
+        id: 5,
+        name: "Head of Curicullum",
+        access: 'Lessons'
+    },
+    {
+        id: 6,
+        name: "Content Creator",
+        access: 'CMO'
+    },
+    {
+        id: 7,
+        name: "Finance",
+        access: 'Finance Dashboard'
+    }
+]

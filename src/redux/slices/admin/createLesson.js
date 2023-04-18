@@ -10,14 +10,14 @@ const initialState = {
 }
 
 const slice = createSlice({
-    name: 'getAllSchools',
+    name: 'createLesson',
     initialState: initialState,
     reducers: {
         startLoading(state) {
             state.isLoading = true
             state.isError = false
         },
-        getAllSchoolsSuccess(state, action) {
+        createLessonSuccess(state, action) {
             state.isLoading = false
             state.isError = false
             state.isSuccess = true
@@ -30,7 +30,7 @@ const slice = createSlice({
             state.data = { ...action.payload }
         }
         ,
-        getAllSchoolsReset(state) {
+        createLessonReset(state) {
             state.data = {}
             state.isSuccess = false
             state.isError = false
@@ -38,17 +38,12 @@ const slice = createSlice({
     }
 })
 
-export function getAllSchoolsRequest(payload) {
-    let url;
-    if (payload)
-        url = `api/school/${payload}`
-    else
-        url = 'api/school/'
+export function createLessonRequest(payload) {
     return async () => {
         dispatch(slice.actions.startLoading())
         try {
-            const response = await Axios.get(url)
-            dispatch(slice.actions.getAllSchoolsSuccess(response.data))
+            const response = await Axios.post('api/lesson/', payload)
+            dispatch(slice.actions.createLessonSuccess(response.data))
         }
 
         catch (e) {
@@ -58,4 +53,4 @@ export function getAllSchoolsRequest(payload) {
 }
 
 export default slice.reducer
-export const { getAllSchoolsReset } = slice.actions
+export const { createLessonReset } = slice.actions

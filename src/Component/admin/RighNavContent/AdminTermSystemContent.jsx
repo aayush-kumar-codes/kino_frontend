@@ -20,7 +20,7 @@ function AdminTermSystemContent() {
     term_start_date: "",
     mid_term_break: "",
     term_end_date: "",
-    term_name: "",
+    term_name: 6,
     country: "Kenya",
     academic_term: "3",
     academic_year: "2023",
@@ -154,7 +154,7 @@ function AdminTermSystemContent() {
                 required
               >
                 {
-                  termSystem?.map((item, i) => <MenuItem key={i} value={item?.term_name}>{item?.term_name}</MenuItem>)
+                  termSystem?.map((item, i) => <MenuItem key={i} value={item?.id}>{item?.term_name}</MenuItem>)
                 }
               </Select>
               {errorMessages?.term_name && <p className='formErrorText'>{errorMessages?.term_name[0]}</p>}

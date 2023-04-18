@@ -20,7 +20,7 @@ const AdminSchoolByCountryContent = ({ country }) => {
 
     useEffect(() => {
         if (country) {
-            const payload = `country=${country.toString()}`
+            const payload = `?country=${country.toString()}`
             dispatch(getAllSchoolsRequest(payload))
         }
     }, [country])
@@ -34,7 +34,7 @@ const AdminSchoolByCountryContent = ({ country }) => {
     }, [getAllSchoolsState.isSuccess])
 
     const handlePagination = (requestUrl) => {
-        dispatch(getAllSchoolsRequest(requestUrl.split('?')[1]))
+        dispatch(getAllSchoolsRequest(`?${requestUrl.split('?')[1]}`))
     }
 
     return (

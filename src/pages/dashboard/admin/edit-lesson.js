@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
-import SchoolProfileContent from '@/Component/admin/RighNavContent/SchoolProfileContent';
 import { useRouter } from 'next/router';
+import AdminEditLessonContent from '@/Component/admin/RighNavContent/AdminEditLessonContent';
 
-const SchoolProfile = () => {
+const EditLesson = () => {
 
     const [collapsed, setCollapsed] = useState(false);
     const router = useRouter()
@@ -16,12 +16,12 @@ const SchoolProfile = () => {
         <Layout style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "hidden" }}>
             <AdminLeftNav collapsed={collapsed} />
             <Layout className="site-layout" style={{ maxHeight: "100vh", overflow: 'scroll', overflowX: "hidden" }}>
-                <AdminHeader collapsed={collapsed} setCollapsed={setCollapsed} headerText="" />
-                <RightContentWrapper>
-                    <SchoolProfileContent id={id} />
+                <AdminHeader collapsed={collapsed} setCollapsed={setCollapsed} headerText='Total Schools' />
+                <RightContentWrapper padding='12px'>
+                    <AdminEditLessonContent id={id} />
                 </RightContentWrapper>
             </Layout>
         </Layout>
     );
 };
-export default SchoolProfile;
+export default EditLesson;

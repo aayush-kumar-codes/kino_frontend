@@ -1,4 +1,5 @@
 import { Avatar, Table } from 'antd';
+import { useRouter } from 'next/router';
 
 const columns = [
     {
@@ -55,6 +56,15 @@ const rowSelection = {
 };
 
 const SchoolsList = ({ data }) => {
+    const router = useRouter();
+
+    const onRow = (record) => {
+        return {
+            onClick: () => {
+                router.push(`/dashboard/admin/school-profile/${record.id}`);
+            },
+        };
+    };
     return (
         <Table
             rowSelection={{
@@ -62,6 +72,7 @@ const SchoolsList = ({ data }) => {
                 ...rowSelection,
             }}
             columns={columns}
+            onRow={onRow}
             dataSource={data}
             pagination={false}
         />
