@@ -35,10 +35,10 @@ const login = () => {
         onSubmit: (values) => {
             const payload = {
                 ...values,
-                isRemember: isRemember
+                remember_me: isRemember ? 1 : 0
             }
 
-            dispatch(loginRequest(values))
+            dispatch(loginRequest(payload))
         }
     })
 
