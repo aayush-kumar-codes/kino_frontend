@@ -14,6 +14,7 @@ import { RxCross1 } from 'react-icons/rx'
 function AdminManageLessionsContent() {
     const router = useRouter()
     const getLessonsState = useSelector(state => state.getLessons)
+    const [pageSize, setPageSize] = useState(10)
 
     const columns = [
         {
@@ -72,19 +73,19 @@ function AdminManageLessionsContent() {
             else {
                 let payload;
                 if (values.class && values.name)
-                    payload = `?class=${values.class}&name=${values.name}`
+                    payload = `?class=${values.class}&name=${values.name}&page_size=${pageSize}`
                 else if (values.class)
-                    payload = `?class=${values.class}`
+                    payload = `?class=${values.class}&page_size=${pageSize}`
                 else if (values.name)
-                    payload = `?name=${values.name}`
+                    payload = `?name=${values.name} &page_size=${pageSize}`
                 dispatch(getLessonsRequest(payload))
             }
         },
     });
 
     useEffect(() => {
-        dispatch(getLessonsRequest())
-    }, [])
+        dispatch(getLessonsRequest(`?page_size=${pageSize}`))
+    }, [pageSize])
 
     useEffect(() => {
         if (getLessonsState.isSuccess) {
@@ -93,6 +94,10 @@ function AdminManageLessionsContent() {
             dispatch(getLessonsReset())
         }
     }, [getLessonsState.isSuccess])
+
+    const handlePagination = (requestUrl) => {
+        dispatch(getLessonsRequest(`?${requestUrl.split('?')[1]}`))
+    }
 
     return (
         <div>
@@ -149,13 +154,14 @@ function AdminManageLessionsContent() {
                 <div className={styles.pagination}>
                     <span>Show</span>
                     <Select
-                        defaultValue={10}
+                        defaultValue={pageSize}
                         style={{ width: 80 }}
                         options={[
                             { value: 10, label: '10' },
                             { value: 25, label: '20' },
                             { value: 50, label: '50' },
                         ]}
+                        onChange={(values => setPageSize(values))}
                     />
                     <span>entries</span>
                 </div>
@@ -165,9 +171,9 @@ function AdminManageLessionsContent() {
                 <div className={styles.bottom_Pagination}>
                     <p>Showing {response ? 1 : 0} to {response?.count || 0} of {response?.count || 0} entries</p>
                     <div>
-                        <Button disabled={!response.previous} variant="outlined" size="medium">Previous</Button>
+                        <Button disabled={!response.previous} variant="outlined" onClick={() => handlePagination(response.previous)} size="medium">Previous</Button>
                         <Button variant="contained" size="medium">1</Button>
-                        <Button disabled={!response.next} variant="outlined" size="medium">Next</Button>
+                        <Button disabled={!response.next} variant="outlined" onClick={() => handlePagination(response.next)} size="medium">Next</Button>
                     </div>
                 </div>
             </div>

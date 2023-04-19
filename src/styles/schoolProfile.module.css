@@ -68,7 +68,7 @@
 .secondCard {
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: 1fr 2.5fr;
+    grid-template-columns: 1.5fr 2fr;
     column-gap: 2rem;
     min-height: 300px;
 }
@@ -86,4 +86,72 @@
     gap: 1rem;
     align-items: center;
     margin-top: 1rem;
+}
+
+.p_title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.p_description {
+    color: #867d7d;
+    font-weight: 500;
+}
+
+.right_content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.right_content_title {
+    color: #050505;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.right_content_des {
+    color: #8c8080;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.school_title {
+    color: #161616;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.right_bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+.copyright {
+    margin-top: 2rem;
+    text-align: center;
+    color: #b7afaf;
+    font-weight: 500;
+    padding: 1rem;
+    background: #fff;
+}
+
+@media (max-width:886px) {
+    .schoolInfo {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .right_bottom {
+        flex-direction: column;
+    }
+}
+
+@media (max-width:760px) {
+    .secondCard {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 1rem;
+    }
 }

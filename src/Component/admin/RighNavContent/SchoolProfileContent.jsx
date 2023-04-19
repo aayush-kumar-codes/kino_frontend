@@ -7,7 +7,9 @@ import styles_new from '@/styles/adminLessions.module.css'
 import styles from '@/styles/schoolProfile.module.css'
 import { flagLink } from '@/utils/constant'
 import { Button } from '@mui/material'
-import { AiOutlinePhone } from 'react-icons/ai'
+import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai'
+import { BsCalendarDate } from 'react-icons/bs'
+import { CiLocationOn } from 'react-icons/ci'
 
 function SchoolProfileContent({ id }) {
   const [data, setData] = useState({})
@@ -80,17 +82,59 @@ function SchoolProfileContent({ id }) {
           <div className={styles.secondCardLeft}>
             <p style={{ fontSize: '1.3rem', fontWeight: '600' }}>Personal Details:</p>
             <div className={styles.iconContainer}>
-              <AiOutlinePhone />
+              <AiOutlinePhone size={'1.3rem'} />
               <div>
-                <p>Mobile</p>
-                <p>{data?.phone}</p>
+                <p className={styles.p_title}>Mobile</p>
+                <p className={styles.p_description}>{data?.phone}</p>
+              </div>
+            </div>
+            <div className={styles.iconContainer}>
+              <AiOutlineMail size={'1.3rem'} />
+              <div>
+                <p className={styles.p_title}>Email</p>
+                <p className={styles.p_description}>{data?.email}</p>
+              </div>
+            </div>
+            <div className={styles.iconContainer}>
+              <BsCalendarDate size={'1.3rem'} />
+              <div>
+                <p className={styles.p_title}>Date of Estabishment</p>
+                <p className={styles.p_description}>{data?.year_established}</p>
+              </div>
+            </div>
+            <div className={styles.iconContainer}>
+              <CiLocationOn size={'1.3rem'} />
+              <div>
+                <p className={styles.p_title}>Mobile</p>
+                <p className={styles.p_description}>{data?.address + ' ' + data?.city + ' ' + data?.country}</p>
               </div>
             </div>
           </div>
           <div className={styles.secondCardRight}>
-            right
+            <div className={styles.right_content} style={{ margin: 0 }}>
+              <p className={styles.right_content_title}>About us</p>
+              <p className={styles.school_title}>{data?.name}</p>
+              <p className={styles.right_content_des}>{data?.description}</p>
+            </div>
+            <div className={styles.right_content}>
+              <p className={styles.right_content_title}>Motto</p>
+              <p className={styles.right_content_des}>{data?.motto}</p>
+            </div>
+            <div className={styles.right_bottom}>
+              <div className={styles.right_content}>
+                <p className={styles.right_content_title}>Principal</p>
+                <p className={styles.right_content_des}>{data?.principal_name}</p>
+              </div>
+              <div className={styles.right_content}>
+                <p className={styles.right_content_title}>Website</p>
+                <p className={styles.right_content_des}>{data?.website_url}</p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <div className={styles.copyright}>
+        <p>COPYRIGHT &copy; 2023 KAINO.</p>
       </div>
     </div>
   )

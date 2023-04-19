@@ -32,47 +32,52 @@ const AdminAllSchoolsContent = () => {
         dispatch(getAllSchoolsRequest(`?${requestUrl.split('?')[1]}`))
     }
 
+    const getCount = (name) => {
+        const count = data?.filter(item => item.country === name).length
+        return count
+    }
+
     return (
         <div>
             <div className={styles.countryCardContainer}>
                 <CountrySchoolCard
                     link={flagLink.tanzania}
-                    count={132}
+                    count={getCount('Tanzania')}
                     country={'Tanzania'}
                 />
                 <CountrySchoolCard
                     link={flagLink.s_africa}
-                    count={132}
+                    count={getCount('S. Africa')}
                     country={'S. Africa'}
                 />
                 <CountrySchoolCard
                     link={flagLink.s_sudan}
-                    count={132}
+                    count={getCount('S. Sudan')}
                     country={'S. Sudan'}
                 />
                 <CountrySchoolCard
                     link={flagLink.rwanda}
-                    count={132}
+                    count={getCount('Rwanda')}
                     country={'Rwanda'}
                 />
                 <CountrySchoolCard
                     link={flagLink.kenya}
-                    count={132}
+                    count={getCount('Kenya')}
                     country={'Kenya'}
                 />
                 <CountrySchoolCard
                     link={flagLink.uganda}
-                    count={132}
+                    count={getCount('Uganda')}
                     country={'Uganda'}
                 />
                 <CountrySchoolCard
                     link={flagLink.ghana}
-                    count={132}
+                    count={getCount('Ghana')}
                     country={'Ghana'}
                 />
                 <CountrySchoolCard
                     link={flagLink.nigeria}
-                    count={132}
+                    count={getCount('Nigeria')}
                     country={'Nigeria'}
                 />
             </div>

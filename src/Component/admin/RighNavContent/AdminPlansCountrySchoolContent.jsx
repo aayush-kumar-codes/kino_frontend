@@ -14,7 +14,7 @@ import { RxCross1 } from 'react-icons/rx'
 const AdminPlansCountrySchoolContent = ({ country, plans }) => {
 
     const getAllSchoolsState = useSelector(state => state.getAllSchools)
-
+    const [pageSize, setPageSize] = useState(10)
     const [response, setResponse] = useState({})
     const [data, setData] = useState([])
 
@@ -42,11 +42,11 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
 
     useEffect(() => {
         if (country) {
-            const payload = `?country=${country.toString()}&subscription=${plans}`
+            const payload = `?country=${country.toString()}&subscription=${plans}&page_size=${pageSize}`
             dispatch(getAllSchoolsRequest(payload))
         }
 
-    }, [country, plans])
+    }, [country, plans, pageSize])
 
     useEffect(() => {
         if (getAllSchoolsState.isSuccess) {
@@ -114,13 +114,14 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
                 <div className={styles_new.pagination}>
                     <span>Show</span>
                     <Select
-                        defaultValue={10}
+                        defaultValue={pageSize}
                         style={{ width: 80 }}
                         options={[
                             { value: 10, label: '10' },
                             { value: 25, label: '20' },
                             { value: 50, label: '50' },
                         ]}
+                        onChange={(values => setPageSize(values))}
                     />
                     <span>entries</span>
                 </div>
