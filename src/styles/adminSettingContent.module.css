@@ -18,10 +18,22 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-.activityText{
+.activityText {
     color: #40a2ed;
     font-weight: 600;
     font-size: 1rem;
+}
+
+@media (max-width:920px) {
+    .cardContainer {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+    }
 }

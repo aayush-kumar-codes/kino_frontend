@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ScreenLoader from '@/Component/Generic/ScreenLoader';
 import PrivateRoutes from '@/Component/PrivateRoutes';
+import ToastNotify from '@/Component/Generic/ToastNotify';
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
@@ -39,6 +40,7 @@ function MyApp({ Component, pageProps }) {
       {loading ? <ScreenLoader loading={loading} /> : (
         <Provider store={store}>
           <PrivateRoutes>
+            <ToastNotify />
             <Component {...pageProps} />
           </PrivateRoutes>
         </Provider>

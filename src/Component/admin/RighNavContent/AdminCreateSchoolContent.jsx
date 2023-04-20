@@ -9,9 +9,11 @@ import { createSchoolRequest, createSchoolReset } from '@/redux/slices/admin/cre
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { countries, kaino_plans, loader_text } from '@/utils/constant'
+import Axios from '@/utils/axios'
 
 function AdminCreateSchoolContent() {
   const createSchoolState = useSelector(state => state.createSchool)
+  const [termSystem, setTermSystem] = useState([])
   const [errorMessages, setErrorMessages] = useState({})
   const router = useRouter()
   const [today] = useState(new Date().toISOString().split('T')[0]);
@@ -24,7 +26,7 @@ function AdminCreateSchoolContent() {
       total_students: "",
       total_teachers: "",
       subscriptions: "KAINO_PLUS",
-      term_system: '1',
+      term_system: 6,
       principal_name: '',
       phone: '',
       website_url: '',
@@ -62,6 +64,22 @@ function AdminCreateSchoolContent() {
     }
 
   }, [createSchoolState.isSuccess])
+
+  const getTermSytem = async () => {
+    try {
+      const data = await Axios.get('api/get_term/')
+      if (data.data?.data) {
+        setTermSystem(data.data?.data)
+      }
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getTermSytem()
+  }, [])
 
   return (
     <>
@@ -180,8 +198,9 @@ function AdminCreateSchoolContent() {
                 onChange={formik.handleChange}
                 name='term_system'
               >
-                <MenuItem value={'1'}>1</MenuItem>
-                <MenuItem value={'2'}>2</MenuItem>
+                {
+                  termSystem?.map((item, i) => <MenuItem key={i} value={item?.id}>{item?.term_name}</MenuItem>)
+                }
               </Select>
               {errorMessages?.term_system && <p className='formErrorText'>{errorMessages?.term_system[0]}</p>}
             </FormControl>

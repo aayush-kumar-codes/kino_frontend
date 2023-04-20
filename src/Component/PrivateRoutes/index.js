@@ -11,7 +11,9 @@ const PrivateRoutes = ({ children }) => {
         router.push('/')
     else
         return (
-            children
+            <>
+                {children}
+            </>
         )
 }
 

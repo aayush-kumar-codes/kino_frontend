@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '@/styles/adminDashboardContent.module.css'
 import CounterCard from '../../Generic/CounterCard'
 import { FaRegBuilding } from 'react-icons/fa'
@@ -7,6 +7,9 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import { IoIosPeople } from 'react-icons/io'
 import { BiBookOpen, BiDonateHeart } from 'react-icons/bi'
 import { Button } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { dispatch } from '@/redux/store'
+import { getDashboardCountRequest, getDashboardCountReset } from '@/redux/slices/admin/getDashboardCount'
 
 const FaRegBuildingIcon = <FaRegBuilding size={'2.6rem'} color='#9E4EE0' />
 const BsTerminalIcon = <BsTerminal size={'2.6rem'} color='#EA8858' />
@@ -15,6 +18,19 @@ const IoIosPeopleIcon = <IoIosPeople size={'2.6rem'} color='#4EAF96' />
 
 
 function AdminDashboardContent() {
+  const [countData, setCountData] = useState({})
+  const getDashboardCountState = useSelector(state => state.getDashboardCount)
+
+  useEffect(() => {
+    dispatch(getDashboardCountRequest())
+  }, [])
+
+  useEffect(() => {
+    if (getDashboardCountState.isSuccess) {
+      setCountData(getDashboardCountState.data?.data)
+      dispatch(getDashboardCountReset())
+    }
+  }, [getDashboardCountState.isSuccess])
 
   return (
     <div>
@@ -25,14 +41,14 @@ function AdminDashboardContent() {
             color={'#9E4EE0'}
             icon={FaRegBuildingIcon}
             totalText={'Schools'}
-            totalNo={'451'}
+            totalNo={countData?.schools || 0}
           />
           <CounterCard
             to='/dashboard/admin/school-by-country'
             color={'#C6164F'}
             icon={AiOutlineUserAddIcon}
             totalText={'Students'}
-            totalNo={'5,034'}
+            totalNo={countData?.students || 0}
           />
           <div className={styles.card_left} style={{ background: '#6759D1' }}>
             <div style={{ zIndex: 3 }}>
@@ -59,14 +75,14 @@ function AdminDashboardContent() {
             color={'#EA8858'}
             icon={BsTerminalIcon}
             totalText={'Teachers'}
-            totalNo={'232'}
+            totalNo={countData?.teachers || 0}
           />
           <CounterCard
             to='/dashboard/admin/school-by-country'
             color={'#4EAF96'}
             icon={IoIosPeopleIcon}
             totalText={'Parents'}
-            totalNo={'3,987'}
+            totalNo={countData?.parents || 0}
           />
           <div className={styles.card_left} style={{ background: '#2896A0' }}>
             <div style={{ display: "flex", gap: '2rem' }}>

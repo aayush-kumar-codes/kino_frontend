@@ -11,7 +11,12 @@ import getSingleLesson from "./slices/admin/getSingleLesson";
 import editSingleLessons from "./slices/admin/editSingleLessons";
 import addNewUser from "./slices/admin/addNewUser";
 import deleteUser from "./slices/admin/deleteUser";
-import getAllUsers from "./slices/admin/getAllUsers"
+import getAllUsers from "./slices/admin/getAllUsers";
+import ChangePassword from "./slices/admin/ChangePassword";
+import getActivityLog from "./slices/admin/getActivityLog";
+import Modify2F_Logs from "./slices/admin/Modify2F_Logs";
+import get2fStatus from "./slices/admin/get2fStatus";
+import getDashboardCount from "./slices/admin/getDashboardCount";
 
 const rootReducer = combineReducers({
     login: login,
@@ -26,6 +31,11 @@ const rootReducer = combineReducers({
     editSingleLessons: editSingleLessons,
     addNewUser: addNewUser,
     deleteUser: deleteUser,
-    getAllUsers: getAllUsers
+    getAllUsers: getAllUsers,
+    ChangePassword: ChangePassword,
+    getActivityLog: getActivityLog,
+    Modify2F_Logs: Modify2F_Logs,
+    get2fStatus: get2fStatus,
+    getDashboardCount: getDashboardCount
 })
 export default rootReducer
