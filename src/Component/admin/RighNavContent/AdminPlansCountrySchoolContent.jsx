@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import { Input, Select } from 'antd';
 import { useFormik } from 'formik';
 import { RxCross1 } from 'react-icons/rx'
+import exportFromJSON from 'export-from-json'
 
 const AdminPlansCountrySchoolContent = ({ country, plans }) => {
 
@@ -109,7 +110,7 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
             <div className={styles.tableContainer}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <p className={styles.topSchools_text}>Schools</p>
-                    <Button variant='contained' size='large'>Download</Button>
+                    <Button variant='contained' size='large' onClick={() => exportFromJSON(data, 'Download', exportFromJSON.types.xls)}>Download</Button>
                 </div>
                 <div className={styles_new.pagination}>
                     <span>Show</span>

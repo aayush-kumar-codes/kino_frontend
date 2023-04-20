@@ -17,6 +17,7 @@ import getActivityLog from "./slices/admin/getActivityLog";
 import Modify2F_Logs from "./slices/admin/Modify2F_Logs";
 import get2fStatus from "./slices/admin/get2fStatus";
 import getDashboardCount from "./slices/admin/getDashboardCount";
+import verifyOtp from "./slices/verifyOtp";
 
 const rootReducer = combineReducers({
     login: login,
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
     getActivityLog: getActivityLog,
     Modify2F_Logs: Modify2F_Logs,
     get2fStatus: get2fStatus,
-    getDashboardCount: getDashboardCount
+    getDashboardCount: getDashboardCount,
+    verifyOtp:verifyOtp
 })
 export default rootReducer
