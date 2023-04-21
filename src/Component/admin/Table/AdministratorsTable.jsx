@@ -7,10 +7,14 @@ import { deleteUserRequest, deleteUserReset } from '@/redux/slices/admin/deleteU
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getAllUsersRequest } from '@/redux/slices/admin/getAllUsers';
+import { toast } from 'react-toastify';
+import EditRoleModal from '../Modal/EditRoleModal';
 
 const AdministratorsTable = ({ data }) => {
     const [delId, setDelId] = useState('')
     const deleteUserState = useSelector(state => state.deleteUser)
+    const [isEditModal, setIsEditModal] = useState(false)
+    const [editData, setEditData] = useState({})
 
     const handleDelete = ({ id }) => {
         setDelId(id)
@@ -19,7 +23,7 @@ const AdministratorsTable = ({ data }) => {
 
     useEffect(() => {
         if (deleteUserState.isSuccess) {
-            alert('User disabled successfully')
+            toast.success('User disabled successfully')
             dispatch(deleteUserReset())
             setDelId('')
             dispatch(getAllUsersRequest())
@@ -67,17 +71,30 @@ const AdministratorsTable = ({ data }) => {
         {
             title: 'Activity',
             render: (item) => (
-                <Button onClick={() => handleDelete(item)} className={styles.btn} variant='contained' size='medium'>
-                    {deleteUserState.isLoading && delId === item.id ? <Spin /> : 'Remove'}
-                </Button>
+                <div style={{ display: 'flex', gap: "8px" }}>
+                    <Button onClick={() => handleDelete(item)} className={styles.btn} variant='contained' size='medium'>
+                        {deleteUserState.isLoading && delId === item.id ? <Spin /> : 'Remove'}
+                    </Button>
+                    <Button onClick={() => {
+                        setIsEditModal(true)
+                        setEditData(item)
+                    }} variant='contained' size='medium'>
+                        Edit
+                    </Button>
+                </div>
             ),
         },
     ];
 
     return (
-        <div className={styles.tableContainer}>
-            <Table columns={columns} dataSource={data} pagination={false} />
-        </div>
+        <>
+            <div className={styles.tableContainer}>
+                <Table columns={columns} dataSource={data} pagination={false} />
+            </div>
+            {
+                isEditModal && <EditRoleModal setIsModal={setIsEditModal} isModal={isEditModal} editData={editData} />
+            }
+        </>
     )
 };
 

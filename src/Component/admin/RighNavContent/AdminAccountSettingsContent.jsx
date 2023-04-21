@@ -36,7 +36,7 @@ function AdminAccountSettingsContent() {
 
     useEffect(() => {
         if (get2fStatusState.isSuccess) {
-            setStatus(get2fStatusState.data?.data[0])
+            setStatus(get2fStatusState.data?.data)
             dispatch(get2fStatusReset())
         }
     }, [get2fStatusState.isSuccess])
