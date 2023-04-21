@@ -78,7 +78,7 @@ function AdminDashboardContent() {
             totalNo={countData?.teachers || 0}
           />
           <CounterCard
-            to='/dashboard/admin/school-by-country'
+            to='/dashboard/admin/all-parents'
             color={'#4EAF96'}
             icon={IoIosPeopleIcon}
             totalText={'Parents'}

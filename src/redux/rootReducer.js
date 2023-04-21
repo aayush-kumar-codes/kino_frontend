@@ -19,6 +19,7 @@ import get2fStatus from "./slices/admin/get2fStatus";
 import getDashboardCount from "./slices/admin/getDashboardCount";
 import verifyOtp from "./slices/verifyOtp";
 import updateRole from "./slices/admin/updateRole";
+import getAllParents from "./slices/admin/getAllParents";
 
 const rootReducer = combineReducers({
     login: login,
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
     get2fStatus: get2fStatus,
     getDashboardCount: getDashboardCount,
     verifyOtp: verifyOtp,
-    updateRole: updateRole
+    updateRole: updateRole,
+    getAllParents: getAllParents
 })
 export default rootReducer

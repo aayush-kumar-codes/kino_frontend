@@ -15,6 +15,17 @@
     align-items: center;
 }
 
+.card_parent {
+    background: #4EAF96;
+    min-height: 160px;
+    border-radius: 10px;
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
 .countryCardContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -36,7 +47,9 @@
 .countryCard:hover,
 .countryCard:active,
 .card:hover,
-.card:active {
+.card:active,
+.card_parent:hover,
+.card_parent:active {
     color: #fff !important;
 }
 
