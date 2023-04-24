@@ -20,6 +20,7 @@ import getDashboardCount from "./slices/admin/getDashboardCount";
 import verifyOtp from "./slices/verifyOtp";
 import updateRole from "./slices/admin/updateRole";
 import getAllParents from "./slices/admin/getAllParents";
+import getAllTeachers from "./slices/admin/getAllTeachers";
 
 const rootReducer = combineReducers({
     login: login,
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
     getDashboardCount: getDashboardCount,
     verifyOtp: verifyOtp,
     updateRole: updateRole,
-    getAllParents: getAllParents
+    getAllParents: getAllParents,
+    getAllTeachers: getAllTeachers
 })
 export default rootReducer

@@ -71,7 +71,7 @@ function AdminDashboardContent() {
         </div>
         <div className={styles.card_innerContainer}>
           <CounterCard
-            to='/dashboard/admin/school-by-country'
+            to='/dashboard/admin/all-teachers'
             color={'#EA8858'}
             icon={BsTerminalIcon}
             totalText={'Teachers'}

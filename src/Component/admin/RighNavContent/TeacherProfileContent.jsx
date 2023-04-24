@@ -1,4 +1,4 @@
-import { getAllParentsRequest, getAllParentsReset } from '@/redux/slices/admin/getAllParents'
+import { getAllTeachersRequest, getAllTeachersReset } from '@/redux/slices/admin/getAllTeachers'
 import { dispatch } from '@/redux/store'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -11,38 +11,38 @@ import { BsCalendarDate, BsGenderAmbiguous, BsTelephone } from 'react-icons/bs'
 import { CiLocationOn } from 'react-icons/ci'
 import { AiOutlineMail } from 'react-icons/ai'
 
-function ParentProfileContent({ id }) {
+function TeacherProfileContent({ id }) {
     const [data, setData] = useState({})
 
     const router = useRouter()
 
-    const getAllParentsState = useSelector(state => state.getAllParents)
+    const getAllTeachersState = useSelector(state => state.getAllTeachers)
 
     useEffect(() => {
         if (id) {
-            dispatch(getAllParentsRequest(`${id}/`))
+            dispatch(getAllTeachersRequest(`${id}/`))
         }
     }, [id])
 
     useEffect(() => {
-        if (getAllParentsState.isSuccess) {
-            setData(getAllParentsState.data?.data?.results[0])
-            dispatch(getAllParentsReset())
+        if (getAllTeachersState.isSuccess) {
+            setData(getAllTeachersState.data?.data?.results[0])
+            dispatch(getAllTeachersReset())
         }
-    }, [getAllParentsState.isSuccess])
+    }, [getAllTeachersState.isSuccess])
 
     useEffect(() => {
-        if (getAllParentsState.isError) {
+        if (getAllTeachersState.isError) {
             router.push('/dashboard/admin')
-            dispatch(getAllParentsReset())
+            dispatch(getAllTeachersReset())
         }
-    }, [getAllParentsState.isError])
+    }, [getAllTeachersState.isError])
 
     return (
         <div>
             <div className={styles_new.breadcrumbs}>
-                <p className={styles_new.breadcrumbs_left}>Parent Details</p>
-                <p className={styles_new.breadcrumbs_right}>Parent /<span> Parent Details</span></p>
+                <p className={styles_new.breadcrumbs_left}>Teacher Details</p>
+                <p className={styles_new.breadcrumbs_right}>Teacher /<span> Teacher Details</span></p>
             </div>
             <div className={styles.card}>
                 <div className={styles.card_inner}>
@@ -52,26 +52,30 @@ function ParentProfileContent({ id }) {
                         <p style={{ marginTop: "4px", opacity: '0.4', fontWeight: '500' }}>St. Patrick Kindergaten</p>
                         <div className={styles.card_right}>
                             <div>
-                                <p style={{ fontWeight: '500', opacity: '0.5' }}>Children</p>
-                                <p className={styles.details}>3</p>
+                                <p style={{ fontWeight: '500', opacity: '0.5' }}>Main Class</p>
+                                <p className={styles.details}>{data?.main_class}</p>
                             </div>
                             <div>
                                 <p style={{ fontWeight: '500', opacity: '0.5' }}>ID Number</p>
-                                <p className={styles.details}>CMHJK43NMQ32</p>
+                                <p className={styles.details}>{data?.teacher_id}</p>
+                            </div>
+                            <div>
+                                <p style={{ fontWeight: '500', opacity: '0.5' }}>Total Lessons</p>
+                                <p className={styles.details}>285</p>
                             </div>
                             <div>
                                 <p style={{ fontWeight: '500', opacity: '0.5' }}>Joined in</p>
-                                <p className={styles.details}>2021</p>
+                                <p className={styles.details}>{new Date(data?.joining_date).getFullYear()}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div style={{ marginTop: '2rem' }}>
-                    <p style={{ fontWeight: '600', fontSize: '1.2rem' }}>Parents Details:</p>
+                    <p style={{ fontWeight: '600', fontSize: '1.2rem' }}>Teachers Details:</p>
                     <div className={styles.bottomGrid}>
                         <div>
-                            <p className={styles.parent_details_title}><GiGraduateCap /> Occupation</p>
-                            <p className={styles.parent_details}>{data?.occupation}</p>
+                            <p className={styles.parent_details_title}><GiGraduateCap /> Role</p>
+                            <p className={styles.parent_details}>{data?.role || 'Class Teacher'}</p>
                         </div>
                         <div>
                             <p className={styles.parent_details_title}><BsGenderAmbiguous /> Gender</p>
@@ -79,7 +83,11 @@ function ParentProfileContent({ id }) {
                         </div>
                         <div>
                             <p className={styles.parent_details_title}><BsCalendarDate /> Date Of Joining</p>
-                            <p className={styles.parent_details}>Not available</p>
+                            <p className={styles.parent_details}>{data?.joining_date}</p>
+                        </div>
+                        <div>
+                            <p className={styles.parent_details_title}><GiGraduateCap />Qualification</p>
+                            <p className={styles.parent_details}>{data?.qualification || 'Unknown'}</p>
                         </div>
                         <div>
                             <p className={styles.parent_details_title}><BsTelephone /> Telephone</p>
@@ -87,7 +95,7 @@ function ParentProfileContent({ id }) {
                         </div>
                         <div>
                             <p className={styles.parent_details_title}><BsCalendarDate /> Date Of Birth</p>
-                            <p className={styles.parent_details}>{data?.user?.dob}</p>
+                            <p className={styles.parent_details}>{data?.user?.dob || 'Unknown'}</p>
                         </div>
                         <div>
                             <p className={styles.parent_details_title}><CiLocationOn /> Address</p>
@@ -97,6 +105,10 @@ function ParentProfileContent({ id }) {
                             <p className={styles.parent_details_title}><AiOutlineMail /> Email</p>
                             <p className={styles.parent_details}>{data?.user?.email}</p>
                         </div>
+                        <div>
+                            <p className={styles.parent_details_title}><BsCalendarDate />Year of Experiance</p>
+                            <p className={styles.parent_details}>{data?.year_of_experience}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,4 +116,4 @@ function ParentProfileContent({ id }) {
     )
 }
 
-export default ParentProfileContent
+export default TeacherProfileContent
