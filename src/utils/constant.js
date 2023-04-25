@@ -54,3 +54,12 @@ export const rolesAccess = [
         access: 'Finance Dashboard'
     }
 ]
+
+export const arrayObjectFlat = (arr) => {
+    const transformedArray = []
+    arr.map(item => {
+        const { user, ...rest } = item;
+        transformedArray.push({ ...rest, ...user });
+    });
+    return transformedArray
+}

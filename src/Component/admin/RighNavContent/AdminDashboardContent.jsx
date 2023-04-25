@@ -44,7 +44,7 @@ function AdminDashboardContent() {
             totalNo={countData?.schools || 0}
           />
           <CounterCard
-            to='/dashboard/admin/school-by-country'
+            to='/dashboard/admin/all-students'
             color={'#C6164F'}
             icon={AiOutlineUserAddIcon}
             totalText={'Students'}
