@@ -90,12 +90,8 @@ a {
   height: 1em !important
 }
 
-.css-kcpcfh-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+.MuiInputLabel-root.Mui-focused {
   color: lightgray !important;
-}
-
-.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
-  color: lightgrey !important;
 }
 
 .MuiFormControl-root .MuiOutlinedInput-root fieldset {
@@ -178,6 +174,15 @@ hr {
 .ant-table-column-sorters {
   font-weight: 700;
   font-size: 1rem;
+}
+
+.highlights {
+  background: yellow !important;
+  color: #191919 !important;
+}
+
+.ant-layout {
+  position: relative;
 }
 
 @media (max-width:660px) {

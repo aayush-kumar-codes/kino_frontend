@@ -22,6 +22,8 @@ import updateRole from "./slices/admin/updateRole";
 import getAllParents from "./slices/admin/getAllParents";
 import getAllTeachers from "./slices/admin/getAllTeachers";
 import getAllStudents from "./slices/admin/getAllStudents";
+import getNotifications from "./slices/getNotifications";
+import clearNotification from "./slices/clearNotification";
 
 const rootReducer = combineReducers({
     login: login,
@@ -46,6 +48,8 @@ const rootReducer = combineReducers({
     updateRole: updateRole,
     getAllParents: getAllParents,
     getAllTeachers: getAllTeachers,
-    getAllStudents:getAllStudents
+    getAllStudents:getAllStudents,
+    getNotifications:getNotifications,
+    clearNotification:clearNotification
 })
 export default rootReducer

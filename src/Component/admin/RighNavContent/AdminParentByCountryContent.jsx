@@ -9,8 +9,8 @@ import { Button } from '@mui/material';
 import { Input, Select } from 'antd';
 import { useFormik } from 'formik';
 import { RxCross1 } from 'react-icons/rx'
-import exportFromJSON from 'export-from-json'
 import ParentsList from '../Table/ParentsList';
+import { arrayObjectFlat, convertToCSV } from '@/utils/constant';
 
 const AdminParentByCountryContent = ({ country }) => {
 
@@ -18,8 +18,6 @@ const AdminParentByCountryContent = ({ country }) => {
     const [pageSize, setPageSize] = useState(10)
     const [response, setResponse] = useState({})
     const [data, setData] = useState([])
-    const fileName = 'download'
-    const exportType = exportFromJSON.types.csv
 
     const formik = useFormik({
         initialValues: {
@@ -112,7 +110,7 @@ const AdminParentByCountryContent = ({ country }) => {
             <div className={styles.tableContainer}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <p className={styles.topSchools_text}>Parents</p>
-                    <Button variant='contained' size='large' disabled onClick={() => exportFromJSON({ data, fileName, exportType })}>Download</Button>
+                    <Button variant='contained' size='large' onClick={() => convertToCSV(arrayObjectFlat(data))}>Download</Button>
                 </div>
                 <div className={styles_new.pagination}>
                     <span>Show</span>

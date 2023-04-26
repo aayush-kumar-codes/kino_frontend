@@ -63,3 +63,13 @@ export const arrayObjectFlat = (arr) => {
     });
     return transformedArray
 }
+
+import { saveAs } from 'file-saver';
+import json2csv from 'json2csv';
+
+export function convertToCSV(data) {
+  const csv = json2csv.parse(data);
+  const fileName = 'data.csv';
+  const file = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  saveAs(file, fileName);
+}
