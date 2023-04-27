@@ -139,6 +139,11 @@
     font-weight: 500;
 }
 
+.card_left:hover,
+.card_left:active {
+    color: #fff;
+}
+
 @media (max-width:1064px) {
     .card_container {
         flex-wrap: wrap;
