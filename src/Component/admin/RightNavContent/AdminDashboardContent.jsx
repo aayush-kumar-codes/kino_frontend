@@ -10,6 +10,7 @@ import { Button } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { dispatch } from '@/redux/store'
 import { getDashboardCountRequest, getDashboardCountReset } from '@/redux/slices/admin/getDashboardCount'
+import Link from 'next/link'
 
 const FaRegBuildingIcon = <FaRegBuilding size={'2.6rem'} color='#9E4EE0' />
 const BsTerminalIcon = <BsTerminal size={'2.6rem'} color='#EA8858' />
@@ -84,14 +85,16 @@ function AdminDashboardContent() {
             totalText={'Parents'}
             totalNo={countData?.parents || 0}
           />
-          <div className={styles.card_left} style={{ background: '#2896A0' }}>
+          <Link href={'/dashboard/admin/all-organization'} className={styles.card_left} style={{ background: '#2896A0' }}>
             <div style={{ display: "flex", gap: '2rem' }}>
               <div style={{ background: "#fff", padding: '.7rem', borderRadius: "12px" }}>
                 <BiDonateHeart size={'2.4rem'} color='#2896A0' />
               </div>
               <div>
                 <p style={{ fontSize: '1rem', fontWeight: '500' }}>Total Orgnizations</p>
-                <p style={{ fontSize: '2rem', fontWeight: '700' }} className={styles.bigCard_Number}>3,987</p>
+                <p style={{ fontSize: '2rem', fontWeight: '700' }} className={styles.bigCard_Number}>
+                  {countData?.organizations?.total}
+                </p>
               </div>
             </div>
             <table style={{ borderSpacing: "0 0.5rem" }}>
@@ -100,25 +103,15 @@ function AdminDashboardContent() {
                   <th style={{ textAlign: 'inherit', fontSize: "1rem", fontWeight: '500' }}>Top rankings</th>
                   <th style={{ textAlign: 'inherit', fontSize: "1rem", fontWeight: '500' }}>Students</th>
                 </tr>
-                <tr className={styles.table_tr}>
-                  <td>UNICEF</td>
-                  <td>23%</td>
-                </tr>
-                <tr className={styles.table_tr}>
-                  <td>Save the children</td>
-                  <td>23%</td>
-                </tr>
-                <tr className={styles.table_tr}>
-                  <td>FENU</td>
-                  <td>23%</td>
-                </tr>
-                <tr className={styles.table_tr}>
-                  <td>PLAN Uganda</td>
-                  <td>23%</td>
-                </tr>
+                {
+                  countData?.organizations?.data?.map((item, i) => <tr key={i} className={styles.table_tr}>
+                    <td>{item?.name}</td>
+                    <td>{`${item?.total_students}%`}</td>
+                  </tr>)
+                }
               </tbody>
             </table>
-          </div>
+          </Link>
 
         </div>
         <div className={styles.right_flnCard}>
