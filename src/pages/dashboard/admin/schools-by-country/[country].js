@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
-import AdminSchoolByCountryContent from '@/Component/admin/RighNavContent/AdminSchoolByCountryContent';
+import AdminSchoolByCountryContent from '@/Component/admin/RightNavContent/AdminSchoolByCountryContent';
 import { useRouter } from 'next/router';
 
 const SchoolByCountry = () => {
