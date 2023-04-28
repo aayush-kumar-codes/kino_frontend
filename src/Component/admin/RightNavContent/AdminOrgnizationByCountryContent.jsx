@@ -29,7 +29,7 @@ const AdminOrgnizationByCountryContent = ({ country }) => {
     return (
         <div className={styles.card_Grid}>
             {
-                data.map((item, i) => <Link href={`/dashboard/admin/schools-by-org?name=${item.name}`} key={i} className={styles.card}>
+                data.map((item, i) => <Link href={`/dashboard/admin/schools-by-orgnization/${item.name}`} key={i} className={styles.card}>
                     <div>
                         <img src={item.logo || 'https://placehold.co/120x80'} alt="logo" />
                         <p className={styles.schoolTitle}>Total Schools: <span>{item.school}</span></p>
