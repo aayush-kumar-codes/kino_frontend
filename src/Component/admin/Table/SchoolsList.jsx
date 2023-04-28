@@ -32,6 +32,12 @@ const columns = [
         sortDirections: ['descend', 'ascend'],
     },
     {
+        title: 'Organization',
+        dataIndex: 'organization',
+        sorter: (a, b) => a.organization.localeCompare(b.organization),
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
         title: 'Country',
         dataIndex: 'country',
         sorter: (a, b) => a.country.localeCompare(b.country),

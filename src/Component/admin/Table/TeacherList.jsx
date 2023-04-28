@@ -23,7 +23,7 @@ const columns = [
     {
         title: 'Class',
         dataIndex: 'main_class',
-        sorter: (a, b) => a.user.main_class.localeCompare(b.user.main_class),
+        sorter: (a, b) => a.main_class.localeCompare(b.main_class),
         sortDirections: ['descend', 'ascend'],
     },
     {
@@ -35,14 +35,14 @@ const columns = [
         sorter: (a, b) => a.user.gender - b.user.gender,
         sortDirections: ['descend', 'ascend'],
     },
-   
+
     {
         title: 'Mobile Number',
         dataIndex: 'user',
         render: (text) => (
             <p>{text.mobile_no} </p>
         ),
-        sorter: (a, b) => a.user.mobile_no.localeCompare(b.user.mobile_no),
+        sorter: (a, b) => a.user.mobile_no - b.user.mobile_no,
         sortDirections: ['descend', 'ascend'],
     },
 ];
