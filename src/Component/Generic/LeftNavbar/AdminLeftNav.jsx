@@ -25,6 +25,8 @@ function AdminLeftNav({ collapsed }) {
                 setDefaultSelectedItem('4')
             else if (pathname === 'user-roles')
                 setDefaultSelectedItem('5')
+            else if (pathname === 'finances')
+                setDefaultSelectedItem('6')
             else if (pathname === 'account-settings')
                 setDefaultSelectedItem('7')
         }
@@ -43,6 +45,8 @@ function AdminLeftNav({ collapsed }) {
             router.push('/dashboard/admin/manage-lessons')
         else if (key === '5')
             router.push('/dashboard/admin/user-roles')
+        else if (key === '6')
+            router.push('/dashboard/admin/finances')
         else if (key === '7')
             router.push('/dashboard/admin/account-settings')
         else if (key === '8') {

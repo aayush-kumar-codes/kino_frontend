@@ -1,0 +1,33 @@
+.invoicesBtn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.invoicesBtn p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    opacity: .8;
+}
+
+.finance_card_container {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.finance_card {
+    min-height: 160px;
+    background: #4EAF96;
+    border-radius: 6px;
+    padding: 1rem;
+    color: #fff;
+}
+
+.filler {
+    width: 100%;
+    margin-top: 1rem;
+    background: #7AC3B0;
+    height: .8rem;
+    border-radius: 12px;
+}
