@@ -1,4 +1,5 @@
-import { Avatar, Table } from 'antd';
+import { Button } from '@mui/material';
+import { Table } from 'antd';
 
 const columns = [
     {
@@ -7,30 +8,31 @@ const columns = [
     },
     {
         title: 'Invoice from',
-        dataIndex: 'invoice_from',
+        dataIndex: 'school',
     },
     {
         title: 'Subscription',
-        dataIndex: 'subscription',
+        dataIndex: 'plan',
     },
     {
         title: 'Created On',
-        dataIndex: 'created_on',
+        dataIndex: 'start_date',
     },
     {
         title: 'Amount (UGX)',
-        dataIndex: 'assigned_students',
+        dataIndex: 'amount',
     },
     {
         title: 'Status',
-        render: (text) => (
-            <p>{text} </p>
+        dataIndex: 'is_paid',
+        render: (item) => (
+            <button className='paid_btn'>{item === 1 ? 'Paid' : 'Unpaid'}</button>
         ),
     },
     {
         title: 'Details',
-        render: (text) => (
-            <p>{text} </p>
+        render: (item) => (
+            <Button variant='outlined' size='medium'>Details</Button>
         ),
     }
 ];

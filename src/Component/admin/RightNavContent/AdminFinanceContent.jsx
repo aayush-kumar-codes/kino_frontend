@@ -9,11 +9,34 @@ import { FormControl, Select, MenuItem } from '@mui/material';
 import InvoicesTable from '../Table/InvoicesTable'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { dispatch } from '@/redux/store'
+import { getFinanceHomeRequest, getFinanceHomeReset } from '@/redux/slices/admin/getFinanceHome'
 
 const AdminFinanceContent = () => {
     const [data, setData] = useState([])
+    const [countData, setCountData] = useState({})
     const [response, setResponse] = useState({})
     const router = useRouter()
+    const getFinanceHomeState = useSelector(state => state.getFinanceHome)
+
+    useEffect(() => {
+        dispatch(getFinanceHomeRequest())
+    }, [])
+
+    useEffect(() => {
+        if (getFinanceHomeState.isSuccess) {
+            setResponse(getFinanceHomeState.data?.data)
+            setData(getFinanceHomeState.data?.data?.results)
+            dispatch(getFinanceHomeReset())
+        }
+    }, [getFinanceHomeState.isSuccess])
+
+    const handlePagination = (requestUrl) => {
+        dispatch(getFinanceHomeRequest(`?${requestUrl.split('?')[1]}`))
+    }
+
     return (
         <div>
             <div className={styles.invoicesBtn}>
@@ -26,11 +49,11 @@ const AdminFinanceContent = () => {
                         <p style={{ fontSize: '1.4rem', fontWeight: '500', letterSpacing: '2px' }}>Total Schools</p>
                         <BsBuildingCheck size={'2rem'} />
                     </Box>
-                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>678</p>
+                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>{getFinanceHomeState.data?.data?.school_count || 0}</p>
                     <div className={styles.filler}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#E7FF88' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ 10 Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {getFinanceHomeState.data?.data?.school_statistics || 0}% Since last month</p>
                 </div>
 
                 <div className={styles.finance_card} style={{ background: '#3A93D6' }}>
@@ -38,11 +61,11 @@ const AdminFinanceContent = () => {
                         <p style={{ fontSize: '1.4rem', fontWeight: '500', letterSpacing: '2px' }}>Paid</p>
                         <BiDollar size={'2rem'} />
                     </Box>
-                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>154</p>
+                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>{getFinanceHomeState.data?.data?.paid_count || 0}</p>
                     <div className={styles.filler} style={{ background: '#6BAEE0' }}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#B2CEB1' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ 04% Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {getFinanceHomeState.data?.data?.paid_statistics || 0}% Since last month</p>
                 </div>
 
                 <div className={styles.finance_card} style={{ background: '#9E4EE0' }}>
@@ -50,11 +73,11 @@ const AdminFinanceContent = () => {
                         <p style={{ fontSize: '1.4rem', fontWeight: '500', letterSpacing: '2px' }}>Unpaid</p>
                         <AiOutlineCamera size={'2rem'} />
                     </Box>
-                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>524</p>
+                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>{getFinanceHomeState.data?.data?.unpaid_count || 0}</p>
                     <div className={styles.filler} style={{ background: '#B67AE8' }}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#FF0000' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>- 23% Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>- {getFinanceHomeState.data?.data?.uppaid_statistics || 0}% Since last month</p>
                 </div>
 
                 <div className={styles.finance_card} style={{ background: '#EA8858' }}>
@@ -62,11 +85,11 @@ const AdminFinanceContent = () => {
                         <p style={{ fontSize: '1.4rem', fontWeight: '500', letterSpacing: '2px' }}>History</p>
                         <BsCashStack size={'2rem'} />
                     </Box>
-                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>$453</p>
+                    <p style={{ marginTop: "8px", fontWeight: '700', fontSize: '2rem' }}>${getFinanceHomeState.data?.data?.history_count || 0}</p>
                     <div className={styles.filler} style={{ background: '#EFA682' }}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#fff' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ 06% Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {getFinanceHomeState.data?.data?.history_statistics || 0}% Since last month</p>
                 </div>
             </div>
             <Box sx={{ marginTop: 4, padding: '1rem', background: '#fff', borderRadius: '10px' }}>
