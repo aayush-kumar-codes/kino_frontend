@@ -95,23 +95,30 @@ a {
 }
 
 .MuiFormControl-root .MuiOutlinedInput-root fieldset {
-  border-color: lightgray;
-  /* Change border color */
+  border: 2px solid #efefef;
 }
 
 .MuiFormControl-root .MuiOutlinedInput-root:hover fieldset {
-  border-color: lightgray;
-  /* Change border color on hover */
+  border: 2px solid #efefef;
 }
 
 .MuiFormControl-root .MuiOutlinedInput-root.Mui-focused fieldset {
-  border-color: lightgray;
-  /* Change border color when focused */
+  border: 2px solid #efefef;
 }
 
 .MuiFormControl-root .MuiFormLabel-asterisk {
   color: red !important;
   font-size: 1.5rem;
+}
+
+.MuiSelect-select {
+  display: flex;
+  align-items: center;
+  min-height: 2em !important;
+}
+
+.MuiInputBase-input {
+  height: 2rem !important;
 }
 
 .formErrorText {
@@ -184,6 +191,22 @@ hr {
 .ant-layout {
   position: relative;
 }
+
+.paid_btn {
+  border: navajowhite;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background: #DCEDE5;
+  color: #92C6AE;
+  font-weight: 700;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 @media (max-width:660px) {
   .content_container {
