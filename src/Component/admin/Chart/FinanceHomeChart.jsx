@@ -2,15 +2,28 @@ import React from "react";
 import { Chart } from "react-google-charts";
 
 export const data = [
-    ["Year", "Sales", "Expenses", "Profit"],
-    ["2014", 1000, 400, 200],
-    ["2015", 1170, 460, 250],
-    ["2016", 660, 1120, 300],
-    ["2017", 1030, 540, 350],
+    ["Month", "Kaino Plus", "Kaino Basic", "Kaino Social"],
+    ["Jan", 120, 30, 70],
+    ["Feb", 85, 50, 70],
+    ["Mar", 40, 50, 70],
+    ["Apr", 130, 50, 45],
+    ["May", 165, 54, 45],
+    ["Jun", 80, 50, 45],
+    ["Jul", 80, 50, 45],
+    ["Aug", 80, 50, 45],
+    ["Sep", 80, 50, 45],
+    ["Oct", 80, 50, 45],
+    ["Nov", 80, 50, 45],
+    ["Dec", 80, 50, 45],
 ];
 
 export const options = {
-    legend: { position: "none" }
+    legend: { position: "none" },
+    series: [
+        { color: "#C6164F" },
+        { color: "#6759D1" },
+        { color: "#4EAF96" },
+    ]
 };
 
 export function FinanceHomeChart() {
