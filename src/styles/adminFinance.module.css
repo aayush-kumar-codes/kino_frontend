@@ -31,3 +31,28 @@
     height: .8rem;
     border-radius: 12px;
 }
+
+.invocesContainer {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.tableText {
+    color: #989CA2;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.bottom_Pagination {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.invoices_card {
+    min-height: 140px;
+}
