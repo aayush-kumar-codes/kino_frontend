@@ -27,6 +27,7 @@ import clearNotification from "./slices/clearNotification";
 import getAllOrgnizations from "./slices/admin/getAllOrgnizations";
 import getTopOrg from "./slices/admin/getTopOrg";
 import getFinanceHome from "./slices/admin/getFinanceHome";
+import getChart from "./slices/admin/getChart";
 
 const rootReducer = combineReducers({
     login: login,
@@ -56,6 +57,7 @@ const rootReducer = combineReducers({
     clearNotification: clearNotification,
     getAllOrgnizations: getAllOrgnizations,
     getTopOrg: getTopOrg,
-    getFinanceHome: getFinanceHome
+    getFinanceHome: getFinanceHome,
+    getChart:getChart
 })
 export default rootReducer
