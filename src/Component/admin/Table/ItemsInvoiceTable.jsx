@@ -151,11 +151,22 @@ const ItemsInvoiceTable = ({ data, setData }) => {
                     size='small'
                     type='number'
                     variant="outlined"
-                    onChange={(e) => handleChange(e, item)}
+                    onChange={(e) => {
+                        const value = parseFloat(e.target.value)
+                        if (value >= 0 && value <= 100) {
+                            handleChange(e, item)
+                        }
+                        else {
+                            e.target.value = ""
+                            handleChange(e, item)
+                        }
+                    }}
                     name='discount'
                     value={item.discount}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">%</InputAdornment>,
+                        min: 0,
+                        max: 100
                     }}
                 />
             ),

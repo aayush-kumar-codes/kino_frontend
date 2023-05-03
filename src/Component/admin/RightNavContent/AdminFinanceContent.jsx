@@ -13,16 +13,20 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { dispatch } from '@/redux/store'
 import { getFinanceHomeRequest, getFinanceHomeReset } from '@/redux/slices/admin/getFinanceHome'
+import { getChartRequest, getChartReset } from '@/redux/slices/admin/getChart'
 
 const AdminFinanceContent = () => {
     const [data, setData] = useState([])
-    const [countData, setCountData] = useState({})
     const [response, setResponse] = useState({})
+    const [chartData, setChartData] = useState([])
+    const [selectedPeriod, setSelectedPeriod] = useState(1)
     const router = useRouter()
     const getFinanceHomeState = useSelector(state => state.getFinanceHome)
+    const getChartState = useSelector(state => state.getChart)
 
     useEffect(() => {
         dispatch(getFinanceHomeRequest())
+        dispatch(getChartRequest())
     }, [])
 
     useEffect(() => {
@@ -32,6 +36,24 @@ const AdminFinanceContent = () => {
             dispatch(getFinanceHomeReset())
         }
     }, [getFinanceHomeState.isSuccess])
+
+    useEffect(() => {
+        if (getChartState.isSuccess) {
+            setChartData(getChartState.data?.data)
+            dispatch(getChartReset())
+        }
+    }, [getChartState.isSuccess])
+
+    const handleGraphChange = (values) => {
+        const number = parseInt(values)
+        setSelectedPeriod(number)
+        if (number === 2)
+            dispatch(getChartRequest('weekly=1'))
+        else if (number === 3)
+            dispatch(getChartRequest('day=1'))
+        else
+            dispatch(getChartRequest())
+    }
 
     const handlePagination = (requestUrl) => {
         dispatch(getFinanceHomeRequest(`?${requestUrl.split('?')[1]}`))
@@ -53,7 +75,7 @@ const AdminFinanceContent = () => {
                     <div className={styles.filler}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#E7FF88' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {getFinanceHomeState.data?.data?.school_statistics || 0}% Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {Number(getFinanceHomeState.data?.data?.school_statistics).toFixed(2) || 0}% Since last month</p>
                 </div>
 
                 <div className={styles.finance_card} style={{ background: '#3A93D6' }}>
@@ -65,7 +87,7 @@ const AdminFinanceContent = () => {
                     <div className={styles.filler} style={{ background: '#6BAEE0' }}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#B2CEB1' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {getFinanceHomeState.data?.data?.paid_statistics || 0}% Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {Number(getFinanceHomeState.data?.data?.paid_statistics).toFixed(2) || 0}% Since last month</p>
                 </div>
 
                 <div className={styles.finance_card} style={{ background: '#9E4EE0' }}>
@@ -77,7 +99,7 @@ const AdminFinanceContent = () => {
                     <div className={styles.filler} style={{ background: '#B67AE8' }}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#FF0000' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>- {getFinanceHomeState.data?.data?.uppaid_statistics || 0}% Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>- {Number(getFinanceHomeState.data?.data?.uppaid_statistics).toFixed(2) || 0}% Since last month</p>
                 </div>
 
                 <div className={styles.finance_card} style={{ background: '#EA8858' }}>
@@ -89,7 +111,7 @@ const AdminFinanceContent = () => {
                     <div className={styles.filler} style={{ background: '#EFA682' }}>
                         <Box sx={{ height: '.8rem', width: '40%', borderRadius: '12px', background: '#fff' }} />
                     </div>
-                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {getFinanceHomeState.data?.data?.history_statistics || 0}% Since last month</p>
+                    <p style={{ fontSize: '1rem', marginTop: '1rem' }}>+ {Number(getFinanceHomeState.data?.data?.history_statistics).toFixed(2) || 0}% Since last month</p>
                 </div>
             </div>
             <Box sx={{ marginTop: 4, padding: '1rem', background: '#fff', borderRadius: '10px' }}>
@@ -104,17 +126,18 @@ const AdminFinanceContent = () => {
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                             <Select
                                 id="select-period"
-                                value={'This Month'}
+                                value={selectedPeriod}
                                 label="Time"
+                                onChange={(e) => handleGraphChange(e.target.value)}
                             >
-                                <MenuItem value={'This Month'}>This Month</MenuItem>
-                                <MenuItem value={'This Weekly'}>This Weekly</MenuItem>
-                                <MenuItem value={'This Day'}>This Day</MenuItem>
+                                <MenuItem value={1}>This Month</MenuItem>
+                                <MenuItem value={2}>This Week</MenuItem>
+                                <MenuItem value={3}>This Day</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
                 </Box>
-                <FinanceHomeChart />
+                <FinanceHomeChart chartData={chartData} />
             </Box>
             <div className={styles.invocesContainer}>
                 <p className={styles.tableText}>Latest Payments</p>
