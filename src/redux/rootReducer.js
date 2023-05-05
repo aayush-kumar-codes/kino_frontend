@@ -28,6 +28,8 @@ import getAllOrgnizations from "./slices/admin/getAllOrgnizations";
 import getTopOrg from "./slices/admin/getTopOrg";
 import getFinanceHome from "./slices/admin/getFinanceHome";
 import getChart from "./slices/admin/getChart";
+import preInvoice from "./slices/admin/preInvoice";
+import createInvoice from "./slices/admin/createInvoice";
 
 const rootReducer = combineReducers({
     login: login,
@@ -58,6 +60,8 @@ const rootReducer = combineReducers({
     getAllOrgnizations: getAllOrgnizations,
     getTopOrg: getTopOrg,
     getFinanceHome: getFinanceHome,
-    getChart:getChart
+    getChart: getChart,
+    preInvoice: preInvoice,
+    createInvoice: createInvoice
 })
 export default rootReducer
