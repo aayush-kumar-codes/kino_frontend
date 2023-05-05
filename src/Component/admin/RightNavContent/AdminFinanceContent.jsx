@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '@/styles/adminFinance.module.css'
 import { Box, Button } from '@mui/material'
-import { BsBuildingCheck, BsCashStack, BsCircle } from 'react-icons/bs'
+import { BsBuildingCheck, BsCashStack } from 'react-icons/bs'
 import { BiDollar } from 'react-icons/bi'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { FinanceHomeChart } from '../Chart/FinanceHomeChart'
@@ -118,9 +118,9 @@ const AdminFinanceContent = () => {
                 <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1.5fr', paddingBottom: 6, alignItems: 'center' }}>
                     <p style={{ fontSize: '1rem', fontWeight: '600', color: '#898F95' }}>Schools Financial Performance</p>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}><BsCircle /><p>Kaino Plus</p></Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}><BsCircle /><p>Kaino Basic</p></Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}><BsCircle /><p>Kaino Social</p></Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span className={styles.chartCircle} /><p>Kaino Plus</p></Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span className={styles.chartCircle} style={{ borderColor: '#6759D1' }} /><p>Kaino Basic</p></Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span className={styles.chartCircle} style={{ borderColor: '#4EAF96' }} /><p>Kaino Social</p></Box>
                     </Box>
                     <Box sx={{ textAlign: 'center' }}>
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
