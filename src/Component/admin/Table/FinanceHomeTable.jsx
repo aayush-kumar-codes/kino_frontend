@@ -2,28 +2,25 @@ import { Button } from '@mui/material';
 import { Table } from 'antd';
 import { useRouter } from 'next/router';
 
-const InvoicesTable = ({ data }) => {
+const FinanceHomeTable = ({ data }) => {
     const router = useRouter()
+
     const columns = [
         {
             title: 'ID',
             dataIndex: 'id'
         },
         {
-            title: 'Invoice To',
-            dataIndex: 'invoice_to',
+            title: 'Invoice from',
+            dataIndex: 'school',
         },
         {
             title: 'Subscription',
-            dataIndex: 'category_name',
+            dataIndex: 'plan',
         },
         {
             title: 'Created On',
-            dataIndex: 'created_date',
-        },
-        {
-            title: 'Due Date',
-            dataIndex: 'due_date'
+            dataIndex: 'start_date',
         },
         {
             title: 'Amount (UGX)',
@@ -31,9 +28,9 @@ const InvoicesTable = ({ data }) => {
         },
         {
             title: 'Status',
-            dataIndex: 'status',
+            dataIndex: 'is_paid',
             render: (item) => (
-                <button className='paid_btn' style={{ color: item === 'OverDue' ? '#5A9CFE' : item === 'Unpaid' ? '#FD9945' : '', background: item === 'Unpaid' ? '#FFECDC' : '' }}>{item}</button>
+                <button className='paid_btn'>{item === 1 ? 'Paid' : 'Unpaid'}</button>
             ),
         },
         {
@@ -53,4 +50,4 @@ const InvoicesTable = ({ data }) => {
     );
 };
 
-export default InvoicesTable;
+export default FinanceHomeTable;

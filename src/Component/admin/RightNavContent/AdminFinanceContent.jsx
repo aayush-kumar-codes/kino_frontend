@@ -6,7 +6,7 @@ import { BiDollar } from 'react-icons/bi'
 import { AiOutlineCamera } from 'react-icons/ai'
 import { FinanceHomeChart } from '../Chart/FinanceHomeChart'
 import { FormControl, Select, MenuItem } from '@mui/material';
-import InvoicesTable from '../Table/InvoicesTable'
+import FinanceHomeTable from '../Table/FinanceHomeTable'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -141,7 +141,7 @@ const AdminFinanceContent = () => {
             </Box>
             <div className={styles.invocesContainer}>
                 <p className={styles.tableText}>Latest Payments</p>
-                <InvoicesTable data={data} />
+                <FinanceHomeTable data={data} />
                 <div className={styles.bottom_Pagination}>
                     <p>Showing {response?.count ? 1 : 0} to {response?.count || 0} of {response?.count || 0} entries</p>
                     <Button variant='outlined' size='large'>Show More</Button>
