@@ -6,7 +6,7 @@ import { FormControl, Select, MenuItem, TextField } from '@mui/material'
 import { useState } from 'react'
 import ItemsInvoiceTable from '../Table/ItemsInvoiceTable'
 import { AiFillCreditCard } from 'react-icons/ai'
-import { DatePicker, Switch } from 'antd'
+import { Switch } from 'antd'
 import { useRouter } from 'next/router'
 import PreviewInvoiceModal from '../Modal/PreviewInvoiceModal'
 import InvoiceView from '../Invoice/InvoiceView'
@@ -25,9 +25,9 @@ const AdminNewInvoiceContent = () => {
     const [invoiceDetails, setInvoiceDetails] = useState({})
     const [invoiceItems, setInvoiceItems] = useState([{
         id: 1,
-        item_name: '',
-        category: '',
-        qty: '',
+        item_name: 'Subscription',
+        plan: 'KAINO_PLUS',
+        quantity: 1,
         price: '',
         amount: '',
         discount: '',
@@ -40,11 +40,18 @@ const AdminNewInvoiceContent = () => {
     const [taxableValue, setTaxableValue] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
     const [poNumber, setPoNumber] = useState('')
-
+    const [signee, setSignee] = useState('')
+    const [previewData, setPreviewData] = useState({})
+    const [invoiceFrom, setinvoiceFrom] = useState({
+        id: '',
+        mobile_no: "",
+        address: "",
+        zip_code: ""
+    })
+    const [dueDate, setDueDate] = useState('')
     const [open, setOpen] = useState(false);
     const [isRound, setIsRound] = useState(false)
     const todayDate = moment().format('DD/MM/YYYY')
-
 
     useMemo(() => {
 
@@ -69,6 +76,7 @@ const AdminNewInvoiceContent = () => {
     useEffect(() => {
         if (preInvoiceState.isSuccess) {
             setInvoiceDetails(preInvoiceState.data?.data)
+            setinvoiceFrom(preInvoiceState.data?.data?.invoice_from)
             dispatch(preInvoiceReset())
         }
     }, [preInvoiceState.isSuccess])
@@ -76,35 +84,34 @@ const AdminNewInvoiceContent = () => {
     useEffect(() => {
         if (createInvoiceState.isSuccess) {
             dispatch(createInvoiceReset())
-            router.push('/dashboard/admin/finances')
+            router.push('/dashboard/admin/all-invoices')
         }
     }, [createInvoiceState.isSuccess])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const payload = {
-            plan: invoiceItems[0].item_name,
-            quantity: invoiceItems[0].qty,
-            discount: parseInt(invoiceItems[0].discount),
-            invoice: {
-                organization: parseInt(customerId),
-                po_number: poNumber,
-                invoice_number: invoiceDetails?.invoice_no,
-                // sign_img: signature
-            }
+        const invoiceOrg =
+        {
+            organization: parseInt(customerId),
+            po_number: poNumber,
+            invoice_number: invoiceDetails?.invoice_no,
+            invoice_from: invoiceFrom.address,
+            name_of_signee: signee ? signee : null,
+            due_date: dueDate ? dueDate : null
         }
 
+        const itemData = []
+        invoiceItems.map(item => {
+            const { id, price, amount, ...others } = item
+            itemData.push(others)
+        })
+
         const formData = new FormData()
-
-        formData.append('plan', payload.plan)
-        formData.append('quantity', parseInt(payload.quantity))
-        formData.append('discount', parseInt(payload.discount))
-        formData.append('invoice[organization]', parseInt(payload.invoice.organization))
-        formData.append('invoice[po_number]', payload.invoice.po_number)
-        formData.append('invoice[invoice_number]', payload.invoice.invoice_number)
-        formData.append('invoice[sign_img]', payload.invoice.sign_img)
-
-        dispatch(createInvoiceRequest(payload))
+        formData.append('sign_img', signature)
+        formData.append('item', JSON.stringify(itemData))
+        formData.append('invoice', JSON.stringify(invoiceOrg))
+        console.log([...formData], 'HDVSHBHJBS');
+        dispatch(createInvoiceRequest(formData))
     }
 
     const handleFileChange = (e) => {
@@ -115,33 +122,26 @@ const AdminNewInvoiceContent = () => {
     }
 
     const handleCustomerChange = (id) => {
-        console.log(id);
         setcustomerId(parseInt(id))
         setInvoiceTo(invoiceDetails?.invoice_to?.find(item => item.id == id))
     }
 
     const handlePreview = () => {
-        // const previewData = {
-        //     id: 16,
-        //     invoice: {
-        //         organization: 12,
-        //         invoice_number: "IN956343191763",
-        //         invoice_from: "C-86B, Sector 8, Noida, 201301, UttraPradesh",
-        //         invoice_to: "",
-        //         po_number: 12452,
-        //         start_date: "2023-05-04",
-        //         end_date: null,
-        //         sign_img: null,
-        //         name_of_signee: null,
-        //         organization_name: "tech"
-        //     },
-        //     items: "Kaino Subscription",
-        //     quantity: 1,
-        //     price: 0,
-        //     discount: 1,
-        //     amount: "0.00",
-        //     plan_name: "KAINO_SOCIAL"
-        // }
+        const previewData = {
+            invoice_number: invoiceDetails?.invoice_no,
+            invoice_from: invoiceFrom.address,
+            invoice_to: invoiceTo?.address + " " + invoiceTo?.city + " " + invoiceTo?.country,
+            po_number: poNumber,
+            created_date: todayDate,
+            due_date: dueDate,
+            sign_img: signature ? URL.createObjectURL(signature) : null,
+            name_of_signee: signee,
+            organization_name: invoiceTo?.name,
+            total_amount: totalAmount,
+            status: 'Draft',
+            items: invoiceItems
+        }
+        setPreviewData(previewData)
         setOpen(true)
     }
 
@@ -200,7 +200,13 @@ const AdminNewInvoiceContent = () => {
                                 </Box>
                                 <Box className={styles.invoice_details_right_div}>
                                     <p style={{ fontSize: '1rem', fontWeight: '700' }}>Due Date <span style={{ color: '#4e6ce0', cursor: "pointer" }}>
-                                        Select
+                                        <TextField
+                                            type='date'
+                                            focused
+                                            sx={{ marginTop: 1 }}
+                                            size='small'
+                                            onChange={(e) => setDueDate(e.target.value)}
+                                        />
                                     </span>
                                     </p>
                                 </Box>
@@ -210,14 +216,14 @@ const AdminNewInvoiceContent = () => {
                 </div>
 
                 <hr style={{ height: '1px' }} />
-                
+
                 <Box sx={{ marginTop: 2 }} className={styles.invoice_details}>
                     <div>
                         <p className={styles.from_toText}>Invoice From <span style={{ color: '#4e6ce0', marginLeft: '2px', fontSize: '.8rem', fontWeight: '700' }}>Edit Address</span></p>
                         <Box sx={{ marginTop: 1 }} className={styles.address}>
-                            <p>{invoiceDetails?.invoice_from?.mobile_no}</p>
-                            <p>{invoiceDetails?.invoice_from?.address}</p>
-                            <p>{invoiceDetails?.invoice_from?.zip_code}</p>
+                            <p>{invoiceFrom.mobile_no}</p>
+                            <p>{invoiceFrom.address}</p>
+                            <p>{invoiceFrom.zip_code}</p>
                         </Box>
                     </div>
                     <div>
@@ -255,6 +261,7 @@ const AdminNewInvoiceContent = () => {
                             <TextField
                                 sx={{ width: '100%', marginTop: 1 }}
                                 focused
+                                size='small'
                                 required
                                 variant="outlined"
                                 name='terms'
@@ -263,6 +270,7 @@ const AdminNewInvoiceContent = () => {
                             <TextField
                                 sx={{ width: '100%', marginTop: 1 }}
                                 focused
+                                size='small'
                                 required
                                 variant="outlined"
                                 name='notes'
@@ -316,6 +324,8 @@ const AdminNewInvoiceContent = () => {
                                 required
                                 variant="outlined"
                                 name='name_of_signatory'
+                                size='small'
+                                onChange={(e) => setSignee(e.target.value)}
                                 placeholder='Name Of Signatory'
                             />
                             <Button disabled={createInvoiceState.isLoading} variant='contained' size='large' sx={{ marginTop: 1, background: '#4c6ae3' }} type='submit'>{createInvoiceState.isLoading ? 'Please wait..' : 'Save Invoice'}</Button>
@@ -324,7 +334,7 @@ const AdminNewInvoiceContent = () => {
                 </div>
             </form>
             {open && <PreviewInvoiceModal open={open} setOpen={setOpen} >
-                <InvoiceView />
+                <InvoiceView data={previewData} />
             </PreviewInvoiceModal>}
         </div>
     )

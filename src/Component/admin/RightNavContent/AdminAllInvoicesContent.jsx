@@ -8,11 +8,58 @@ import { Tabs } from 'antd'
 import { FaFileInvoiceDollar } from 'react-icons/fa'
 import { BiBookmarkAltMinus, BiNotepad } from 'react-icons/bi'
 import { AiOutlineDollarCircle } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { dispatch } from '@/redux/store'
+import { getAllInvoicesRequest, getAllInvoicesReset } from '@/redux/slices/admin/getAllInvoices'
 
 const AdminAllInvoicesContent = () => {
   const [data, setData] = useState([])
   const [response, setResponse] = useState({})
+  const [type, setType] = useState('')
+  const getAllInvoicesState = useSelector(state => state.getAllInvoices)
   const router = useRouter()
+
+  useEffect(() => {
+    if (type)
+      dispatch(getAllInvoicesRequest(type))
+    else
+      dispatch(getAllInvoicesRequest())
+  }, [type])
+
+  useEffect(() => {
+    if (getAllInvoicesState.isSuccess) {
+      setData(getAllInvoicesState.data?.data?.results)
+      setResponse(getAllInvoicesState.data?.data)
+      dispatch(getAllInvoicesReset())
+    }
+  }, [getAllInvoicesState.isSuccess])
+
+  const handlePagination = (requestUrl) => {
+    if (type)
+      dispatch(getAllInvoicesRequest(`${type} & ${requestUrl.split('?')[1]}`))
+    else
+      dispatch(getAllInvoicesRequest(`${requestUrl.split('?')[1]}`))
+  }
+
+  const handleTabsChange = (key) => {
+    const tabkey = parseInt(key)
+    if (tabkey === 1)
+      setType('')
+    else if (tabkey === 2)
+      setType('status=paid')
+    else if (tabkey === 3)
+      setType('status=overdue')
+    else if (tabkey === 4)
+      setType('status=draft')
+    else if (tabkey === 5)
+      setType('status=recurring')
+    else if (tabkey === 6)
+      setType('status=cancelled')
+    else
+      setType('status=unpaid')
+  }
+
   return (
     <div>
       <div className={styles.invoicesBtn}>
@@ -23,6 +70,7 @@ const AdminAllInvoicesContent = () => {
         <Tabs
           defaultActiveKey="1"
           style={{ marginTop: "2rem" }}
+          onChange={(key) => handleTabsChange(key)}
           items={[
             {
               label: `All Invoice`,
@@ -31,6 +79,10 @@ const AdminAllInvoicesContent = () => {
             {
               label: `Paid`,
               key: '2',
+            },
+            {
+              label: `Unpaid`,
+              key: '7',
             },
             {
               label: `Overdue`,
@@ -56,47 +108,47 @@ const AdminAllInvoicesContent = () => {
         <div className={`${styles.finance_card} ${styles.invoices_card}`}>
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <FaFileInvoiceDollar size={'3.2rem'} />
-            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>$8,78,797</p>
+            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>${response?.total_amount}</p>
           </Box>
           <Box sx={{ display: 'flex', gap: '1rem', marginTop: 4, alignItems: 'center' }}>
             <p style={{ fontSize: '1rem', fontWeight: '600' }}>All Invoices</p>
-            <p style={{ fontSize: '12px' }}>50</p>
+            <p style={{ fontSize: '12px' }}>{response?.count_total}</p>
           </Box>
         </div>
 
         <div className={`${styles.finance_card} ${styles.invoices_card}`} style={{ background: '#3A93D6' }}>
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <BiBookmarkAltMinus size={'3.2rem'} />
-            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>$4,5884</p>
+            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>${response?.paid_amount}</p>
           </Box>
           <Box sx={{ display: 'flex', gap: '1rem', marginTop: 4, alignItems: 'center' }}>
             <p style={{ fontSize: '1rem', fontWeight: '600' }}>Paid Invoices</p>
-            <p style={{ fontSize: '12px' }}>60</p>
+            <p style={{ fontSize: '12px' }}>{response?.count_paid}</p>
           </Box>
         </div>
 
         <div className={`${styles.finance_card} ${styles.invoices_card}`} style={{ background: '#9E4EE0' }}>
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <AiOutlineDollarCircle size={'3.2rem'} />
-            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>$2,05,545</p>
+            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>${response?.unpaid_amount}</p>
           </Box>
           <Box sx={{ display: 'flex', gap: '1rem', marginTop: 4, alignItems: 'center' }}>
             <p style={{ fontSize: '1rem', fontWeight: '600' }}>Unpaid Invoices</p>
-            <p style={{ fontSize: '12px' }}>70</p>
+            <p style={{ fontSize: '12px' }}>{response?.count_unpaid}</p>
           </Box>
         </div>
 
         <div className={`${styles.finance_card} ${styles.invoices_card}`} style={{ background: '#EA8858' }}>
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <BiNotepad size={'3.2rem'} />
-            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>$8,797</p>
+            <p style={{ fontSize: '1.8rem', fontWeight: '700' }}>${response?.overDue_amount}</p>
           </Box>
           <Box sx={{ display: 'flex', gap: '1rem', marginTop: 4, alignItems: 'center' }}>
             <p style={{ fontSize: '1rem', fontWeight: '600' }}>Over due</p>
-            <p style={{ fontSize: '12px' }}>80</p>
+            <p style={{ fontSize: '12px' }}>{response?.count_overdue}</p>
           </Box>
         </div>
-        
+
       </div>
       <div className={styles.invocesContainer}>
         <p className={styles.tableText}>Latest Payments</p>

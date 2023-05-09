@@ -54,18 +54,17 @@ function AdminDashboardContent() {
           <div className={styles.card_left} style={{ background: '#6759D1' }}>
             <div style={{ zIndex: 3 }}>
               <p>School Paid</p>
-              <p className={styles.cardLeft_textSize}>201/541</p>
+              <p className={styles.cardLeft_textSize}>{countData?.paid_data?.schools_paid || 0}/{countData?.schools || 0}</p>
             </div>
             <div style={{ zIndex: 3 }}>
               <p>Amount Paid</p>
-              <p className={styles.cardLeft_textSize}>$ 4,588</p>
+              <p className={styles.cardLeft_textSize}>$ {countData?.paid_data?.amount_paid[0] || 0}</p>
             </div>
             <div style={{ zIndex: 3 }}>
               <p>Amount due</p>
-              <p className={styles.cardLeft_textSize}>$ 484</p>
+              <p className={styles.cardLeft_textSize}>$ {countData?.paid_data?.amount_due[0] || 0}</p>
             </div>
             <div className={styles.circleDiv}>
-
             </div>
           </div>
 

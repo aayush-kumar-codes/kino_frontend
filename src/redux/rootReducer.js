@@ -30,6 +30,8 @@ import getFinanceHome from "./slices/admin/getFinanceHome";
 import getChart from "./slices/admin/getChart";
 import preInvoice from "./slices/admin/preInvoice";
 import createInvoice from "./slices/admin/createInvoice";
+import getAllInvoices from "./slices/admin/getAllInvoices";
+import getSingleInvoice from "./slices/admin/getSingleInvoice";
 
 const rootReducer = combineReducers({
     login: login,
@@ -62,6 +64,8 @@ const rootReducer = combineReducers({
     getFinanceHome: getFinanceHome,
     getChart: getChart,
     preInvoice: preInvoice,
-    createInvoice: createInvoice
+    createInvoice: createInvoice,
+    getAllInvoices:getAllInvoices,
+    getSingleInvoice:getSingleInvoice
 })
 export default rootReducer
