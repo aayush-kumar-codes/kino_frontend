@@ -19,7 +19,7 @@ const ItemsInvoiceTable = ({ data, setData }) => {
                 quantity: 1,
                 price: '',
                 amount: '',
-                discount: '',
+                discount: 0,
             }
         )
         setData(newdata)
@@ -148,7 +148,6 @@ const ItemsInvoiceTable = ({ data, setData }) => {
                 <TextField
                     sx={{ width: '100%', background: '#fff' }}
                     focused
-                    required
                     size='small'
                     type='number'
                     variant="outlined"

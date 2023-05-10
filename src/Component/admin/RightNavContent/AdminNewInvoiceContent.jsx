@@ -16,12 +16,20 @@ import { preInvoiceRequest, preInvoiceReset } from '@/redux/slices/admin/preInvo
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { createInvoiceRequest, createInvoiceReset } from '@/redux/slices/admin/createInvoice'
+import { useFormik } from 'formik'
+import * as yup from 'yup'
+import { getSingleInvoiceRequest, getSingleInvoiceReset } from '@/redux/slices/admin/getSingleInvoice'
+import { deleteInvoiceRequest, deleteInvoiceReset } from '@/redux/slices/admin/deleteInvoice'
+import { updateInvoiceRequest, updateInvoiceReset } from '@/redux/slices/admin/updateInvoice'
 
-const AdminNewInvoiceContent = () => {
+const AdminNewInvoiceContent = ({ id }) => {
     const imageRef = useRef()
     const router = useRouter()
     const preInvoiceState = useSelector(state => state.preInvoice)
+    const getSingleInvoiceState = useSelector(state => state.getSingleInvoice)
     const createInvoiceState = useSelector(state => state.createInvoice)
+    const deleteInvoiceState = useSelector(state => state.deleteInvoice)
+    const updateInvoiceState = useSelector(state => state.updateInvoice)
     const [invoiceDetails, setInvoiceDetails] = useState({})
     const [invoiceItems, setInvoiceItems] = useState([{
         id: 1,
@@ -30,28 +38,70 @@ const AdminNewInvoiceContent = () => {
         quantity: 1,
         price: '',
         amount: '',
-        discount: '',
+        discount: 0,
     }])
-
+    const [isEdit, setIsEdit] = useState(false)
+    const [isEditInvoice, setIsEditInvoice] = useState(false)
+    const [isDraft, setIsDraft] = useState(false)
     const [invoiceTo, setInvoiceTo] = useState('')
-    const [customerId, setcustomerId] = useState('')
-    const [signature, setSignature] = useState('')
+    const [signature, setSignature] = useState(null)
     const [roundedValue, setRoundedValue] = useState(0)
     const [taxableValue, setTaxableValue] = useState(0)
     const [totalAmount, setTotalAmount] = useState(0)
-    const [poNumber, setPoNumber] = useState('')
-    const [signee, setSignee] = useState('')
     const [previewData, setPreviewData] = useState({})
-    const [invoiceFrom, setinvoiceFrom] = useState({
+    const [invoiceFrom, setInvoiceFrom] = useState({
         id: '',
         mobile_no: "",
         address: "",
         zip_code: ""
     })
-    const [dueDate, setDueDate] = useState('')
     const [open, setOpen] = useState(false);
     const [isRound, setIsRound] = useState(false)
-    const todayDate = moment().format('DD/MM/YYYY')
+    const [todayDate, setTodayDate] = useState(moment().format('DD/MM/YYYY'))
+
+    const formik = useFormik({
+        initialValues: {
+            organization: '',
+            po_number: '',
+            due_date: '',
+            name_of_signee: '',
+        },
+        validationSchema: yup.object({
+            organization: yup.string()
+                .required('Organization is required'),
+            po_number: yup.string()
+                .required('Po number is required'),
+            due_date: yup.string()
+                .required('Due date is required'),
+            name_of_signee: yup.string()
+                .required('Name of signee is required'),
+        }),
+        onSubmit: (values) => {
+            const invoiceOrg =
+            {
+                ...values,
+                invoice_number: invoiceDetails?.invoice_number,
+                invoice_from: invoiceFrom.address,
+                is_draft: isDraft ? 1 : 0
+            }
+
+            const itemData = []
+            invoiceItems.map(item => {
+                const { id, price, amount, ...others } = item
+                itemData.push(others)
+            })
+
+            const formData = new FormData()
+            if (signature)
+                formData.append('sign_img', signature)
+            formData.append('item', JSON.stringify(itemData))
+            formData.append('invoice', JSON.stringify(invoiceOrg))
+            if (isEditInvoice)
+                dispatch(updateInvoiceRequest(formData, parseInt(id)))
+            else
+                dispatch(createInvoiceRequest(formData))
+        }
+    })
 
     useMemo(() => {
 
@@ -70,16 +120,61 @@ const AdminNewInvoiceContent = () => {
     }, [invoiceItems, isRound])
 
     useEffect(() => {
-        dispatch(preInvoiceRequest())
-    }, [])
+        if (id) {
+            dispatch(getSingleInvoiceRequest(id))
+            setIsEditInvoice(true)
+        }
+        else
+            dispatch(preInvoiceRequest())
+    }, [id])
 
     useEffect(() => {
-        if (preInvoiceState.isSuccess) {
-            setInvoiceDetails(preInvoiceState.data?.data)
-            setinvoiceFrom(preInvoiceState.data?.data?.invoice_from)
-            dispatch(preInvoiceReset())
+        if (!isEditInvoice) {
+            if (preInvoiceState.isSuccess) {
+                setInvoiceDetails(preInvoiceState.data?.data)
+                setInvoiceFrom(preInvoiceState.data?.data?.invoice_from)
+                dispatch(preInvoiceReset())
+            }
         }
     }, [preInvoiceState.isSuccess])
+
+    const convertImageUrlToFile = async (imageUrl) => {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], 'sign', { type: blob.type });
+        setSignature(file)
+    }
+
+
+    useEffect(() => {
+        if (getSingleInvoiceState.isSuccess) {
+            const invoiceData = getSingleInvoiceState.data?.data[0]
+            if (invoiceData) {
+                setInvoiceDetails(invoiceData)
+                formik.setFieldValue('po_number', invoiceData?.po_number)
+                formik.setFieldValue('due_date', invoiceData?.due_date)
+                formik.setFieldValue('name_of_signee', invoiceData?.name_of_signee)
+                formik.setFieldValue('organization', invoiceData?.organization)
+                setInvoiceFrom(old => {
+                    return {
+                        ...old,
+                        'address': invoiceData?.invoice_from
+                    }
+                })
+                setInvoiceTo(old => {
+                    return {
+                        ...old,
+                        'name': invoiceData?.invoice_to
+                    }
+                })
+                setTodayDate(invoiceData?.created_date)
+                if (invoiceData?.items)
+                    setInvoiceItems(invoiceData?.items)
+                convertImageUrlToFile(invoiceData?.sign_img)
+                dispatch(getSingleInvoiceReset())
+            }
+        }
+    }, [getSingleInvoiceState.isSuccess])
 
     useEffect(() => {
         if (createInvoiceState.isSuccess) {
@@ -88,31 +183,19 @@ const AdminNewInvoiceContent = () => {
         }
     }, [createInvoiceState.isSuccess])
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const invoiceOrg =
-        {
-            organization: parseInt(customerId),
-            po_number: poNumber,
-            invoice_number: invoiceDetails?.invoice_no,
-            invoice_from: invoiceFrom.address,
-            name_of_signee: signee ? signee : null,
-            due_date: dueDate ? dueDate : null
+    useEffect(() => {
+        if (updateInvoiceState.isSuccess) {
+            dispatch(updateInvoiceReset())
+            router.push('/dashboard/admin/all-invoices')
         }
+    }, [updateInvoiceState.isSuccess])
 
-        const itemData = []
-        invoiceItems.map(item => {
-            const { id, price, amount, ...others } = item
-            itemData.push(others)
-        })
-
-        const formData = new FormData()
-        formData.append('sign_img', signature)
-        formData.append('item', JSON.stringify(itemData))
-        formData.append('invoice', JSON.stringify(invoiceOrg))
-        console.log([...formData], 'HDVSHBHJBS');
-        dispatch(createInvoiceRequest(formData))
-    }
+    useEffect(() => {
+        if (deleteInvoiceState.isSuccess) {
+            dispatch(deleteInvoiceReset())
+            router.push('/dashboard/admin/all-invoices')
+        }
+    }, [deleteInvoiceState.isSuccess])
 
     const handleFileChange = (e) => {
         const files = e.target.files[0]
@@ -121,21 +204,16 @@ const AdminNewInvoiceContent = () => {
         }
     }
 
-    const handleCustomerChange = (id) => {
-        setcustomerId(parseInt(id))
-        setInvoiceTo(invoiceDetails?.invoice_to?.find(item => item.id == id))
-    }
-
     const handlePreview = () => {
         const previewData = {
-            invoice_number: invoiceDetails?.invoice_no,
+            invoice_number: invoiceDetails?.invoice_number,
             invoice_from: invoiceFrom.address,
-            invoice_to: invoiceTo?.address + " " + invoiceTo?.city + " " + invoiceTo?.country,
-            po_number: poNumber,
+            invoice_to: invoiceTo?.address ? invoiceTo?.address + " " + invoiceTo?.city + " " + invoiceTo?.country : '',
+            po_number: formik.values.po_number,
             created_date: todayDate,
-            due_date: dueDate,
+            due_date: formik.values.due_date,
             sign_img: signature ? URL.createObjectURL(signature) : null,
-            name_of_signee: signee,
+            name_of_signee: formik.values.name_of_signee,
             organization_name: invoiceTo?.name,
             total_amount: totalAmount,
             status: 'Draft',
@@ -150,47 +228,86 @@ const AdminNewInvoiceContent = () => {
             <div className={styles.invoice_page_Btn}>
                 <div className={styles.rightButtonContainer}>
                     <Link className={styles.linkText} href={'/dashboard/admin/finances'}><div className={styles.backtoCircle} />Back to Invoice List</Link>
+
                     <Button variant='primary' onClick={() => handlePreview()} className={styles.linkText} sx={{ textTransform: 'capitalize' }}>Preview</Button>
-                    <Button variant='contained' sx={{ background: '#4c6ae3', color: '#fff', fontWeight: '500' }} size='large'>Delete Invoice</Button>
-                    <Button variant='contained' sx={{ background: '#4c6ae3', color: '#fff', fontWeight: '500' }} size='large'>Save Draft</Button>
+
+                    <Button variant='contained' sx={{ background: '#4c6ae3', color: '#fff', fontWeight: '500' }} size='large'
+                        disabled={!isEditInvoice}
+                        onClick={() => dispatch(deleteInvoiceRequest(parseInt(id)))}
+                    >
+                        {deleteInvoiceState.isLoading ? 'Please wait...' : 'Delete Invoice'}
+                    </Button>
+
+                    <Button
+                        variant='contained'
+                        sx={{ background: '#4c6ae3', color: '#fff', fontWeight: '500' }}
+                        size='large'
+                        onClick={() => {
+                            setIsDraft(true)
+                            formik.handleSubmit()
+                        }}
+                    >
+                        {isDraft && createInvoiceState.isLoading || updateInvoiceState.isLoading ? 'Please wait..' : 'Save Draft'}
+                    </Button>
                 </div>
             </div>
-            <form className={styles.invoice_create_Container} onSubmit={handleSubmit}>
+            <form className={styles.invoice_create_Container} onSubmit={formik.handleSubmit}>
                 <div className={styles.invoice_details}>
                     <div>
-                        <FormControl focused fullWidth size='small'>
-                            <p style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '10px' }}>Customer Name</p>
-                            <Select
-                                labelId="customer-label"
-                                id="customer"
-                                value={customerId}
-                                onChange={(e) => handleCustomerChange(e.target.value)}
-                                required
-                            >
-                                {
-                                    invoiceDetails?.invoice_to?.map(({ id, name }, i) => <MenuItem key={i} value={id}>{name}</MenuItem>)
-                                }
-                            </Select>
-                        </FormControl>
+                        {
+                            isEditInvoice ?
+                                <TextField
+                                    sx={{ width: '100%' }}
+                                    focused
+                                    size='small'
+                                    label='Customer'
+                                    value={invoiceDetails?.organization_name}
+                                    variant="outlined"
+                                />
+                                : <FormControl focused fullWidth size='small'>
+                                    <p style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '10px' }}>Customer Name</p>
+                                    <Select
+                                        labelId="customer-label"
+                                        id="customer"
+                                        name='organization'
+                                        value={formik.values.organization}
+                                        onChange={(e) => {
+                                            formik.setFieldValue('organization', parseInt(e.target.value))
+                                            setInvoiceTo(invoiceDetails?.invoice_to?.find(item => item.id == e.target.value))
+                                        }}
+                                    >
+                                        {
+                                            invoiceDetails?.invoice_to?.map(({ id, name }, i) => <MenuItem key={i} value={id}>{name}</MenuItem>)
+                                        }
+                                    </Select>
+                                    {
+                                        formik.errors.organization && formik.touched.organization && <p className='formErrorText'>{formik.errors.organization}</p>
+                                    }
+                                </FormControl>
+                        }
                         <Box sx={{ marginTop: 2 }}>
                             <p style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '10px' }}>PO Number</p>
                             <TextField
                                 sx={{ width: '100%' }}
                                 focused
-                                required
                                 size='small'
                                 type='number'
+                                name='po_number'
+                                value={formik.values.po_number}
                                 placeholder='Enter Reference Number'
                                 variant="outlined"
-                                onChange={(e) => setPoNumber(parseInt(e.target.value))}
+                                onChange={formik.handleChange}
                             />
+                            {
+                                formik.errors.po_number && formik.touched.po_number && <p className='formErrorText'>{formik.errors.po_number}</p>
+                            }
                         </Box>
                     </div>
                     <div>
                         <p style={{ fontWeight: '700', fontSize: '1rem' }}>Invoice details</p>
                         <div className={styles.invoice_details_right}>
                             <Box sx={{ borderBottom: '1px solid #dcdada' }} className={styles.invoice_details_right_div}>
-                                <p style={{ fontSize: '1rem', fontWeight: '700' }}>Invoice No <span style={{ color: '#4e6ce0' }}>{invoiceDetails?.invoice_no}</span></p>
+                                <p style={{ fontSize: '1rem', fontWeight: '700' }}>Invoice No <span style={{ color: '#4e6ce0' }}>{invoiceDetails?.invoice_number}</span></p>
                             </Box>
                             <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                                 <Box sx={{ borderRight: '1px solid #dcdada' }} className={styles.invoice_details_right_div}>
@@ -205,8 +322,13 @@ const AdminNewInvoiceContent = () => {
                                             focused
                                             sx={{ marginTop: 1 }}
                                             size='small'
-                                            onChange={(e) => setDueDate(e.target.value)}
+                                            name='due_date'
+                                            value={formik.values.due_date}
+                                            onChange={formik.handleChange}
                                         />
+                                        {
+                                            formik.errors.due_date && formik.touched.due_date && <p className='formErrorText'>{formik.errors.due_date}</p>
+                                        }
                                     </span>
                                     </p>
                                 </Box>
@@ -219,11 +341,35 @@ const AdminNewInvoiceContent = () => {
 
                 <Box sx={{ marginTop: 2 }} className={styles.invoice_details}>
                     <div>
-                        <p className={styles.from_toText}>Invoice From <span style={{ color: '#4e6ce0', marginLeft: '2px', fontSize: '.8rem', fontWeight: '700' }}>Edit Address</span></p>
+
+                        <p className={styles.from_toText}>Invoice From
+                            <span style={{ color: '#4e6ce0', marginLeft: '2px', fontSize: '.8rem', fontWeight: '700', cursor: 'pointer' }} onClick={() => setIsEdit(isEdit ? false : true)}>{
+                                isEdit ? 'Save' : 'Edit Address'
+                            }</span>
+                        </p>
+
                         <Box sx={{ marginTop: 1 }} className={styles.address}>
-                            <p>{invoiceFrom.mobile_no}</p>
-                            <p>{invoiceFrom.address}</p>
-                            <p>{invoiceFrom.zip_code}</p>
+                            {invoiceFrom.mobile_no && <p>{invoiceFrom.mobile_no}</p>}
+                            {
+                                isEdit ?
+                                    <TextField
+                                        placeholder='Enter address'
+                                        name='address'
+                                        fullWidth
+                                        value={invoiceFrom.address}
+                                        label='Address'
+                                        focused
+                                        size='small'
+                                        onChange={(e) => setInvoiceFrom(old => {
+                                            return {
+                                                ...old,
+                                                'address': e.target.value
+                                            }
+                                        })}
+                                    />
+                                    : <p>{invoiceFrom.address}</p>
+                            }
+                            {invoiceFrom.zip_code && <p>{invoiceFrom.zip_code}</p>}
                         </Box>
                     </div>
                     <div>
@@ -231,8 +377,8 @@ const AdminNewInvoiceContent = () => {
                         {
                             invoiceTo && <Box sx={{ marginTop: 1 }} className={styles.address}>
                                 <p>{invoiceTo?.name}</p>
-                                <p>{invoiceTo?.address}</p>
-                                <p>{invoiceTo?.city + " " + invoiceTo?.country}</p>
+                                {invoiceTo?.address && <p>{invoiceTo?.address}</p>}
+                                {invoiceTo?.city && <p>{invoiceTo?.city + " " + invoiceTo?.country}</p>}
                             </Box>
                         }
                     </div>
@@ -262,7 +408,6 @@ const AdminNewInvoiceContent = () => {
                                 sx={{ width: '100%', marginTop: 1 }}
                                 focused
                                 size='small'
-                                required
                                 variant="outlined"
                                 name='terms'
                                 placeholder='Add Terms & Conditions'
@@ -271,7 +416,6 @@ const AdminNewInvoiceContent = () => {
                                 sx={{ width: '100%', marginTop: 1 }}
                                 focused
                                 size='small'
-                                required
                                 variant="outlined"
                                 name='notes'
                                 placeholder='Add Notes'
@@ -318,17 +462,31 @@ const AdminNewInvoiceContent = () => {
                                         </label>
                                 }
                             </div>
-                            <TextField
-                                sx={{ width: '80%', marginTop: 1 }}
-                                focused
-                                required
-                                variant="outlined"
-                                name='name_of_signatory'
-                                size='small'
-                                onChange={(e) => setSignee(e.target.value)}
-                                placeholder='Name Of Signatory'
-                            />
-                            <Button disabled={createInvoiceState.isLoading} variant='contained' size='large' sx={{ marginTop: 1, background: '#4c6ae3' }} type='submit'>{createInvoiceState.isLoading ? 'Please wait..' : 'Save Invoice'}</Button>
+                            <Box sx={{ width: '80%' }}>
+                                <TextField
+                                    sx={{ width: '100%', marginTop: 1 }}
+                                    focused
+                                    variant="outlined"
+                                    name='name_of_signee'
+                                    size='small'
+                                    value={formik.values.name_of_signee}
+                                    onChange={formik.handleChange}
+                                    placeholder='Name Of Signatory'
+                                />
+                                {
+                                    formik.errors.name_of_signee && formik.touched.name_of_signee && <p className='formErrorText'>{formik.errors.name_of_signee}</p>
+                                }
+                            </Box>
+                            <Button
+                                disabled={createInvoiceState.isLoading}
+                                variant='contained'
+                                size='large'
+                                sx={{ marginTop: 1, background: '#4c6ae3' }}
+                                type='submit'
+                                onClick={() => setIsDraft(false)}
+                            >
+                                {!isDraft && createInvoiceState.isLoading || updateInvoiceState.isLoading ? 'Please wait..' : 'Save Invoice'}
+                            </Button>
                         </Box>
                     </div>
                 </div>

@@ -51,9 +51,10 @@ const InvoiceView = ({ data }) => {
                     <Typography variant='body1' sx={{ marginTop: 2, fontSize: '1rem' }}>
                         +22736473877
                     </Typography>
-                    <Typography variant='body1' sx={{ fontSize: '1rem', maxWidth: '220px' }}>
+                    {data?.invoice_to && <Typography variant='body1' sx={{ fontSize: '1rem', maxWidth: '220px' }}>
                         {data?.invoice_to}
-                    </Typography>
+                    </Typography>}
+
                     {/* <Typography variant='body1' sx={{ fontSize: '1rem' }}>
                         Address line 2
                     </Typography>
@@ -141,7 +142,7 @@ const InvoiceView = ({ data }) => {
                             Taxable
                         </Typography>
                         <Typography variant='body1'>
-                            UGX {data?.total_amount}
+                            $ {data?.total_amount}
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -149,7 +150,7 @@ const InvoiceView = ({ data }) => {
                             Additional Charges
                         </Typography>
                         <Typography variant='body1'>
-                            UGX 0
+                            $ 0
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
