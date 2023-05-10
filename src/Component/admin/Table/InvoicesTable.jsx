@@ -39,7 +39,7 @@ const InvoicesTable = ({ data }) => {
         {
             title: 'Details',
             render: (item) => (
-                <Button variant='outlined' size='medium' onClick={() => router.push(`/dashboard/admin/invoiceView?id=${item.id}`)}>Details</Button>
+                <Button variant='outlined' size='medium' onClick={() => router.push(`/dashboard/admin/${item.status === 'Draft' ? 'new-invoice' : 'invoiceView'}?id=${item.id}`)}>Details</Button>
             ),
         }
     ];
