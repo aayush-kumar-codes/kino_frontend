@@ -66,7 +66,7 @@ const AdminAllInvoicesContent = () => {
         <p>Invoices</p>
         <p>Dashboard / <span style={{ opacity: .7 }}>Invoices</span></p>
       </div>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: "wrap" }}>
         <Tabs
           defaultActiveKey="1"
           style={{ marginTop: "2rem" }}

@@ -117,37 +117,22 @@ function AdminDashboardContent() {
           <p className={styles.flnText}>FLN IMPACT</p>
           <div className={styles.fln_Icon}>
             <BiBookOpen color='#3D5EE1' size={'3rem'} />
-            <p className={styles.fln_Icon_Number}>672</p>
+            <p className={styles.fln_Icon_Number}>{countData?.fln_over_all}</p>
           </div>
           <p className={styles.performance_text}>Overall Performance Foundational
             Learning and Numeracy Impact</p>
-          <Button variant="contained" size='large' className={styles.more_Btn}>More details</Button>
           <table style={{ margin: 'auto', marginTop: "1rem", color: '#cccaca', borderSpacing: '0 0.8rem', textAlign: 'left', padding: "0 1rem" }}>
             <tbody>
               <tr style={{ color: '#a24b79' }}>
                 <th>Accessment Area</th>
                 <th>Numbers</th>
               </tr>
-              <tr>
-                <td style={{ fontWeight: '500' }}>Lesson-specific performance:</td>
-                <td style={{ fontWeight: '500', textAlign: 'center' }}>201</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: '500' }}>Skill-specific performance:</td>
-                <td style={{ fontWeight: '500', textAlign: 'center' }}>89</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: '500' }}>Comparative analysis:</td>
-                <td style={{ fontWeight: '500', textAlign: 'center' }}>120</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: '500' }}>Engogement and particpation:</td>
-                <td style={{ fontWeight: '500', textAlign: 'center' }}>334</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: '500' }}>Intervention recommendations:</td>
-                <td style={{ fontWeight: '500', textAlign: 'center' }}>42</td>
-              </tr>
+              {
+                countData?.fln_impact?.map((item, i) => <tr key={i}>
+                  <td style={{ fontWeight: '500' }}>{item?.accessment_area}:</td>
+                  <td style={{ fontWeight: '500', textAlign: 'center' }}>{item?.numbers}</td>
+                </tr>)
+              }
             </tbody>
           </table>
         </div>

@@ -115,7 +115,7 @@ const AdminFinanceContent = () => {
                 </div>
             </div>
             <Box sx={{ marginTop: 4, padding: '1rem', background: '#fff', borderRadius: '10px' }}>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1.5fr', paddingBottom: 6, alignItems: 'center' }}>
+                <Box className={styles.chartCircleContainer} sx={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1.5fr', paddingBottom: 6, alignItems: 'center' }}>
                     <p style={{ fontSize: '1rem', fontWeight: '600', color: '#898F95' }}>Schools Financial Performance</p>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span className={styles.chartCircle} /><p>Kaino Plus</p></Box>
