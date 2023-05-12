@@ -54,11 +54,13 @@ function AdminAccountSettingsContent() {
             is_two_factor: bool ? 1 : 0
         }
         dispatch(Modify2F_LogsRequest(payload))
+        toast.dismiss()
         toast.warn('Please wait...')
     }
 
     useEffect(() => {
         if (Modify2F_LogsState.isSuccess) {
+            toast.dismiss()
             toast.success('Updated successfully')
             dispatch(Modify2F_LogsReset())
             dispatch(get2fStatusRequest())
