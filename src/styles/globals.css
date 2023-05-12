@@ -163,6 +163,10 @@ a {
   align-items: center !important;
 }
 
+.ant-menu-sub {
+  background: #9E4474 !important;
+}
+
 .ant-modal-title {
   font-size: 1.5rem !important;
 }
