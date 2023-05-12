@@ -4,18 +4,17 @@ import styles_new from '@/styles/adminLessions.module.css'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { dispatch } from '@/redux/store';
-import { getAllTeachersRequest, getAllTeachersReset } from '@/redux/slices/admin/getAllTeachers';
+import { getAllStudentsRequest, getAllStudentsReset } from '@/redux/slices/admin/getAllStudents';
 import { Button } from '@mui/material';
 import { Input, Select } from 'antd';
 import { useFormik } from 'formik';
 import { RxCross1 } from 'react-icons/rx'
-import TeacherList from '../Table/TeacherList';
-import { convertToCSV } from '@/utils/constant';
-import { arrayObjectFlat } from '@/utils/constant';
+import StudentsList from '../../Table/StudentsList';
+import { arrayObjectFlat, convertToCSV } from '@/utils/constant';
 
-const AdminTeacherByCountryContent = ({ country, plans }) => {
+const AdminStudentByCountryContent = ({ country }) => {
 
-    const getAllTeachersState = useSelector(state => state.getAllTeachers)
+    const getAllStudentsState = useSelector(state => state.getAllStudents)
     const [pageSize, setPageSize] = useState(10)
     const [response, setResponse] = useState({})
     const [data, setData] = useState([])
@@ -28,7 +27,7 @@ const AdminTeacherByCountryContent = ({ country, plans }) => {
         },
         onSubmit: (values) => {
             if (values.id)
-                dispatch(getAllTeachersRequest(`${values.id}/`))
+                dispatch(getAllStudentsRequest(`${values.id}/`))
             else {
                 let payload;
                 if (values.phone && values.name)
@@ -37,7 +36,7 @@ const AdminTeacherByCountryContent = ({ country, plans }) => {
                     payload = `?phone=${values.phone}`
                 else if (values.name)
                     payload = `?name=${values.name}`
-                dispatch(getAllTeachersRequest(payload))
+                dispatch(getAllStudentsRequest(payload))
             }
         },
     });
@@ -45,28 +44,28 @@ const AdminTeacherByCountryContent = ({ country, plans }) => {
     useEffect(() => {
         if (country) {
             const payload = `?country=${country.toString()}&page_size=${pageSize}`
-            dispatch(getAllTeachersRequest(payload))
+            dispatch(getAllStudentsRequest(payload))
         }
 
     }, [country, pageSize])
 
     useEffect(() => {
-        if (getAllTeachersState.isSuccess) {
-            setResponse(getAllTeachersState.data?.data)
-            setData(getAllTeachersState.data?.data?.results)
-            dispatch(getAllTeachersReset())
+        if (getAllStudentsState.isSuccess) {
+            setResponse(getAllStudentsState.data?.data)
+            setData(getAllStudentsState.data?.data?.results)
+            dispatch(getAllStudentsReset())
         }
-    }, [getAllTeachersState.isSuccess])
+    }, [getAllStudentsState.isSuccess])
 
     const handlePagination = (requestUrl) => {
-        dispatch(getAllTeachersRequest(`?${requestUrl.split('?')[1]}`))
+        dispatch(getAllStudentsRequest(`?${requestUrl.split('?')[1]}`))
     }
 
     return (
         <div>
             <div className={styles_new.breadcrumbs}>
-                <p className={styles_new.breadcrumbs_left}>Teachers</p>
-                <p className={styles_new.breadcrumbs_right}>Dashboard /<span> Teachers</span></p>
+                <p className={styles_new.breadcrumbs_left}>Students</p>
+                <p className={styles_new.breadcrumbs_right}>Dashboard /<span> Students</span></p>
             </div>
             <form className={styles_new.form} onSubmit={formik.handleSubmit}>
                 <Input
@@ -103,14 +102,14 @@ const AdminTeacherByCountryContent = ({ country, plans }) => {
                 onClick={() => {
                     formik.resetForm()
                     const payload = `?country=${country.toString()}`
-                    dispatch(getAllTeachersRequest(payload))
+                    dispatch(getAllStudentsRequest(payload))
                 }}
             >
                 <RxCross1 />
             </Button>
             <div className={styles.tableContainer}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <p className={styles.topSchools_text}>Teachers</p>
+                    <p className={styles.topSchools_text}>Students</p>
                     <Button variant='contained' size='large' onClick={() => convertToCSV(arrayObjectFlat(data))}>Download</Button>
                 </div>
                 <div className={styles_new.pagination}>
@@ -128,7 +127,7 @@ const AdminTeacherByCountryContent = ({ country, plans }) => {
                     <span>entries</span>
                 </div>
                 <div style={{ marginTop: "1.5rem" }}>
-                    <TeacherList data={data} />
+                    <StudentsList data={data} />
                 </div>
                 <div className={styles_new.bottom_Pagination}>
                     <p>Showing {response ? 1 : 0} to {response?.count || 0} of {response?.count || 0} entries</p>
@@ -143,4 +142,4 @@ const AdminTeacherByCountryContent = ({ country, plans }) => {
     )
 }
 
-export default AdminTeacherByCountryContent
+export default AdminStudentByCountryContent

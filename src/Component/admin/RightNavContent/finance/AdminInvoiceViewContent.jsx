@@ -5,7 +5,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import InvoiceView from '../Invoice/InvoiceView'
+import InvoiceView from '../../Invoice/InvoiceView'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 

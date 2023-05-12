@@ -4,7 +4,7 @@ import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
 import { useRouter } from 'next/router';
-import AdminTeacherByCountryContent from '@/Component/admin/RightNavContent/AdminTeacherByCountryContent';
+import AdminTeacherByCountryContent from '@/Component/admin/RightNavContent/teachers/AdminTeacherByCountryContent';
 
 const TeachersByCountry = () => {
 

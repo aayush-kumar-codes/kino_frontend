@@ -1,20 +1,20 @@
 import React from 'react'
 import styles from '@/styles/adminSchoolByCountry.module.css'
 import styles_new from '@/styles/adminLessions.module.css'
-import SchoolsList from '../Table/SchoolsList'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { dispatch } from '@/redux/store';
-import { getAllSchoolsRequest, getAllSchoolsReset } from '@/redux/slices/admin/getAllSchools';
+import { getAllParentsRequest, getAllParentsReset } from '@/redux/slices/admin/getAllParents';
 import { Button } from '@mui/material';
 import { Input, Select } from 'antd';
 import { useFormik } from 'formik';
 import { RxCross1 } from 'react-icons/rx'
-import { convertToCSV } from '@/utils/constant';
+import ParentsList from '../../Table/ParentsList';
+import { arrayObjectFlat, convertToCSV } from '@/utils/constant';
 
-const AdminPlansCountrySchoolContent = ({ country, plans }) => {
+const AdminParentByCountryContent = ({ country }) => {
 
-    const getAllSchoolsState = useSelector(state => state.getAllSchools)
+    const getAllParentsState = useSelector(state => state.getAllParents)
     const [pageSize, setPageSize] = useState(10)
     const [response, setResponse] = useState({})
     const [data, setData] = useState([])
@@ -27,7 +27,7 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
         },
         onSubmit: (values) => {
             if (values.id)
-                dispatch(getAllSchoolsRequest(`${values.id}/`))
+                dispatch(getAllParentsRequest(`${values.id}/`))
             else {
                 let payload;
                 if (values.phone && values.name)
@@ -36,36 +36,36 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
                     payload = `?phone=${values.phone}`
                 else if (values.name)
                     payload = `?name=${values.name}`
-                dispatch(getAllSchoolsRequest(payload))
+                dispatch(getAllParentsRequest(payload))
             }
         },
     });
 
     useEffect(() => {
         if (country) {
-            const payload = `?country=${country.toString()}&subscription=${plans}&page_size=${pageSize}`
-            dispatch(getAllSchoolsRequest(payload))
+            const payload = `?country=${country.toString()}&page_size=${pageSize}`
+            dispatch(getAllParentsRequest(payload))
         }
 
-    }, [country, plans, pageSize])
+    }, [country, pageSize])
 
     useEffect(() => {
-        if (getAllSchoolsState.isSuccess) {
-            setResponse(getAllSchoolsState.data?.data)
-            setData(getAllSchoolsState.data?.data?.results)
-            dispatch(getAllSchoolsReset())
+        if (getAllParentsState.isSuccess) {
+            setResponse(getAllParentsState.data?.data)
+            setData(getAllParentsState.data?.data?.results)
+            dispatch(getAllParentsReset())
         }
-    }, [getAllSchoolsState.isSuccess])
+    }, [getAllParentsState.isSuccess])
 
     const handlePagination = (requestUrl) => {
-        dispatch(getAllSchoolsRequest(`?${requestUrl.split('?')[1]}`))
+        dispatch(getAllParentsRequest(`?${requestUrl.split('?')[1]}`))
     }
 
     return (
         <div>
             <div className={styles_new.breadcrumbs}>
-                <p className={styles_new.breadcrumbs_left}>Schools</p>
-                <p className={styles_new.breadcrumbs_right}>Dashboard /<span> Schools</span></p>
+                <p className={styles_new.breadcrumbs_left}>Parents</p>
+                <p className={styles_new.breadcrumbs_right}>Dashboard /<span> Parents</span></p>
             </div>
             <form className={styles_new.form} onSubmit={formik.handleSubmit}>
                 <Input
@@ -101,16 +101,16 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
             <Button variant="contained" size="large" disabled={!formik.dirty} sx={{ background: "red", marginTop: '1rem' }}
                 onClick={() => {
                     formik.resetForm()
-                    const payload = `?country=${country.toString()}&subscription=${plans}`
-                    dispatch(getAllSchoolsRequest(payload))
+                    const payload = `?country=${country.toString()}`
+                    dispatch(getAllParentsRequest(payload))
                 }}
             >
                 <RxCross1 />
             </Button>
             <div className={styles.tableContainer}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <p className={styles.topSchools_text}>Schools</p>
-                    <Button variant='contained' size='large' onClick={() => convertToCSV(data)}>Download</Button>
+                    <p className={styles.topSchools_text}>Parents</p>
+                    <Button variant='contained' size='large' onClick={() => convertToCSV(arrayObjectFlat(data))}>Download</Button>
                 </div>
                 <div className={styles_new.pagination}>
                     <span>Show</span>
@@ -127,7 +127,7 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
                     <span>entries</span>
                 </div>
                 <div style={{ marginTop: "1.5rem" }}>
-                    <SchoolsList data={data} />
+                    <ParentsList data={data} />
                 </div>
                 <div className={styles_new.bottom_Pagination}>
                     <p>Showing {response ? 1 : 0} to {response?.count || 0} of {response?.count || 0} entries</p>
@@ -142,4 +142,4 @@ const AdminPlansCountrySchoolContent = ({ country, plans }) => {
     )
 }
 
-export default AdminPlansCountrySchoolContent
+export default AdminParentByCountryContent
