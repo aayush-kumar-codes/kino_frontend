@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '@/styles/adminFinance.module.css'
 import { Box, Button } from '@mui/material'
-import InvoicesTable from '../Table/InvoicesTable'
+import InvoicesTable from '../../Table/InvoicesTable'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Tabs } from 'antd'

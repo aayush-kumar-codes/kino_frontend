@@ -3,7 +3,7 @@ import styles from '@/styles/adminLessions.module.css'
 import { Input, Select } from 'antd'
 import { Button } from '@mui/material'
 import { useFormik } from 'formik';
-import SelectTableSort from '../Table/SelectTableSort';
+import SelectTableSort from '../../Table/SelectTableSort';
 import { AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';

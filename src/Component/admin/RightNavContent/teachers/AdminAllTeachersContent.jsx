@@ -7,7 +7,7 @@ import { getAllTeachersRequest, getAllTeachersReset } from '@/redux/slices/admin
 import { Button } from 'antd'
 import { flagLink } from '@/utils/constant';
 import CountryCommonard from '@/Component/Generic/CountryCommonard';
-import TeacherList from '../Table/TeacherList';
+import TeacherList from '../../Table/TeacherList';
 
 const AdminAllTeachersContent = () => {
 

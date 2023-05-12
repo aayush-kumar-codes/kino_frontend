@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
-import AdminManageLessionsContent from '@/Component/admin/RightNavContent/AdminManageLessionsContent';
+import AdminManageLessionsContent from '@/Component/admin/RightNavContent/lessons/AdminManageLessionsContent';
 
 const ManageLessons = () => {
 

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
-import ParentProfileContent from '@/Component/admin/RightNavContent/ParentProfileContent';
+import ParentProfileContent from '@/Component/admin/RightNavContent/parents/ParentProfileContent';
 import { useRouter } from 'next/router';
 
 const ParentProfile = () => {

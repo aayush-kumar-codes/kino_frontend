@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
-import AdminAllInvoicesContent from '@/Component/admin/RightNavContent/AdminAllInvoicesContent';
+import AdminAllInvoicesContent from '@/Component/admin/RightNavContent/finance/AdminAllInvoicesContent';
 
 const AllInvoice = () => {
 

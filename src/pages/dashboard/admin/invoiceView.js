@@ -4,7 +4,7 @@ import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
 import { useRouter } from 'next/router';
-import AdminInvoiceViewContent from '@/Component/admin/RightNavContent/AdminInvoiceViewContent';
+import AdminInvoiceViewContent from '@/Component/admin/RightNavContent/finance/AdminInvoiceViewContent';
 
 const InvoiceView = () => {
 

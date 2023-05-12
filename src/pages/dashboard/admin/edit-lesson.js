@@ -4,7 +4,7 @@ import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
 import { useRouter } from 'next/router';
-import AdminEditLessonContent from '@/Component/admin/RightNavContent/AdminEditLessonContent';
+import AdminEditLessonContent from '@/Component/admin/RightNavContent/lessons/AdminEditLessonContent';
 
 const EditLesson = () => {
 

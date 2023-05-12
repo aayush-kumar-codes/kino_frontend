@@ -3,7 +3,7 @@ import styles from '@/styles/adminSchoolByCountry.module.css'
 import { FaRegBuilding } from 'react-icons/fa'
 import { SlGraduation } from 'react-icons/sl'
 import { AiOutlineHeart } from 'react-icons/ai'
-import SchoolsList from '../Table/SchoolsList'
+import SchoolsList from '../../Table/SchoolsList'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { dispatch } from '@/redux/store';
