@@ -19,7 +19,8 @@ function SchoolLeftNav() {
 
     useEffect(() => {
         if (pathname) {
-
+            if (pathname == 'create-student')
+                setDefaultSelectedItem('3')
         }
         else
             setDefaultSelectedItem('1')
@@ -28,6 +29,12 @@ function SchoolLeftNav() {
     const handleChange = ({ key }) => {
         if (key === '1')
             router.push('/dashboard/school')
+        else if (key === '3')
+            router.push('/dashboard/school/create-student')
+        else if (key === '14') {
+            localStorage.clear()
+            router.push('/')
+        }
 
     }
 
