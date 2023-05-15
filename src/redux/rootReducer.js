@@ -34,6 +34,7 @@ import getAllInvoices from "./slices/admin/getAllInvoices";
 import getSingleInvoice from "./slices/admin/getSingleInvoice";
 import deleteInvoice from "./slices/admin/deleteInvoice";
 import updateInvoice from "./slices/admin/updateInvoice";
+import navbar from "./slices/navbar";
 
 const rootReducer = combineReducers({
     login: login,
@@ -70,6 +71,7 @@ const rootReducer = combineReducers({
     getAllInvoices: getAllInvoices,
     getSingleInvoice: getSingleInvoice,
     deleteInvoice: deleteInvoice,
-    updateInvoice: updateInvoice
+    updateInvoice: updateInvoice,
+    navbar:navbar
 })
 export default rootReducer
