@@ -7,12 +7,13 @@ import { AiOutlineHome, AiOutlineLogout, AiOutlineSetting, AiOutlineUserAdd } fr
 import { CgNotes } from 'react-icons/cg';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 const { Sider } = Layout;
 
-function AdminLeftNav({ collapsed }) {
+function AdminLeftNav() {
     const router = useRouter()
     const pathname = router.asPath.split('/dashboard/admin/')[1];
-
+    const { isCollapsed } = useSelector(state => state.navbar)
     const [defaultSelectedItem, setDefaultSelectedItem] = useState('1')
 
     useEffect(() => {
@@ -56,7 +57,7 @@ function AdminLeftNav({ collapsed }) {
     }
 
     return (
-        <Sider trigger={null} collapsible collapsed={collapsed}
+        <Sider trigger={null} collapsible collapsed={isCollapsed}
             collapsedWidth={'85px'}
             width={'270px'}
             style={{ minHeight: '100%' }}
@@ -64,7 +65,7 @@ function AdminLeftNav({ collapsed }) {
         >
             <div className={styles.logo} >
                 {
-                    collapsed ? 'K' : 'KAINO'
+                    isCollapsed ? 'K' : 'KAINO'
                 }
             </div>
             <Menu

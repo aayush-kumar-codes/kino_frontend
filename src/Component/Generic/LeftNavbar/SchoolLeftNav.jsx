@@ -7,13 +7,14 @@ import { BsBook } from 'react-icons/bs';
 import { IoIosPeople, IoMdSchool } from 'react-icons/io';
 import { BiUser } from 'react-icons/bi';
 import { MdAccountBox } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 const { Sider } = Layout;
 
-function SchoolLeftNav({ collapsed }) {
+function SchoolLeftNav() {
     const router = useRouter()
     const pathname = router.asPath.split('/dashboard/school/')[1];
-
+    const { isCollapsed } = useSelector(state => state.navbar)
     const [defaultSelectedItem, setDefaultSelectedItem] = useState('1')
 
     useEffect(() => {
@@ -31,7 +32,7 @@ function SchoolLeftNav({ collapsed }) {
     }
 
     return (
-        <Sider trigger={null} collapsible collapsed={collapsed}
+        <Sider trigger={null} collapsible collapsed={isCollapsed}
             collapsedWidth={'85px'}
             width={'270px'}
             style={{ minHeight: '100%' }}
@@ -39,7 +40,7 @@ function SchoolLeftNav({ collapsed }) {
         >
             <div className={styles.logo} >
                 {
-                    collapsed ? 'K' : 'KAINO'
+                    isCollapsed ? 'K' : 'KAINO'
                 }
             </div>
             <Menu
