@@ -1,76 +1,86 @@
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/adminCreateSchool.module.css'
 import { TextField, InputAdornment, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material'
-import { AiOutlineLink, AiOutlinePhone } from 'react-icons/ai'
+import { AiOutlineMail, AiOutlinePhone, AiOutlineUser } from 'react-icons/ai'
 import { GoLocation } from 'react-icons/go'
 import { useFormik } from 'formik';
 import { dispatch } from '@/redux/store'
-import { createSchoolRequest, createSchoolReset } from '@/redux/slices/admin/createSchool'
+import { createStudentRequest, createStudentReset } from '@/redux/slices/school/createStudent'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import { countries, kaino_plans, loader_text } from '@/utils/constant'
+import { countries, loader_text } from '@/utils/constant'
+import { FaHashtag } from 'react-icons/fa'
 import Axios from '@/utils/axios'
 
 function SchoolCreateStudentContent() {
-  const createSchoolState = useSelector(state => state.createSchool)
-  const [termSystem, setTermSystem] = useState([])
+  const createStudentState = useSelector(state => state.createStudent)
   const [errorMessages, setErrorMessages] = useState({})
+  const [parents, setParents] = useState([])
   const router = useRouter()
   const [today] = useState(new Date().toISOString().split('T')[0]);
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      year_established: '',
-      motto: '',
-      total_students: "",
-      total_teachers: "",
-      subscriptions: "KAINO_PLUS",
-      term_system: 6,
-      principal_name: '',
-      phone: '',
-      website_url: '',
+      first_name: '',
+      last_name: '',
+      gender: 1,
+      dob: "",
+      id_no: "",
+      class_id: 1,
+      religion: 'Christian',
       email: '',
       address: '',
-      region: 'AL',
-      city: 'South Town',
-      country: 'Tanzania',
-      description: '',
-      logo_img: ''
+      parents_id: '',
+      mobile_no: '',
+      profile_img: ''
     },
 
     onSubmit: (values) => {
-      const key = Object.keys(values)
       const formData = new FormData()
-      key.map(item => formData.append(item, values[item]))
+      const restData = {
+        religion: values.religion,
+        id_no: values.id_no,
+        class_id: values.class_id,
+        address: values.address,
+        parents_id: parseInt(values.parents_id)
+      }
+      const userData = {
+        email: values.email,
+        first_name: values.first_name,
+        last_name: values.last_name,
+        gender: values.gender,
+        dob: values.dob,
+        mobile_no: values.mobile_no,
+      }
+      formData.append('member', JSON.stringify(restData))
+      formData.append('user', JSON.stringify(userData))
+      values.profile_img && formData.append('profile_img', values.profile_img)
       setErrorMessages({})
-      dispatch(createSchoolRequest(formData))
+      dispatch(createStudentRequest(formData))
     }
   });
 
   useEffect(() => {
-    if (createSchoolState.isError && createSchoolState.data?.message) {
-      setErrorMessages(createSchoolState.data?.message)
-      dispatch(createSchoolReset())
+    if (createStudentState.isError && createStudentState.data?.message) {
+      setErrorMessages(createStudentState.data?.message)
+      dispatch(createStudentReset())
     }
 
-  }, [createSchoolState.isError])
+  }, [createStudentState.isError])
 
   useEffect(() => {
-    if (createSchoolState.isSuccess) {
+    if (createStudentState.isSuccess) {
       formik.resetForm()
-      router.push('/dashboard/admin')
-      dispatch(createSchoolReset())
+      router.push('/dashboard/school')
+      dispatch(createStudentReset())
     }
 
-  }, [createSchoolState.isSuccess])
+  }, [createStudentState.isSuccess])
 
-  const getTermSytem = async () => {
+  const getParents = async () => {
     try {
-      const data = await Axios.get('api/get_term/')
-      if (data.data?.data) {
-        setTermSystem(data.data?.data)
-      }
+      const response = await Axios.get('api/auth/all_parents/')
+      setParents(response.data?.data)
     }
     catch (e) {
       console.log(e);
@@ -78,17 +88,17 @@ function SchoolCreateStudentContent() {
   }
 
   useEffect(() => {
-    getTermSytem()
+    getParents()
   }, [])
 
   return (
     <>
       <div style={{ marginBottom: "2rem", display: 'flex', justifyContent: 'space-between', padding: "0 .5rem" }}>
-        <p style={{ fontSize: '1.2rem', color: '#191919', fontWeight: '500' }}>Add School Information</p>
-        <p style={{ fontSize: "1rem", color: 'gray' }}><span style={{ color: "#191919", fontWeight: "500" }}>School</span> / Add School Information</p>
+        <p style={{ fontSize: '1.2rem', color: '#191919', fontWeight: '500' }}>Add Student</p>
+        <p style={{ fontSize: "1rem", color: 'gray' }}><span style={{ color: "#191919", fontWeight: "500" }}>Student</span> / Add Student</p>
       </div>
       <div className={styles.formContainer}>
-        <p className={styles.infoText}>School Information</p>
+        <p className={styles.infoText}>Student Information</p>
 
         <form onSubmit={formik.handleSubmit}>
           <div className={styles.formGrid}>
@@ -98,15 +108,18 @@ function SchoolCreateStudentContent() {
                 focused
                 required
                 size='small'
-                id="outlined-adornment-schoolname"
-                label="School Name"
+                id="outlined-adornment-first_name"
+                InputProps={{
+                  endAdornment: <InputAdornment position="end"><AiOutlineUser color='#191919' /></InputAdornment>,
+                }}
+                label="First Name"
                 placeholder='Type here'
                 variant="outlined"
-                name='name'
+                name='first_name'
                 onChange={formik.handleChange}
-                value={formik.values.name}
+                value={formik.values.first_name}
               />
-              {errorMessages?.name && <p className='formErrorText'>{errorMessages?.name[0]}</p>}
+              {errorMessages?.first_name && <p className='formErrorText'>{errorMessages?.first_name[0]}</p>}
             </div>
 
             <div>
@@ -115,49 +128,51 @@ function SchoolCreateStudentContent() {
                 focused
                 required
                 size='small'
-                id="outlined-adornment-year"
-                label="Year of Etablishment"
+                id="outlined-adornment-last_name"
+                InputProps={{
+                  endAdornment: <InputAdornment position="end"><AiOutlineUser color='#191919' /></InputAdornment>,
+                }}
+                label="Last Name"
+                placeholder='Type here'
                 variant="outlined"
+                name='last_name'
+                onChange={formik.handleChange}
+                value={formik.values.last_name}
+              />
+              {errorMessages?.last_name && <p className='formErrorText'>{errorMessages?.last_name[0]}</p>}
+            </div>
+
+            <FormControl size='small' focused required>
+              <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+              <Select
+                id="outlined-adornment-gender"
+                label="Gender"
+                value={formik.values.gender}
+                onChange={formik.handleChange}
+                name='gender'
+              >
+                <MenuItem value={1}>Male</MenuItem>
+                <MenuItem value={2}>Female</MenuItem>
+              </Select>
+              {errorMessages?.gender && <p className='formErrorText'>{errorMessages?.gender[0]}</p>}
+            </FormControl>
+
+            <div>
+              <TextField
+                sx={{ width: '100%' }}
+                focused
+                required
+                size='small'
                 type='date'
-                name='year_established'
-                onChange={formik.handleChange}
-                value={formik.values.year_established}
+                id="outlined-adornment-dob"
+                label="Date Of Birth"
+                variant="outlined"
                 inputProps={{ max: today }}
-              />
-              {errorMessages?.year_established && <p className='formErrorText'>{errorMessages?.year_established[0]}</p>}
-            </div>
-
-            <div>
-              <TextField
-                sx={{ width: '100%' }}
-                focused
-                required
-                size='small'
-                id="outlined-adornment-motto"
-                label="Motto"
-                placeholder='Type here'
-                variant="outlined"
-                name='motto'
+                name='dob'
                 onChange={formik.handleChange}
-                value={formik.values.motto}
+                value={formik.values.dob}
               />
-              {errorMessages?.motto && <p className='formErrorText'>{errorMessages?.motto[0]}</p>}
-            </div>
-
-            <div>
-              <TextField
-                sx={{ width: '100%' }}
-                focused
-                required
-                size='small'
-                id="outlined-adornment-students"
-                label="Total Students"
-                variant="outlined"
-                name='total_students'
-                onChange={formik.handleChange}
-                value={formik.values.total_students}
-              />
-              {errorMessages?.total_students && <p className='formErrorText'>{errorMessages?.total_students[0]}</p>}
+              {errorMessages?.dob && <p className='formErrorText'>{errorMessages?.dob[0]}</p>}
             </div>
 
             <div>
@@ -165,44 +180,51 @@ function SchoolCreateStudentContent() {
                 sx={{ width: '100%' }}
                 focused
                 size='small'
-                id="outlined-adornment-teachers"
-                label="Total Teachers"
+                id="outlined-adornment-id"
+                InputProps={{
+                  endAdornment: <InputAdornment position="end"><FaHashtag color='#191919' /></InputAdornment>,
+                }}
+                label="ID No"
                 variant="outlined"
-                name='total_teachers'
+                name='id_no'
                 onChange={formik.handleChange}
-                value={formik.values.total_teachers}
+                value={formik.values.id_no}
               />
-              {errorMessages?.total_teachers && <p className='formErrorText'>{errorMessages?.total_teachers[0]}</p>}
+              {errorMessages?.id_no && <p className='formErrorText'>{errorMessages?.id_no[0]}</p>}
             </div>
 
             <FormControl size='small' focused required>
-              <InputLabel id="demo-simple-select-label">Plans</InputLabel>
+              <InputLabel id="demo-simple-select-label">Class</InputLabel>
               <Select
-                id="outlined-adornment-Plans"
-                label="Plans"
-                value={formik.values.subscriptions}
+                id="outlined-adornment-class"
+                label="Class"
+                value={formik.values.class_id}
                 onChange={formik.handleChange}
-                name='subscriptions'
+                name='class_id'
               >
-                {kaino_plans.map((item, i) => <MenuItem key={i} value={item.value}>{item.name}</MenuItem>)}
+                <MenuItem value={1}>{'K1'}</MenuItem>
+                <MenuItem value={2}>{'K2'}</MenuItem>
+                <MenuItem value={3}>{'K3'}</MenuItem>
               </Select>
-              {errorMessages?.subscriptions && <p className='formErrorText'>{errorMessages?.subscriptions[0]}</p>}
+              {errorMessages?.class_id && <p className='formErrorText'>{errorMessages?.class_id[0]}</p>}
             </FormControl>
 
             <FormControl size='small' focused required>
-              <InputLabel id="demo-simple-select-label">Term System</InputLabel>
+              <InputLabel id="demo-simple-select-label">Religion</InputLabel>
               <Select
-                id="country-term_system"
-                label="Term System"
-                value={formik.values.term_system}
+                id="outlined-adornment-religion"
+                label="Select Religion"
+                value={formik.values.religion}
                 onChange={formik.handleChange}
-                name='term_system'
+                name='religion'
               >
-                {
-                  termSystem?.map((item, i) => <MenuItem key={i} value={item?.id}>{item?.term_name}</MenuItem>)
-                }
+                <MenuItem value={'Christian'}>Christian</MenuItem>
+                <MenuItem value={'Muslim'}>Islam</MenuItem>
+                <MenuItem value={'Hindu'}>Hindu</MenuItem>
+                <MenuItem value={'Buddhist'}>Buddhist</MenuItem>
+                <MenuItem value={'Others'}>Others</MenuItem>
               </Select>
-              {errorMessages?.term_system && <p className='formErrorText'>{errorMessages?.term_system[0]}</p>}
+              {errorMessages?.religion && <p className='formErrorText'>{errorMessages?.religion[0]}</p>}
             </FormControl>
 
             <div>
@@ -211,63 +233,12 @@ function SchoolCreateStudentContent() {
                 focused
                 required
                 size='small'
-                id="outlined-adornment-pricipal_name"
-                label="Pricipal Name"
-                variant="outlined"
-                name='principal_name'
-                onChange={formik.handleChange}
-                value={formik.values.principal_name}
-              />
-              {errorMessages?.principal_name && <p className='formErrorText'>{errorMessages?.principal_name[0]}</p>}
-            </div>
-
-            <div>
-              <TextField
-                sx={{ width: '100%' }}
-                focused
-                required
-                size='small'
-                id="outlined-adornment-phone_No"
-                InputProps={{
-                  endAdornment: <InputAdornment position="start"><AiOutlinePhone color='#191919' /></InputAdornment>,
-                }}
-                label="Phone"
-                variant="outlined"
-                name='phone'
-                onChange={formik.handleChange}
-                value={formik.values.phone}
-              />
-              {errorMessages?.phone && <p className='formErrorText'>{errorMessages?.phone[0]}</p>}
-            </div>
-
-            <div>
-              <TextField
-                sx={{ width: '100%' }}
-                focused
-                required
-                size='small'
-                id="outlined-adornment-weburl"
-                InputProps={{
-                  endAdornment: <InputAdornment position="start"><AiOutlineLink color='#191919' /></InputAdornment>,
-                }}
-                label="Website url"
-                type='url'
-                variant="outlined"
-                name='website_url'
-                onChange={formik.handleChange}
-                value={formik.values.website_url}
-              />
-              {errorMessages?.address && <p className='formErrorText'>{errorMessages?.address[0]}</p>}
-            </div>
-
-            <div>
-              <TextField
-                sx={{ width: '100%' }}
-                focused
-                required
-                size='small'
+                type='email'
                 id="outlined-adornment-email"
-                label="Email address"
+                InputProps={{
+                  endAdornment: <InputAdornment position="end"><AiOutlineMail color='#191919' /></InputAdornment>,
+                }}
+                label="Email"
                 variant="outlined"
                 name='email'
                 onChange={formik.handleChange}
@@ -280,6 +251,7 @@ function SchoolCreateStudentContent() {
               <TextField
                 sx={{ width: '100%' }}
                 focused
+                required
                 size='small'
                 id="outlined-adornment-address"
                 InputProps={{
@@ -295,83 +267,56 @@ function SchoolCreateStudentContent() {
             </div>
 
             <FormControl size='small' focused required>
-              <InputLabel id="demo-simple-select-label">Region</InputLabel>
+              <InputLabel id="demo-simple-select-label">Select Parent Name</InputLabel>
               <Select
-                id="region-select"
-                label="Region"
-                name='region'
-                value={formik.values.region}
+                id="outlined-adornment-parent"
+                label="Parent Name"
+                value={formik.values.parents_id}
                 onChange={formik.handleChange}
+                name='parents_id'
               >
-                <MenuItem value={'AL'}>AL</MenuItem>
-                <MenuItem value={'SL'}>SL</MenuItem>
-              </Select>
-              {errorMessages?.region && <p className='formErrorText'>{errorMessages?.region[0]}</p>}
-            </FormControl>
+                {
+                  parents.map((item, i) => <MenuItem key={i} value={item?.id}>{item.first_name + " " + item.last_name + " " + item.mobile_no}</MenuItem>)
+                }
 
-            <FormControl size='small' focused required>
-              <InputLabel id="demo-simple-select-label">City</InputLabel>
-              <Select
-                id="city-select"
-                label="City"
-                name='city'
-                value={formik.values.city}
-                onChange={formik.handleChange}
-              >
-                <MenuItem value={'South Town'}>South Town</MenuItem>
-                <MenuItem value={'Rizel'}>Rizel</MenuItem>
               </Select>
-              {errorMessages?.city && <p className='formErrorText'>{errorMessages?.city[0]}</p>}
+              {errorMessages?.parents_id && <p className='formErrorText'>{errorMessages?.parents_id[0]}</p>}
             </FormControl>
-
-            <FormControl size='small' focused required>
-              <InputLabel id="demo-simple-select-label">Country</InputLabel>
-              <Select
-                id="country-select"
-                label="Country"
-                name='country'
-                value={formik.values.country}
+            <div>
+              <TextField
+                sx={{ width: '100%' }}
+                focused
+                size='small'
+                id="outlined-adornment-phone_No"
+                InputProps={{
+                  endAdornment: <InputAdornment position="start"><AiOutlinePhone color='#191919' /></InputAdornment>,
+                }}
+                label="Phone"
+                variant="outlined"
+                name='mobile_no'
                 onChange={formik.handleChange}
-              >
-                {countries.map((item, i) => <MenuItem key={i} value={item}>{item}</MenuItem>)}
-              </Select>
-              {errorMessages?.country && <p className='formErrorText'>{errorMessages?.country[0]}</p>}
-            </FormControl>
+                value={formik.values.mobile_no}
+              />
+              {errorMessages?.mobile_no && <p className='formErrorText'>{errorMessages?.mobile_no[0]}</p>}
+            </div>
 
           </div>
-          <div style={{ marginTop: "1rem" }}>
-            <TextField
-              sx={{ width: '100%' }}
-              focused
-              required
-              id="outlined-adornment-description"
-              label="Brief Description"
-              variant="outlined"
-              name='description'
-              multiline
-              rows={4}
-              fullWidth
-              onChange={formik.handleChange}
-              value={formik.values.description}
-            />
-            {errorMessages?.description && <p className='formErrorText'>{errorMessages?.description[0]}</p>}
 
-          </div>
           <div style={{ marginTop: ".8rem" }}>
-            <p style={{ marginBottom: '1.5rem', color: "#444444", fontSize: '1rem', fontWeight: '600' }}>Upload School Logo (150px * 150px)</p>
+            <p style={{ marginBottom: '1.5rem', color: "#444444", fontSize: '1rem', fontWeight: '600' }}>Upload Student Photo (150px * 150px)</p>
             <label className={styles.fileUpload}>
-              {formik.values.logo_img ? 'Uploaded' : 'Choose File'}
-              <input type='file' style={{ display: "none" }} name='logo_img' onChange={(event) => {
-                formik.setFieldValue("logo_img", event.currentTarget.files[0]);
+              {formik.values.profile_img ? 'Uploaded' : 'Choose File'}
+              <input type='file' style={{ display: "none" }} name='profile_img' onChange={(event) => {
+                formik.setFieldValue("profile_img", event.currentTarget.files[0]);
               }} />
             </label>
-            {errorMessages?.logo_img && <p className='formErrorText'>{errorMessages?.logo_img[0]}</p>}
+            {errorMessages?.profile_img && <p className='formErrorText'>{errorMessages?.profile_img[0]}</p>}
 
           </div>
 
           <div style={{ marginTop: "2rem" }}>
-            <Button type='submit' variant='contained' sx={{ borderRadius: '6px', backgroundColor: "#5D79E6", width: "150px" }} disabled={createSchoolState.isLoading}>
-              {createSchoolState.isLoading ? loader_text : 'Submit'}
+            <Button type='submit' variant='contained' sx={{ borderRadius: '6px', backgroundColor: "#5D79E6", width: "150px" }} disabled={createStudentState.isLoading}>
+              {createStudentState.isLoading ? loader_text : 'Submit'}
             </Button>
           </div>
         </form>
