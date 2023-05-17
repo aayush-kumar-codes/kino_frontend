@@ -156,7 +156,7 @@ function SchoolDashboardContent() {
                     />
                     <Box sx={{ minHeight: '300px', marginTop: '1rem', display: 'flex', flexDirection: "column", justifyContent: 'space-between' }}>
                         <CounterCard
-                            to='/dashboard/school/all-students'
+                            to='/dashboard/school/students-card'
                             color={'#C6164F'}
                             icon={AiOutlineUserAddIcon}
                             totalText={'Students'}
