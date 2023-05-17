@@ -7,20 +7,18 @@ import { useSelector } from 'react-redux'
 import { createTermSystemRequest, createTermSystemReset } from '@/redux/slices/admin/createTermSystem'
 import { dispatch } from '@/redux/store'
 import { countries } from '@/utils/constant'
-import Axios from '@/utils/axios'
 
 function AdminTermSystemContent() {
   const createTermSystemState = useSelector(state => state.createTermSystem)
   const [errorMessages, setErrorMessages] = useState({})
   const router = useRouter()
   const [today] = useState(new Date().toISOString().split('T')[0]);
-  const [termSystem, setTermSystem] = useState([])
-
+  
   const initialValues = {
     term_start_date: "",
     mid_term_break: "",
     term_end_date: "",
-    term_name: 6,
+    term_name: '',
     country: "Kenya",
     academic_term: "3",
     academic_year: "2023",
@@ -43,21 +41,6 @@ function AdminTermSystemContent() {
     }
   })
 
-  const getTermSytem = async () => {
-    try {
-      const data = await Axios.get('api/get_term/')
-      if (data.data?.data) {
-        setTermSystem(data.data?.data)
-      }
-    }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-  useEffect(() => {
-    getTermSytem()
-  }, [])
 
   useEffect(() => {
     if (createTermSystemState.isError && createTermSystemState.data?.message) {
@@ -141,24 +124,21 @@ function AdminTermSystemContent() {
               {errorMessages?.term_end_date && <p className='formErrorText'>{errorMessages?.term_end_date[0]}</p>}
             </div>
 
-            <FormControl size='small' focused
-              sx={{ width: '100%' }}
-              required>
-              <InputLabel >Term Name</InputLabel>
-              <Select
+            <div>
+              <TextField
+                focused
+                sx={{ width: '100%' }}
+                required
+                size='small'
                 id="country-term_system"
                 label="Term Name"
+                variant="outlined"
+                name='term_name'
                 onChange={formHandler.handleChange}
                 value={formHandler.values.term_name}
-                name='term_name'
-                required
-              >
-                {
-                  termSystem?.map((item, i) => <MenuItem key={i} value={item?.id}>{item?.term_name}</MenuItem>)
-                }
-              </Select>
+              />
               {errorMessages?.term_name && <p className='formErrorText'>{errorMessages?.term_name[0]}</p>}
-            </FormControl>
+            </div>
 
             <FormControl size='small' focused
               sx={{ width: '100%' }}
