@@ -29,6 +29,8 @@ function SchoolLeftNav() {
                 setDefaultSelectedItem('7')
             else if (pathname === 'all-teachers')
                 setDefaultSelectedItem('8')
+            else if (pathname === 'all-parents')
+                setDefaultSelectedItem('9')
         }
         else
             setDefaultSelectedItem('1')
@@ -47,6 +49,8 @@ function SchoolLeftNav() {
             router.push('/dashboard/school/students-card')
         else if (key == '8')
             router.push('/dashboard/school/all-teachers')
+        else if (key == '9')
+            router.push('/dashboard/school/all-parents')
         else if (key === '14') {
             localStorage.clear()
             router.push('/')

@@ -148,7 +148,7 @@ function SchoolDashboardContent() {
                         totalNo={countData?.total_teachers || 0}
                     />
                     <CounterCard
-                        to='/dashboard/school/all-parents'
+                        to='/dashboard/school/parents-card'
                         color={'#4EAF96'}
                         icon={IoIosPeopleIcon}
                         totalText={'Parents'}
