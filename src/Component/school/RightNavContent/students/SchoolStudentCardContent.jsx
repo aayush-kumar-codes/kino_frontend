@@ -36,9 +36,9 @@ const SchoolStudentCardContent = () => {
     return (
         <div className={styles_new.classes_card_container}>
             {
-                Object.keys(data).map((item, i) => <Link key={i} href={`/dashboard/school/all-students?Class=${item}`} className={styles.card} style={{ background: "#C6164F" }}>
+                Object.keys(data).map((item, i) => <Link key={i} href={`/dashboard/school/students-by-gender?Class=${item}`} className={styles.card} style={{ background: "#C6164F" }}>
                     <div className={styles.icon_Container}>
-                        <p styles={{ fontSize: '2.6rem', color: '#C6164F' }}>{item}</p>
+                        <p style={{ fontSize: '2rem', color: "#C6164F" }}>{item}</p>
                     </div>
                     <Box className={styles.totalTextContainer} sx={{ gap: '4px!important' }}>
                         <p className={styles.totalText}>Total Students</p>

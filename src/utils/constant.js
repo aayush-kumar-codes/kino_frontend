@@ -87,6 +87,7 @@ export const arrayObjectFlat = (arr) => {
 
 import { saveAs } from 'file-saver';
 import json2csv from 'json2csv';
+import jwtDecode from 'jwt-decode';
 
 export function convertToCSV(data) {
     const csv = json2csv.parse(data);
@@ -96,7 +97,10 @@ export function convertToCSV(data) {
 }
 
 export const getRole = (id) => {
-    const roleDetails = rolesAccess.find(item => item.id == id)
-    const name = roleDetails.name
+    const token = localStorage.getItem('token')
+    const decoded = jwtDecode(token)
+    let roleId = id ? id : decoded?.role
+    const roleDetails = rolesAccess.find(item => item.id == roleId)
+    const name = roleDetails?.name
     return name
 }

@@ -12,7 +12,7 @@ import { RxCross1 } from 'react-icons/rx'
 import { arrayObjectFlat, convertToCSV } from '@/utils/constant';
 import StudentsList from '@/Component/admin/Table/StudentsList';
 
-const SchoolAllStudentsContent = ({ Class }) => {
+const SchoolAllStudentsContent = ({ Class, Gender }) => {
 
     const schoolStudentState = useSelector(state => state.schoolStudent)
     const [pageSize, setPageSize] = useState(10)
@@ -43,9 +43,15 @@ const SchoolAllStudentsContent = ({ Class }) => {
 
     useEffect(() => {
         if (Class) {
-            const payload = `class=${Class.toString()}&page_size=${pageSize}`
+            let payload;
+            if (Gender)
+                payload = `class=${Class.toString()}&gender=${Gender}&page_size=${pageSize}`
+            else
+                payload = `class=${Class.toString()}&page_size=${pageSize}`
             dispatch(schoolStudentRequest(payload))
         }
+        else
+            dispatch(schoolStudentRequest())
 
     }, [Class, pageSize])
 
@@ -101,8 +107,16 @@ const SchoolAllStudentsContent = ({ Class }) => {
             <Button variant="contained" size="large" disabled={!formik.dirty} sx={{ background: "red", marginTop: '1rem' }}
                 onClick={() => {
                     formik.resetForm()
-                    const payload = `class=${Class.toString()}`
-                    dispatch(schoolStudentRequest(payload))
+                    if (Class) {
+                        let payload;
+                        if (Gender)
+                            payload = `class=${Class.toString()}&gender=${Gender}&page_size=${pageSize}`
+                        else
+                            payload = `class=${Class.toString()}&page_size=${pageSize}`
+                        dispatch(schoolStudentRequest(payload))
+                    }
+                    else
+                        dispatch(schoolStudentRequest())
                 }}
             >
                 <RxCross1 />

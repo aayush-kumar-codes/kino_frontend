@@ -33,6 +33,7 @@ const slice = createSlice({
         schoolStudentReset(state) {
             state.isSuccess = false
             state.isError = false
+            state.data = {}
         }
     }
 })
