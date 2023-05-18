@@ -21,7 +21,7 @@ const SchoolStudentsByGender = ({ Class }) => {
 
     useEffect(() => {
         if (Class)
-            dispatch(schoolStudentRequest(`class=${Class}page_size=${pageSize}`))
+            dispatch(schoolStudentRequest(`class=${Class}&page_size=${pageSize}`))
     }, [pageSize, Class])
 
     useEffect(() => {

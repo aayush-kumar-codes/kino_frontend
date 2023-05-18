@@ -31,11 +31,11 @@ const SchoolAllStudentsContent = ({ Class, Gender }) => {
             else {
                 let payload;
                 if (values.phone && values.name)
-                    payload = `?phone=${values.phone}&name=${values.name}`
+                    payload = `phone=${values.phone}&name=${values.name}`
                 else if (values.phone)
-                    payload = `?phone=${values.phone}`
+                    payload = `phone=${values.phone}`
                 else if (values.name)
-                    payload = `?name=${values.name}`
+                    payload = `name=${values.name}`
                 dispatch(schoolStudentRequest(payload))
             }
         },
