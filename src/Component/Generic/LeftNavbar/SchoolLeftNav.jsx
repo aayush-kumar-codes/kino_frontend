@@ -26,7 +26,9 @@ function SchoolLeftNav() {
             else if (pathname == 'create-teacher')
                 setDefaultSelectedItem('5')
             else if (pathname == 'students-card')
-                setDefaultSelectedItem(7)
+                setDefaultSelectedItem('7')
+            else if (pathname === 'all-teachers')
+                setDefaultSelectedItem('8')
         }
         else
             setDefaultSelectedItem('1')
@@ -43,6 +45,8 @@ function SchoolLeftNav() {
             router.push('/dashboard/school/create-teacher')
         else if (key == '7')
             router.push('/dashboard/school/students-card')
+        else if (key == '8')
+            router.push('/dashboard/school/all-teachers')
         else if (key === '14') {
             localStorage.clear()
             router.push('/')

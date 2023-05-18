@@ -41,6 +41,7 @@ import createParent from "./slices/school/createParent";
 import createTeacher from "./slices/school/createTeacher";
 import getClassTeacher from "./slices/school/getClassTeacher";
 import schoolStudent from "./slices/school/schoolStudent";
+import schoolTeacher from "./slices/school/schoolTeacher";
 
 const rootReducer = combineReducers({
     login: login,
@@ -84,6 +85,7 @@ const rootReducer = combineReducers({
     createParent: createParent,
     createTeacher: createTeacher,
     getClassTeacher: getClassTeacher,
-    schoolStudent: schoolStudent
+    schoolStudent: schoolStudent,
+    schoolTeacher: schoolTeacher
 })
 export default rootReducer
