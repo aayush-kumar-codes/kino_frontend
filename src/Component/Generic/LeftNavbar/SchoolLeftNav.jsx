@@ -33,10 +33,11 @@ function SchoolLeftNav() {
                 setDefaultSelectedItem('9')
             else if (pathname === 'account-settings')
                 setDefaultSelectedItem('13')
+            else setDefaultSelectedItem('')
         }
         else
             setDefaultSelectedItem('1')
-    }, [])
+    }, [pathname])
 
     const handleChange = ({ key }) => {
         if (key === '1')

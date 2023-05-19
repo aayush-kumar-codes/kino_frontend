@@ -30,10 +30,11 @@ function AdminLeftNav() {
                 setDefaultSelectedItem('6')
             else if (pathname === 'account-settings')
                 setDefaultSelectedItem('7')
+            else setDefaultSelectedItem('')
         }
         else
             setDefaultSelectedItem('1')
-    }, [])
+    }, [pathname])
 
     const handleChange = ({ key }) => {
         if (key === '1')

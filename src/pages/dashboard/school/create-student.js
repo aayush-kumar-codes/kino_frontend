@@ -1,22 +1,15 @@
-import { Layout } from 'antd';
-import React from 'react';
-import SchoolLeftNav from '@/Component/Generic/LeftNavbar/SchoolLeftNav';
-import SchoolHeader from '@/Component/Generic/Header/SchoolHeader';
-import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
+import React, { useEffect } from 'react';
 import SchoolCreateStudentContent from '@/Component/school/RightNavContent/students/SchoolCreateStudentContent';
+import { dispatch } from '@/redux/store';
+import { setHeader } from '@/redux/slices/HeaderTitle';
 
 const CreateStudent = () => {
+    useEffect(() => {
+        dispatch(setHeader("Create Student"))
+    }, [])
 
     return (
-        <Layout style={{ minHeight: '100vh', maxHeight: "100vh", overflow: "hidden" }}>
-            <SchoolLeftNav />
-            <Layout className="site-layout" style={{ maxHeight: "100vh", overflow: 'scroll', overflowX: "hidden" }}>
-                <SchoolHeader headerText='Create Student' />
-                <RightContentWrapper padding='14px'>
-                    <SchoolCreateStudentContent />
-                </RightContentWrapper>
-            </Layout>
-        </Layout>
+        <SchoolCreateStudentContent />
     );
 };
 export default CreateStudent;

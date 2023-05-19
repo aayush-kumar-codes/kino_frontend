@@ -44,6 +44,7 @@ import schoolStudent from "./slices/school/schoolStudent";
 import schoolTeacher from "./slices/school/schoolTeacher";
 import schoolParent from "./slices/school/schoolParent";
 import getParentCount from "./slices/school/getParentCount";
+import headerTitle from "./slices/HeaderTitle";
 
 const rootReducer = combineReducers({
     login: login,
@@ -82,6 +83,7 @@ const rootReducer = combineReducers({
     deleteInvoice: deleteInvoice,
     updateInvoice: updateInvoice,
     navbar: navbar,
+    headerTitle:headerTitle,
     getSchoolDashboard: getSchoolDashboard,
     createStudent: createStudent,
     createParent: createParent,

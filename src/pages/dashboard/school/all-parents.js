@@ -1,25 +1,19 @@
-import { Layout } from 'antd';
-import React from 'react';
-import SchoolLeftNav from '@/Component/Generic/LeftNavbar/SchoolLeftNav';
-import SchoolHeader from '@/Component/Generic/Header/SchoolHeader';
-import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import SchoolAllParents from '@/Component/school/RightNavContent/parents/SchoolAllParents';
+import { dispatch } from '@/redux/store';
+import { setHeader } from '@/redux/slices/HeaderTitle';
 
 const AllParents = () => {
     const router = useRouter()
     const { Class } = router.query
 
+    useEffect(() => {
+        dispatch(setHeader("Parents"))
+    }, [])
+
     return (
-        <Layout style={{ minHeight: '100vh', maxHeight: "100vh", overflow: "hidden" }}>
-            <SchoolLeftNav />
-            <Layout className="site-layout" style={{ maxHeight: "100vh", overflow: 'scroll', overflowX: "hidden" }}>
-                <SchoolHeader headerText='Parents' />
-                <RightContentWrapper padding='14px'>
-                    <SchoolAllParents Class={Class} />
-                </RightContentWrapper>
-            </Layout>
-        </Layout>
+        <SchoolAllParents Class={Class} />
     );
 };
 export default AllParents;

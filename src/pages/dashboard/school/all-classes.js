@@ -1,31 +1,16 @@
-import { Layout } from 'antd';
-import React from 'react';
-import dynamic from 'next/dynamic';
-
-const SchoolAllClassesContent = dynamic(
-    () => import('@/Component/school/RightNavContent/classes/SchoolAllClassesContent')
-);
-const SchoolLeftNav = dynamic(
-    () => import('@/Component/Generic/LeftNavbar/SchoolLeftNav')
-);
-const SchoolHeader = dynamic(
-    () => import('@/Component/Generic/Header/SchoolHeader')
-);
-const RightContentWrapper = dynamic(
-    () => import('@/Component/Generic/RightBarContent/RightContentWrapper')
-);
+import React, { useEffect } from 'react';
+import { dispatch } from '@/redux/store';
+import { setHeader } from '@/redux/slices/HeaderTitle';
+import SchoolAllClassesContent from '@/Component/school/RightNavContent/classes/SchoolAllClassesContent';
 
 const AllClasses = () => {
+
+    useEffect(() => {
+        dispatch(setHeader("Classes"))
+    }, [])
+
     return (
-        <Layout style={{ minHeight: '100vh', maxHeight: '100vh', overflow: 'hidden' }}>
-            <SchoolLeftNav />
-            <Layout className="site-layout" style={{ maxHeight: '100vh', overflow: 'scroll', overflowX: 'hidden' }}>
-                <SchoolHeader headerText='Classes' />
-                <RightContentWrapper padding='14px'>
-                    <SchoolAllClassesContent />
-                </RightContentWrapper>
-            </Layout>
-        </Layout>
+        <SchoolAllClassesContent />
     );
 };
 

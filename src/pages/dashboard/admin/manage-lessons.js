@@ -1,22 +1,16 @@
-import { Layout } from 'antd';
-import React from 'react';
-import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
-import AdminHeader from '@/Component/Generic/Header/AdminHeader';
-import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
+import React, { useEffect } from 'react';
 import AdminManageLessionsContent from '@/Component/admin/RightNavContent/lessons/AdminManageLessionsContent';
+import { dispatch } from '@/redux/store';
+import { setHeader } from '@/redux/slices/HeaderTitle';
 
 const ManageLessons = () => {
 
+    useEffect(() => {
+        dispatch(setHeader('School'))
+    }, [])
+
     return (
-        <Layout style={{ minHeight: "100vh", maxHeight: "100vh", overflow: "hidden" }}>
-            <AdminLeftNav />
-            <Layout className="site-layout" style={{ maxHeight: "100vh", overflow: 'scroll', overflowX: "hidden" }}>
-                <AdminHeader headerText='School' />
-                <RightContentWrapper padding='18px'>
-                    <AdminManageLessionsContent />
-                </RightContentWrapper>
-            </Layout>
-        </Layout>
+        <AdminManageLessionsContent />
     );
 };
 export default ManageLessons;

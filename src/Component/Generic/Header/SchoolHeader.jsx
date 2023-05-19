@@ -13,8 +13,8 @@ import { getNotificationsRequest, getNotificationsReset } from '@/redux/slices/g
 import { useSelector } from 'react-redux';
 import { setIsCollapsed } from '@/redux/slices/navbar';
 
-function SchoolHeader({ headerText }) {
-
+function SchoolHeader() {
+    const headerTitleState = useSelector(state => state.headerTitle)
     const {
         token: { colorBgContainer },
     } = theme.useToken();
@@ -89,7 +89,7 @@ function SchoolHeader({ headerText }) {
                         size: "2rem",
                         color: "#891b55"
                     })}
-                    <p className={styles.headerLeft_title}>{headerText}</p>
+                    <p className={styles.headerLeft_title}>{headerTitleState.title}</p>
                 </div>
                 <div className={styles.display_flex} style={{ marginLeft: "8px" }}>
                     <form onSubmit={handleSearch}>
