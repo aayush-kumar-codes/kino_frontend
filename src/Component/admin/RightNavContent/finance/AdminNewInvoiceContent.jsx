@@ -316,7 +316,7 @@ const AdminNewInvoiceContent = ({ id }) => {
                                     </span></p>
                                 </Box>
                                 <Box className={styles.invoice_details_right_div}>
-                                    <p style={{ fontSize: '1rem', fontWeight: '700' }}>Due Date <span style={{ color: '#4e6ce0', cursor: "pointer" }}>
+                                    <div style={{ fontSize: '1rem', fontWeight: '700' }}>Due Date <span style={{ color: '#4e6ce0', cursor: "pointer" }}>
                                         <TextField
                                             type='date'
                                             focused
@@ -330,7 +330,7 @@ const AdminNewInvoiceContent = ({ id }) => {
                                             formik.errors.due_date && formik.touched.due_date && <p className='formErrorText'>{formik.errors.due_date}</p>
                                         }
                                     </span>
-                                    </p>
+                                    </div>
                                 </Box>
                             </Box>
                         </div>
