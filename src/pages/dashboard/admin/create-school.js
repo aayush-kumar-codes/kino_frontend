@@ -1,20 +1,17 @@
 import { Layout } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import AdminLeftNav from '@/Component/Generic/LeftNavbar/AdminLeftNav';
 import AdminHeader from '@/Component/Generic/Header/AdminHeader';
 import RightContentWrapper from '@/Component/Generic/RightBarContent/RightContentWrapper';
-import AdminCreateSchoolContent from '@/Component/admin/RighNavContent/AdminCreateSchoolContent';
+import AdminCreateSchoolContent from '@/Component/admin/RightNavContent/schools/AdminCreateSchoolContent';
 
 const CreateSchool = () => {
 
-    const [collapsed, setCollapsed] = useState(false);
-
-
     return (
         <Layout style={{ maxHeight: "100vh", overflow: "hidden" }}>
-            <AdminLeftNav collapsed={collapsed} />
+            <AdminLeftNav />
             <Layout className="site-layout" style={{ maxHeight: "100vh", overflow: 'scroll', overflowX: "hidden" }}>
-                <AdminHeader collapsed={collapsed} setCollapsed={setCollapsed} headerText='School' />
+                <AdminHeader headerText='School' />
                 <RightContentWrapper padding='12px'>
                     <AdminCreateSchoolContent />
                 </RightContentWrapper>
@@ -22,4 +19,5 @@ const CreateSchool = () => {
         </Layout>
     );
 };
+
 export default CreateSchool;

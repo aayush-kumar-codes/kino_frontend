@@ -22,6 +22,23 @@ import updateRole from "./slices/admin/updateRole";
 import getAllParents from "./slices/admin/getAllParents";
 import getAllTeachers from "./slices/admin/getAllTeachers";
 import getAllStudents from "./slices/admin/getAllStudents";
+import getNotifications from "./slices/getNotifications";
+import clearNotification from "./slices/clearNotification";
+import getAllOrgnizations from "./slices/admin/getAllOrgnizations";
+import getTopOrg from "./slices/admin/getTopOrg";
+import getFinanceHome from "./slices/admin/getFinanceHome";
+import getChart from "./slices/admin/getChart";
+import preInvoice from "./slices/admin/preInvoice";
+import createInvoice from "./slices/admin/createInvoice";
+import getAllInvoices from "./slices/admin/getAllInvoices";
+import getSingleInvoice from "./slices/admin/getSingleInvoice";
+import deleteInvoice from "./slices/admin/deleteInvoice";
+import updateInvoice from "./slices/admin/updateInvoice";
+import navbar from "./slices/navbar";
+import getSchoolDashboard from "./slices/school/getSchoolDashboard";
+import createStudent from "./slices/school/createStudent";
+import createParent from "./slices/school/createParent";
+import createTeacher from "./slices/school/createTeacher";
 
 const rootReducer = combineReducers({
     login: login,
@@ -46,6 +63,23 @@ const rootReducer = combineReducers({
     updateRole: updateRole,
     getAllParents: getAllParents,
     getAllTeachers: getAllTeachers,
-    getAllStudents:getAllStudents
+    getAllStudents: getAllStudents,
+    getNotifications: getNotifications,
+    clearNotification: clearNotification,
+    getAllOrgnizations: getAllOrgnizations,
+    getTopOrg: getTopOrg,
+    getFinanceHome: getFinanceHome,
+    getChart: getChart,
+    preInvoice: preInvoice,
+    createInvoice: createInvoice,
+    getAllInvoices: getAllInvoices,
+    getSingleInvoice: getSingleInvoice,
+    deleteInvoice: deleteInvoice,
+    updateInvoice: updateInvoice,
+    navbar: navbar,
+    getSchoolDashboard: getSchoolDashboard,
+    createStudent: createStudent,
+    createParent: createParent,
+    createTeacher: createTeacher
 })
 export default rootReducer
