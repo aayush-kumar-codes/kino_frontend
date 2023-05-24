@@ -124,15 +124,15 @@ function SchoolDashboardContent() {
                     <Link href={'/#'} className={styles.card_left} style={{ background: '#6759D1' }}>
                         <div style={{ zIndex: 3 }}>
                             <p>Roll Call Summary</p>
-                            <p className={styles.cardLeft_textSize} style={{ fontSize: "2rem", fontWeight: '800' }}>{0}/{0}</p>
+                            <p className={styles.cardLeft_textSize} style={{ fontSize: "2rem", fontWeight: '800' }}>{countData?.summery_percentage || 0}/{100}</p>
                         </div>
                         <div style={{ zIndex: 3 }}>
                             <p>Students Present</p>
-                            <p className={styles.cardLeft_textSize} style={{ fontSize: "2rem", fontWeight: '800' }}>{0}</p>
+                            <p className={styles.cardLeft_textSize} style={{ fontSize: "2rem", fontWeight: '800' }}>{countData?.present || 0}</p>
                         </div>
                         <div style={{ zIndex: 3 }}>
                             <p>Students Absent</p>
-                            <p className={styles.cardLeft_textSize} style={{ fontSize: "2rem", fontWeight: '800' }}>{0}</p>
+                            <p className={styles.cardLeft_textSize} style={{ fontSize: "2rem", fontWeight: '800' }}>{countData?.absent || 0}</p>
                         </div>
                         <div className={styles.circleDiv}>
                         </div>

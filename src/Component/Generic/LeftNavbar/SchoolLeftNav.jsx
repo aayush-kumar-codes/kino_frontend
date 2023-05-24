@@ -35,6 +35,8 @@ function SchoolLeftNav() {
                 setDefaultSelectedItem('10')
             else if (pathname === 'subscriptions')
                 setDefaultSelectedItem('11')
+            else if (pathname === 'accounts')
+                setDefaultSelectedItem('12')
             else if (pathname === 'account-settings')
                 setDefaultSelectedItem('13')
             else setDefaultSelectedItem('')
@@ -62,6 +64,8 @@ function SchoolLeftNav() {
             router.push('/dashboard/school/roll-call')
         else if (key == '11')
             router.push('/dashboard/school/subscriptions')
+        else if (key == '12')
+            router.push('/dashboard/school/accounts')
         else if (key == '13')
             router.push('/dashboard/school/account-settings')
         else if (key === '14') {

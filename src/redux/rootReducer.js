@@ -48,6 +48,11 @@ import headerTitle from "./slices/HeaderTitle";
 import getAttendance from "./slices/school/getAttendance";
 import rollCallStudent from "./slices/school/rollCallStudent";
 import getPieChart from "./slices/school/getPieChart";
+import schoolPayments from "./slices/school/schoolPayments";
+import schoolSingleInv from "./slices/school/schoolSingleInv";
+import getSchoolData from "./slices/school/getSchoolData";
+import getSchoolBilling from "./slices/school/getSchoolBilling";
+import updateSchoolPersonal from "./slices/school/updateSchoolPersonal";
 
 const rootReducer = combineReducers({
     login: login,
@@ -98,6 +103,11 @@ const rootReducer = combineReducers({
     getParentCount: getParentCount,
     getAttendance: getAttendance,
     rollCallStudent: rollCallStudent,
-    getPieChart: getPieChart
+    getPieChart: getPieChart,
+    schoolPayments: schoolPayments,
+    schoolSingleInv: schoolSingleInv,
+    getSchoolData: getSchoolData,
+    getSchoolBilling: getSchoolBilling,
+    updateSchoolPersonal: updateSchoolPersonal
 })
 export default rootReducer
