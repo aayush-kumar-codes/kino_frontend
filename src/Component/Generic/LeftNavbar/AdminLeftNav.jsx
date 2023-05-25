@@ -1,6 +1,5 @@
 import { FaRegBuilding } from 'react-icons/fa'
 import { BsTerminal } from 'react-icons/bs'
-import { GoBook } from 'react-icons/go'
 import { Layout, Menu } from 'antd';
 import styles from '@/styles/adminNavbar.module.css'
 import { AiOutlineHome, AiOutlineLogout, AiOutlineSetting, AiOutlineUserAdd } from 'react-icons/ai';
@@ -22,8 +21,6 @@ function AdminLeftNav() {
                 setDefaultSelectedItem('2')
             else if (pathname === 'term-system')
                 setDefaultSelectedItem('3')
-            else if (pathname === 'manage-lessons')
-                setDefaultSelectedItem('4')
             else if (pathname === 'user-roles')
                 setDefaultSelectedItem('5')
             else if (pathname === 'finances')
@@ -43,8 +40,6 @@ function AdminLeftNav() {
             router.push('/dashboard/admin/create-school')
         else if (key === '3')
             router.push('/dashboard/admin/term-system')
-        else if (key === '4')
-            router.push('/dashboard/admin/manage-lessons')
         else if (key === '5')
             router.push('/dashboard/admin/user-roles')
         else if (key === '6')
@@ -101,12 +96,6 @@ function AdminLeftNav() {
                         icon: <BsTerminal size={"1.6rem"} />,
                         style: { width: "100%" },
                         label: 'Term System',
-                    },
-                    {
-                        key: '4',
-                        icon: <GoBook size={"1.6rem"} />,
-                        style: { width: "100%" },
-                        label: 'Lessons',
                     },
                     {
                         key: '5',

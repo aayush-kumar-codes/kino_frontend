@@ -52,8 +52,8 @@ const SchoolBillingContent = ({ data }) => {
                             include {getBenefits(data?.benefits || [])}
                             and more.
                         </Typography>
-                        <Button variant='contained' size='large' sx={{ width: 'fit-content' }} onClick={() => router.push('/dashboard/school/accounts')}>
-                            See Plan
+                        <Button variant='contained' size='large' sx={{ width: 'fit-content' }}>
+                            Cancel Plan
                         </Button>
                     </Box>
                     <Box sx={{ marginTop: '2rem' }}>

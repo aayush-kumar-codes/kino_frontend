@@ -8,6 +8,7 @@ import { IoIosPeople, IoMdSchool } from 'react-icons/io';
 import { BiUser } from 'react-icons/bi';
 import { MdAccountBox } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import { GoBook } from 'react-icons/go';
 
 const { Sider } = Layout;
 
@@ -25,6 +26,8 @@ function SchoolLeftNav() {
                 setDefaultSelectedItem('4')
             else if (pathname == 'create-teacher')
                 setDefaultSelectedItem('5')
+            if (pathname === 'all-coverage')
+                setDefaultSelectedItem('6')
             else if (pathname == 'students-card')
                 setDefaultSelectedItem('7')
             else if (pathname === 'all-teachers')
@@ -39,6 +42,8 @@ function SchoolLeftNav() {
                 setDefaultSelectedItem('12')
             else if (pathname === 'account-settings')
                 setDefaultSelectedItem('13')
+            else if (pathname === 'manage-lessons')
+                setDefaultSelectedItem('15')
             else setDefaultSelectedItem('')
         }
         else
@@ -54,6 +59,8 @@ function SchoolLeftNav() {
             router.push('/dashboard/school/create-parent')
         else if (key === '5')
             router.push('/dashboard/school/create-teacher')
+        if (key === '6')
+            router.push('/dashboard/school/all-coverage')
         else if (key == '7')
             router.push('/dashboard/school/students-card')
         else if (key == '8')
@@ -68,6 +75,8 @@ function SchoolLeftNav() {
             router.push('/dashboard/school/accounts')
         else if (key == '13')
             router.push('/dashboard/school/account-settings')
+        else if (key == '15')
+            router.push('/dashboard/school/manage-lessons')
         else if (key === '14') {
             localStorage.clear()
             router.push('/')
@@ -123,6 +132,9 @@ function SchoolLeftNav() {
                 </Menu.Item>
                 <Menu.Item key="9" icon={<BiUser size={"1.6rem"} />} style={{ width: "100%" }}>
                     Parents
+                </Menu.Item>
+                <Menu.Item key="15" icon={<GoBook size={"1.6rem"} />} style={{ width: "100%" }}>
+                    Lessons
                 </Menu.Item>
                 <Menu.Item key="10" icon={<AiOutlineCheckCircle size={"1.6rem"} />} style={{ width: "100%" }}>
                     Roll-Call

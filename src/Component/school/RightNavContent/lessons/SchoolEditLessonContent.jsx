@@ -10,7 +10,7 @@ import Axios from '@/utils/axios'
 import { getSingleLessonRequest, getSingleLessonReset } from '@/redux/slices/admin/getSingleLesson'
 import { editSingleLessonsRequest, editSingleLessonsReset } from '@/redux/slices/admin/editSingleLessons'
 
-function AdminEditLessonContent({ id }) {
+function SchoolEditLessonContent({ id }) {
     const [errorMessages, setErrorMessages] = useState({})
     const [termSystem, setTermSystem] = useState([])
     const editSingleLessonsState = useSelector(state => state.editSingleLessons)
@@ -70,7 +70,7 @@ function AdminEditLessonContent({ id }) {
         if (editSingleLessonsState.isSuccess) {
             dispatch(editSingleLessonsReset())
             formik.resetForm()
-            router.push('/dashboard/admin/manage-lessons')
+            router.push('/dashboard/school/manage-lessons')
         }
     }, [editSingleLessonsState.isSuccess])
 
@@ -226,4 +226,4 @@ function AdminEditLessonContent({ id }) {
     )
 }
 
-export default AdminEditLessonContent
+export default SchoolEditLessonContent

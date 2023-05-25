@@ -12,13 +12,14 @@ import { dispatch } from '@/redux/store';
 import { getNotificationsRequest, getNotificationsReset } from '@/redux/slices/getNotifications';
 import { useSelector } from 'react-redux';
 import { setIsCollapsed } from '@/redux/slices/navbar';
+import { useRouter } from 'next/router';
 
 function SchoolHeader() {
     const headerTitleState = useSelector(state => state.headerTitle)
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-
+    const router = useRouter()
     const [data, setData] = useState([])
     const getNotificationsState = useSelector(state => state.getNotifications)
     const { isCollapsed } = useSelector(state => state.navbar)
@@ -115,7 +116,7 @@ function SchoolHeader() {
                             <MdNotificationsNone style={{ cursor: 'pointer' }} size={'28px'} onClick={() => setIsNotification(isNotification ? false : true)} />
                         </Badge>
                     </div>
-                    <div style={{ marginLeft: "15px", gap: '15px' }} className={styles.display_flex}>
+                    <div style={{ marginLeft: "15px", gap: '15px', cursor: "pointer" }} className={styles.display_flex} onClick={() => router.push('/dashboard/school/school-profile')}>
                         <Avatar size="large" icon={<AiOutlineProfile />} />
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             <span style={{ height: "20px", fontWeight: '700', color: "#505050" }}>School</span>

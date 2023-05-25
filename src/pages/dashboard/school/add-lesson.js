@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import AdminLessionFormContent from '@/Component/admin/RightNavContent/lessons/AdminLessionFormContent';
+import SchoolLessionFormContent from '@/Component/school/RightNavContent/lessons/SchoolLessionFormContent';
 import { dispatch } from '@/redux/store';
 import { setHeader } from '@/redux/slices/HeaderTitle';
 
@@ -10,7 +10,7 @@ const AddLesson = () => {
     }, [])
 
     return (
-        <AdminLessionFormContent />
+        <SchoolLessionFormContent />
     );
 };
 export default AddLesson;

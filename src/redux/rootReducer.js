@@ -53,6 +53,9 @@ import schoolSingleInv from "./slices/school/schoolSingleInv";
 import getSchoolData from "./slices/school/getSchoolData";
 import getSchoolBilling from "./slices/school/getSchoolBilling";
 import updateSchoolPersonal from "./slices/school/updateSchoolPersonal";
+import getCoverrage from "./slices/school/getCoverrage";
+import getSchoolProfile from "./slices/school/getSchoolProfile";
+import updateSchoolProfile from "./slices/school/updateSchoolProfile";
 
 const rootReducer = combineReducers({
     login: login,
@@ -108,6 +111,9 @@ const rootReducer = combineReducers({
     schoolSingleInv: schoolSingleInv,
     getSchoolData: getSchoolData,
     getSchoolBilling: getSchoolBilling,
-    updateSchoolPersonal: updateSchoolPersonal
+    updateSchoolPersonal: updateSchoolPersonal,
+    getCoverrage: getCoverrage,
+    getSchoolProfile: getSchoolProfile,
+    updateSchoolProfile: updateSchoolProfile
 })
 export default rootReducer

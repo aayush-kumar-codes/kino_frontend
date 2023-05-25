@@ -3,7 +3,7 @@ import styles from '@/styles/adminLessions.module.css'
 import { Input, Select } from 'antd'
 import { Button } from '@mui/material'
 import { useFormik } from 'formik';
-import SelectTableSort from '../../Table/SelectTableSort';
+import SelectTableSort from '../../../admin/Table/SelectTableSort';
 import { AiOutlineEdit, AiOutlineEye } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import { dispatch } from '@/redux/store';
 import { getLessonsRequest, getLessonsReset } from '@/redux/slices/admin/getLessons';
 import { RxCross1 } from 'react-icons/rx'
 
-function AdminManageLessionsContent() {
+function SchoolManageLessionsContent() {
     const router = useRouter()
     const getLessonsState = useSelector(state => state.getLessons)
     const [pageSize, setPageSize] = useState(10)
@@ -51,7 +51,7 @@ function AdminManageLessionsContent() {
             title: 'Action',
             render: ({ id }) => (
                 <div style={{ display: 'flex', gap: '8px' }}>
-                    <button className={styles.actionBtn} onClick={() => router.push(`/dashboard/admin/edit-lesson?id=${id}`)}><AiOutlineEdit /></button>
+                    <button className={styles.actionBtn} onClick={() => router.push(`/dashboard/school/edit-lesson?id=${id}`)}><AiOutlineEdit /></button>
                     <button disabled className={styles.actionBtn} style={{ color: 'red' }}><AiOutlineEye /></button>
                 </div>
             )
@@ -147,7 +147,7 @@ function AdminManageLessionsContent() {
             <div className={styles.tableContainer}>
                 <div className={styles.header}>
                     <p className={styles.breadcrumbs_left}>Lessons</p>
-                    <Button variant="contained" size="large" onClick={() => router.push('/dashboard/admin/add-lesson')}>
+                    <Button variant="contained" size="large" onClick={() => router.push('/dashboard/school/add-lesson')}>
                         Create
                     </Button>
                 </div>
@@ -184,4 +184,4 @@ function AdminManageLessionsContent() {
     )
 }
 
-export default AdminManageLessionsContent
+export default SchoolManageLessionsContent

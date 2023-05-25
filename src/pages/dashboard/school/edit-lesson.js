@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import AdminEditLessonContent from '@/Component/admin/RightNavContent/lessons/AdminEditLessonContent';
+import SchoolEditLessonContent from '@/Component/school/RightNavContent/lessons/SchoolEditLessonContent';
 import { setHeader } from '@/redux/slices/HeaderTitle';
 import { dispatch } from '@/redux/store';
 
@@ -9,11 +9,11 @@ const EditLesson = () => {
     const { id } = router.query
 
     useEffect(() => {
-        dispatch(setHeader('Total Schools'))
+        dispatch(setHeader('Add Lesson'))
     }, [])
 
     return (
-        <AdminEditLessonContent id={id} />
+        <SchoolEditLessonContent id={id} />
     );
 };
 export default EditLesson;

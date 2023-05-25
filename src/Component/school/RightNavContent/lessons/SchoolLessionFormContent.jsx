@@ -9,7 +9,7 @@ import { createLessonRequest, createLessonReset } from '@/redux/slices/admin/cre
 import { useRouter } from 'next/router'
 import Axios from '@/utils/axios'
 
-function AdminLessionFormContent() {
+function SchoolLessionFormContent() {
   const [errorMessages, setErrorMessages] = useState({})
   const [termSystem, setTermSystem] = useState([])
   const createLessonState = useSelector(state => state.createLesson)
@@ -58,7 +58,7 @@ function AdminLessionFormContent() {
     if (createLessonState.isSuccess) {
       dispatch(createLessonReset())
       formik.resetForm()
-      router.push('/dashboard/admin/manage-lessons')
+      router.push('/dashboard/school/manage-lessons')
     }
   }, [createLessonState.isSuccess])
 
@@ -207,4 +207,4 @@ function AdminLessionFormContent() {
   )
 }
 
-export default AdminLessionFormContent
+export default SchoolLessionFormContent

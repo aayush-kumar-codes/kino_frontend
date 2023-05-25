@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import AdminManageLessionsContent from '@/Component/admin/RightNavContent/lessons/AdminManageLessionsContent';
+import SchoolManageLessionsContent from '@/Component/school/RightNavContent/lessons/SchoolManageLessionsContent';
 import { dispatch } from '@/redux/store';
 import { setHeader } from '@/redux/slices/HeaderTitle';
 
 const ManageLessons = () => {
 
     useEffect(() => {
-        dispatch(setHeader('School'))
+        dispatch(setHeader('Lessons'))
     }, [])
 
     return (
-        <AdminManageLessionsContent />
+        <SchoolManageLessionsContent />
     );
 };
 export default ManageLessons;
