@@ -1,11 +1,15 @@
+import Axios from '@/utils/axios'
 import { Box, Button, Typography } from '@mui/material'
+import { Modal } from 'antd'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import { useCallback } from 'react'
 import { BsArrowCounterclockwise, BsWallet2 } from 'react-icons/bs'
+import { toast } from 'react-toastify'
 
 const SchoolBillingContent = ({ data }) => {
     const router = useRouter()
+    const [isModal, setIsModal] = useState(false)
 
     const getBenefits = useCallback((benefitsData) => {
         const nameList = benefitsData.map(item => item.name);
@@ -13,8 +17,31 @@ const SchoolBillingContent = ({ data }) => {
         return joinedNames + " "
     }, [data])
 
+    const handleCancelPlan = () => {
+        setIsModal(false)
+        toast.warn('Please wait..')
+        try {
+            Axios.delete('api/subscription/school_plan_cancel/')
+            toast.dismiss()
+            toast.success('Cancelled Successfully')
+        }
+        catch (e) {
+            toast.error('Something went wrong')
+
+        }
+    }
+
     return (
         <Box sx={{ marginTop: "2rem", display: 'grid', gridTemplateColumns: "1fr 1fr", columnGap: "2rem" }}>
+            {
+                isModal && <Modal
+                    open={isModal}
+                    centered
+                    onCancel={() => setIsModal(false)}
+                    title='Are you sure want to cancel this plan?'
+                    onOk={() => handleCancelPlan()}
+                />
+            }
             <Box>
                 <Box sx={{ marginBottom: '1rem', display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
                     <BsWallet2 size={'1.5rem'} />
@@ -52,7 +79,7 @@ const SchoolBillingContent = ({ data }) => {
                             include {getBenefits(data?.benefits || [])}
                             and more.
                         </Typography>
-                        <Button variant='contained' size='large' sx={{ width: 'fit-content' }}>
+                        <Button variant='contained' size='large' sx={{ width: 'fit-content' }} onClick={() => setIsModal(true)}>
                             Cancel Plan
                         </Button>
                     </Box>

@@ -1,18 +1,40 @@
+import { getSchoolBillingRequest, getSchoolBillingReset } from '@/redux/slices/school/getSchoolBilling'
+import { dispatch } from '@/redux/store'
 import { Box, Button, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiFillSetting, AiOutlineBook, AiOutlineCreditCard, AiOutlineMobile } from 'react-icons/ai'
 import { BsCashCoin } from 'react-icons/bs'
+import { useSelector } from 'react-redux'
 
 const SchoolSubscriptions = () => {
-
+    const [billingData, setBillingData] = useState({})
+    const getSchoolBillingState = useSelector(state => state.getSchoolBilling)
     const router = useRouter()
+
+    useEffect(() => {
+        dispatch(getSchoolBillingRequest())
+    }, [])
+
+    useEffect(() => {
+        if (getSchoolBillingState.isSuccess) {
+            setBillingData(getSchoolBillingState.data?.data)
+            dispatch(getSchoolBillingReset())
+        }
+    }, [getSchoolBillingState.isSuccess])
+
+    const getBenefits = (benefitsData) => {
+        const nameList = benefitsData.map(item => item.name);
+        const joinedNames = nameList.join(", ");
+        return joinedNames + " "
+    }
+
 
     return (
         <Box sx={{ padding: "1rem" }}>
             <Box>
                 <Typography variant='h6'>
-                    Welcome, St. Patrick Kindergarten, Kisumu
+                    Welcome, {billingData?.school_name}
                 </Typography>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', columnGap: '1rem', marginTop: 3 }}>
 
@@ -120,14 +142,14 @@ const SchoolSubscriptions = () => {
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <Typography sx={{ fontWeight: '500', fontSize: '1.2rem' }}>
-                                Kaino Plus Annual Member
+                                {billingData?.plan_name || ''} Annual Member
                             </Typography>
                             <Typography sx={{ color: "#48C1C1" }} variant='h6'>
-                                $99/Year
+                                ${billingData?.price || 0}/Year
                             </Typography>
                             <Typography variant='body1'>
-                                About Kaino Plus. Members receive benefits which
-                                include A, B,C, D, unlimited reading, and more.
+                                About {billingData?.plan_name || ''}. Members receive benefits which
+                                include {getBenefits(billingData?.benefits || [])} and more.
                             </Typography>
                             <Button variant='contained' size='large' sx={{ width: 'fit-content' }} onClick={() => router.push('/dashboard/school/accounts')}>
                                 See Plan
