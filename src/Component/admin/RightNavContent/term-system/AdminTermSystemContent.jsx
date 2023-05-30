@@ -7,13 +7,14 @@ import { useSelector } from 'react-redux'
 import { createTermSystemRequest, createTermSystemReset } from '@/redux/slices/admin/createTermSystem'
 import { dispatch } from '@/redux/store'
 import { countries } from '@/utils/constant'
+import * as yup from 'yup'
 
 function AdminTermSystemContent() {
   const createTermSystemState = useSelector(state => state.createTermSystem)
   const [errorMessages, setErrorMessages] = useState({})
   const router = useRouter()
   const [today] = useState(new Date().toISOString().split('T')[0]);
-  
+
   const initialValues = {
     term_start_date: "",
     mid_term_break: "",
@@ -32,6 +33,17 @@ function AdminTermSystemContent() {
 
   const formHandler = useFormik({
     initialValues: initialValues,
+    validationSchema: yup.object({
+      term_start_date: yup.date()
+        .min(today, 'Term Start Date must be a future date')
+        .required('Term Start Date is required'),
+      mid_term_break: yup.date()
+        .min(yup.ref('term_start_date'), 'Mid Term Break must be greater than Term Start Date')
+        .required('Mid Term Break is required'),
+      term_end_date: yup.date()
+        .min(yup.ref('mid_term_break'), 'Term End Date must be greater than Mid Term Break')
+        .required('Term End Date is required'),
+    }),
     onSubmit: (values) => {
       setErrorMessages({})
       const filteredPayload = Object.fromEntries(
@@ -85,6 +97,9 @@ function AdminTermSystemContent() {
                 value={formHandler.values.term_start_date}
                 inputProps={{ min: today }}
               />
+              {
+                formHandler.errors.term_start_date && <p className='formErrorText'>{formHandler.errors.term_start_date}</p>
+              }
               {errorMessages?.term_start_date && <p className='formErrorText'>{errorMessages?.term_start_date[0]}</p>}
             </div>
 
@@ -103,6 +118,9 @@ function AdminTermSystemContent() {
                 value={formHandler.values.mid_term_break}
                 inputProps={{ min: formHandler.values.term_start_date }}
               />
+              {
+                formHandler.errors.mid_term_break && <p className='formErrorText'>{formHandler.errors.mid_term_break}</p>
+              }
               {errorMessages?.mid_term_break && <p className='formErrorText'>{errorMessages?.mid_term_break[0]}</p>}
             </div>
 
@@ -121,6 +139,9 @@ function AdminTermSystemContent() {
                 value={formHandler.values.term_end_date}
                 inputProps={{ min: formHandler.values.mid_term_break }}
               />
+              {
+                formHandler.errors.term_end_date && <p className='formErrorText'>{formHandler.errors.term_end_date}</p>
+              }
               {errorMessages?.term_end_date && <p className='formErrorText'>{errorMessages?.term_end_date[0]}</p>}
             </div>
 

@@ -255,35 +255,37 @@ function EditSchoolContent() {
               {errorMessages?.address && <p className='formErrorText'>{errorMessages?.address[0]}</p>}
             </div>
 
-            <FormControl size='small' focused required>
-              <InputLabel id="demo-simple-select-label">Region</InputLabel>
-              <Select
-                id="region-select"
+            <div>
+              <TextField
+                sx={{ width: '100%' }}
+                focused
+                size='small'
+                required
+                id="outlined-adornment-region"
                 label="Region"
+                variant="outlined"
                 name='region'
+                onChange={formik.handleChange}
                 value={formik.values.region}
-                onChange={formik.handleChange}
-              >
-                <MenuItem value={'AL'}>AL</MenuItem>
-                <MenuItem value={'SL'}>SL</MenuItem>
-              </Select>
+              />
               {errorMessages?.region && <p className='formErrorText'>{errorMessages?.region[0]}</p>}
-            </FormControl>
+            </div>
 
-            <FormControl size='small' focused required>
-              <InputLabel id="demo-simple-select-label">City</InputLabel>
-              <Select
-                id="city-select"
+            <div>
+              <TextField
+                sx={{ width: '100%' }}
+                focused
+                size='small'
+                required
+                id="outlined-adornment-city"
                 label="City"
+                variant="outlined"
                 name='city'
-                value={formik.values.city}
                 onChange={formik.handleChange}
-              >
-                <MenuItem value={'South Town'}>South Town</MenuItem>
-                <MenuItem value={'Rizel'}>Rizel</MenuItem>
-              </Select>
+                value={formik.values.city}
+              />
               {errorMessages?.city && <p className='formErrorText'>{errorMessages?.city[0]}</p>}
-            </FormControl>
+            </div>
 
             <FormControl size='small' focused required>
               <InputLabel id="demo-simple-select-label">Country</InputLabel>

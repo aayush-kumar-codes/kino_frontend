@@ -32,8 +32,8 @@ function SchoolCreateTeacherContent() {
             email: '',
             address: '',
             profile_img: '',
-            city: 'South Town',
-            region: 'AL',
+            city: '',
+            region: '',
             country: 'Uganda',
             mobile_no: '',
             username: '',
@@ -59,7 +59,7 @@ function SchoolCreateTeacherContent() {
             const formData = new FormData()
 
             const restData = {
-                teacher_id :values.teacher_id ,
+                teacher_id: values.teacher_id,
                 joining_date: values.date_of_joining,
                 qualification: values.qualification,
                 year_of_experience: parseInt(values.year_of_experiance),
@@ -419,36 +419,37 @@ function SchoolCreateTeacherContent() {
                             {errorMessages?.address && <p className='formErrorText'>{errorMessages?.address[0]}</p>}
                         </div>
 
-                        <FormControl size='small' focused required>
-                            <InputLabel id="demo-simple-select-label">City</InputLabel>
-                            <Select
-                                id="city-select"
+                        <div>
+                            <TextField
+                                sx={{ width: '100%' }}
+                                focused
+                                size='small'
+                                required
+                                id="outlined-adornment-city"
                                 label="City"
+                                variant="outlined"
                                 name='city'
+                                onChange={formik.handleChange}
                                 value={formik.values.city}
-                                onChange={formik.handleChange}
-                            >
-                                <MenuItem value={'South Town'}>South Town</MenuItem>
-                                <MenuItem value={'Rizel'}>Rizel</MenuItem>
-                            </Select>
+                            />
                             {errorMessages?.city && <p className='formErrorText'>{errorMessages?.city[0]}</p>}
-                        </FormControl>
-
-
-                        <FormControl size='small' focused required>
-                            <InputLabel id="demo-simple-select-label">Region</InputLabel>
-                            <Select
-                                id="region-select"
+                        </div>
+                        
+                        <div>
+                            <TextField
+                                sx={{ width: '100%' }}
+                                focused
+                                size='small'
+                                required
+                                id="outlined-adornment-region"
                                 label="Region"
+                                variant="outlined"
                                 name='region'
-                                value={formik.values.region}
                                 onChange={formik.handleChange}
-                            >
-                                <MenuItem value={'AL'}>AL</MenuItem>
-                                <MenuItem value={'SL'}>SL</MenuItem>
-                            </Select>
+                                value={formik.values.region}
+                            />
                             {errorMessages?.region && <p className='formErrorText'>{errorMessages?.region[0]}</p>}
-                        </FormControl>
+                        </div>
 
 
                         <FormControl size='small' focused required>

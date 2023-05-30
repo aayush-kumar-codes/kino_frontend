@@ -36,7 +36,7 @@ const SchoolPersonalContent = ({ data }) => {
                     <SchoolAccountCard icon={<AiOutlineMail />} title={'Email'} name={data?.email} />
                     <SchoolAccountCard icon={<AiOutlinePhone />} title={'Phone Number'} name={data?.mobile_no} />
                     <SchoolAccountCard icon={<AiOutlineCalendar />} title={'Date of Birth'} name={data?.dob} />
-                    <SchoolAccountCard icon={<GoLocation />} title={'Address'} name={Object.values(data?.address).join(' ')} />
+                    <SchoolAccountCard icon={<GoLocation />} title={'Address'} name={Object.values(data?.address)?.join(' ')} />
                 </Box>
             </Box>
         </Box >

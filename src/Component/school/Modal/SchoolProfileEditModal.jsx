@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'antd'
 import styles from '@/styles/adminUserRoles.module.css'
-import { TextField, Button, Typography } from '@mui/material'
+import { TextField, Button, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { dispatch } from '@/redux/store'
 import { updateSchoolPersonalRequest, updateSchoolPersonalReset } from '@/redux/slices/school/updateSchoolPersonal'
 import { toast } from 'react-toastify'
 import { getSchoolDataRequest } from '@/redux/slices/school/getSchoolData'
+import { countries } from '@/utils/constant'
 
 export default function SchoolProfileEditModal({ setIsModal, isModal, editData }) {
     const updateSchoolPersonalState = useSelector(state => state.updateSchoolPersonal)
@@ -251,23 +252,19 @@ export default function SchoolProfileEditModal({ setIsModal, isModal, editData }
                         {errorMessages?.zip_code && <p className='formErrorText'>{errorMessages?.zip_code[0]}</p>}
                     </div>
 
-                    <div>
-                        <TextField
-                            focused
-                            sx={{ width: "100%" }}
-                            required
-                            size='small'
-                            id="outlined-adornment-country"
+                    <FormControl size='small' focused required>
+                        <InputLabel id="demo-simple-select-label">Country</InputLabel>
+                        <Select
+                            id="country-select"
                             label="Country"
-                            placeholder='country'
-                            variant="outlined"
                             name='address[country]'
                             value={formik.values.address.country}
                             onChange={formik.handleChange}
-                        />
+                        >
+                            {countries.map((item, i) => <MenuItem key={i} value={item}>{item}</MenuItem>)}
+                        </Select>
                         {errorMessages?.country && <p className='formErrorText'>{errorMessages?.country[0]}</p>}
-                    </div>
-
+                    </FormControl>
                 </div>
 
                 <div style={{ marginTop: '1rem' }}>

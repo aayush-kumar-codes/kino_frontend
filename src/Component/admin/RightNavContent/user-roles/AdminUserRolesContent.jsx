@@ -35,7 +35,7 @@ function AdminUserRolesContent() {
             }
             <div className={styles.role_btn}>
                 <p className={styles.adminText}>Administrators</p>
-                <Button variant='contained' size='large' onClick={() => setIsModal(true)}>Add Admin</Button>
+                <Button variant='contained' size='large' onClick={() => setIsModal(true)}>Create User</Button>
             </div>
             <div className={styles.accounts_div}>
                 <p className={styles.adminText} style={{ opacity: 0.9 }}>Administrator roles available</p>

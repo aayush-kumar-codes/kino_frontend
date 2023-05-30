@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -10,7 +11,11 @@ const PrivateRoutes = ({ children }) => {
         const isProtectedRoutes = noAuthRoute.includes(router.pathname);
 
         if (isProtectedRoutes && token) {
-            router.push('/dashboard/admin');
+            const role = jwtDecode(token)?.role
+            if (role === 1)
+                router.push('/dashboard/admin');
+            else
+                router.push('/dashboard/school');
         } else if (!isProtectedRoutes && !token) {
             router.push('/');
         }
