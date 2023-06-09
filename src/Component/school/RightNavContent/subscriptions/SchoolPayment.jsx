@@ -1,27 +1,26 @@
 import {
   Button,
   Checkbox,
-  Divider,
   FormControlLabel,
-  InputAdornment,
   Radio,
   RadioGroup,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import styles from "@/styles/adminDashboardContent.module.css";
-import React from "react";
+import React, { useState } from "react";
 import { BiMobileAlt } from "react-icons/bi";
-import { Input } from "antd";
-import { useState } from "react";
+import InputFeild from "./InputFeild";
 
 const SchoolPayment = () => {
-  const [paymentMethod , setPaymentMethod] = useState('Mobile Money')
+  const [paymentMethod, setPaymentMethod] = useState("Mobile Money");
   return (
     <>
       <Box sx={{ display: "flex" }}>
         <Box>
-          <Typography variant="h6" sx={{ color: "black", fontWeight: "100" }}>
+          <Typography
+          className={styles.headingcontainer}
+           variant="h6" sx={{ fontWeight: "100" }}>
             Order Summary
           </Typography>
           <Box>
@@ -38,16 +37,8 @@ const SchoolPayment = () => {
               }}
             >
               <Box
-                sx={{
-                  background: "#FFFFFF",
-                  padding: "1rem",
-                  boxShadow: "3px 3px 3px 0px #f1e9e9",
-                  height: "150px",
-                  width: "350px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                }}
+                className={styles.boxcontainer}
+                sx={{ height: "150px", width: "350px" }}
               >
                 <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
                   <Box
@@ -58,18 +49,16 @@ const SchoolPayment = () => {
                       marginRight: "1.5rem",
                     }}
                   >
-                    <Typography sx={{}}></Typography>
+                    <Typography></Typography>
                   </Box>
-                  <Box className={styles.totalTextContainer} sx={{}}>
-                    <Typography
-                      variant="p"
-                      sx={{ color: "black", fontWeight: "300" }}
-                    >
+                  <Box className={styles.totalTextContainer}>
+                    <Typography className={styles.headingcontainer} variant="p">
                       Monthly Subscription
                     </Typography>
                     <Typography
+                      className={styles.headingcontainer}
                       variant="p"
-                      sx={{ color: "black", fontWeight: "500" }}
+                      sx={{ fontWeight: "500" }}
                     >
                       $36
                     </Typography>
@@ -85,18 +74,12 @@ const SchoolPayment = () => {
                   }}
                 >
                   <Box sx={{ marginTop: "auto", paddingTop: "1rem" }}>
-                    <Typography
-                      variant="p"
-                      sx={{ color: "black", fontWeight: "500" }}
-                    >
+                    <Typography variant="span" sx={{ color: "black" }}>
                       Billed Today (USD)
                     </Typography>
                   </Box>
                   <Box sx={{ marginTop: "auto", paddingTop: "1rem" }}>
-                    <Typography
-                      variant="p"
-                      sx={{ color: "black", fontWeight: "500" }}
-                    >
+                    <Typography variant="span" sx={{ color: "black" }}>
                       $36
                     </Typography>
                   </Box>
@@ -105,40 +88,37 @@ const SchoolPayment = () => {
             </Box>
           </Box>
           <Typography
+          className={styles.headingcontainer}
             variant="h6"
-            sx={{ color: "black", fontWeight: "100", marginTop: "50px" }}
+            sx={{fontWeight: "100", marginTop: "50px" }}
           >
             Account Information
-            </Typography>
-            <Typography
+          </Typography>
+          <Typography
+          className={styles.headingcontainer}
             variant="p"
-            sx={{ color: "black", fontWeight: "100", marginTop: "20%" }}
+            sx={{ fontWeight: "100", marginTop: "20%" }}
           >
             Required
           </Typography>
-          
+
           <Box
+            className={styles.boxcontainer}
             sx={{
-              background: "#FFFFFF",
-              padding: "1rem",
-              boxShadow: "3px 3px 3px 0px #f1e9e9",
               height: "280px",
               width: "550px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
             }}
           >
-            <form>
+            <form style={{ width: "100%" }}>
               <Box>
                 <Box
                   sx={{
                     display: "flex",
                     marginTop: "5px",
+                    width: "100%",
                     alignItems: "center",
                     justifyContent: "space-between",
                     marginBottom: "10px",
-                    
                   }}
                 >
                   <Box
@@ -146,70 +126,55 @@ const SchoolPayment = () => {
                       display: "flex",
                       flexDirection: "column",
                       width: "48%",
-                      
                     }}
                   >
                     <Typography
+                      className={styles.headingcontainer}
                       variant="p"
-                      sx={{ color: "black", fontWeight: "100" }}
+                      sx={{ fontWeight: "100" }}
                     >
                       First Name
                     </Typography>
-                    <Input
-                      placeholder="First Name"
-                      style={{
-                        border: "1px solid #BB7696 ",
-                        height: "35px",
-                        marginTop: "5px",
-                        backgroundColor: "white",
-                        marginRight: "2%",
-                      }}
-                    />
+                    <Box>
+                      <InputFeild text="FirstName" />
+                    </Box>
                   </Box>
 
-                  <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "48%",
+                    }}
+                  >
                     <Typography
+                      className={styles.headingcontainer}
                       variant="p"
                       sx={{
-                        color: "black",
                         fontWeight: "100",
                       }}
                     >
                       Last Name
                     </Typography>
-                    <Input
-                      placeholder="Last Name"
-                      style={{
-                        border: "1px solid #BB7696 ",
-                        height: "35px",
-                        backgroundColor: "white",
-                        marginTop: "5px",
-                      }}
-                    />
+                    <Box>
+                      <InputFeild text="LastName" />
+                    </Box>
                   </Box>
                 </Box>
 
                 <Typography
+                  className={styles.headingcontainer}
                   variant="p"
-                  sx={{ color: "black", fontWeight: "100" }}
+                  sx={{ fontWeight: "100" }}
                 >
                   Email Address
                 </Typography>
-                <Input
-                  placeholder="email"
-                  style={{
-                    border: "1px solid #BB7696 ",
-                    height: "35px",
-                    backgroundColor: "white",
-                    marginTop: "5px",
-                    marginBottom: "10px",
-                  }}
-                />
+                <InputFeild text="email" />
 
                 <Typography
+                  className={styles.headingcontainer}
                   variant="p"
                   sx={{
-                    color: "black",
                     fontWeight: "100",
                     marginBottom: "100px",
                     marginTop: "10px",
@@ -217,15 +182,7 @@ const SchoolPayment = () => {
                 >
                   Telephone
                 </Typography>
-                <Input
-                  placeholder="+91"
-                  style={{
-                    border: "1px solid #BB7696 ",
-                    height: "35px",
-                    backgroundColor: "white",
-                    marginTop: "5px",
-                  }}
-                />
+                <InputFeild text="+27" />
 
                 <Box>
                   <Checkbox
@@ -233,8 +190,9 @@ const SchoolPayment = () => {
                     inputProps={{ "aria-label": "checkbox" }}
                   />
                   <Typography
+                    className={styles.headingcontainer}
                     variant="span"
-                    sx={{ color: "black", fontWeight: "100", marginTop: "5px" }}
+                    sx={{ fontWeight: "100", marginTop: "5px" }}
                   >
                     I agree to email instructional emails
                   </Typography>
@@ -244,37 +202,36 @@ const SchoolPayment = () => {
           </Box>
         </Box>
         <Box>
-          <Typography variant="h6" sx={{ color: "black", fontWeight: "100" }}>
+          <Typography
+            className={styles.headingcontainer}
+            variant="h6"
+            sx={{ fontWeight: "100" }}
+          >
             Payment Information
           </Typography>
           <Typography
+            className={styles.headingcontainer}
             variant="p"
-            sx={{ color: "black", fontWeight: "100", marginBottom: "20%" }}
+            sx={{ fontWeight: "100", marginBottom: "20%" }}
           >
             This is secured by Flutterwave payment
           </Typography>
           <Box
+            className={styles.boxcontainer}
             sx={{
-              background: "#FFFFFF",
-              padding: "1rem",
-              boxShadow: "3px 3px 3px 0px #f1e9e9",
-              height: "230px",
+              height: "240px",
               width: "550px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              marginTop: "10px",
+              marginTop: "5px",
             }}
           >
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
-              style={{width:'100%'}}
-            onChange={(e)=>{
-              setPaymentMethod(e.target.value)
-            }}
-
-            value={paymentMethod}
+              style={{ width: "100%" }}
+              onChange={(e) => {
+                setPaymentMethod(e.target.value);
+              }}
+              value={paymentMethod}
             >
               <Box
                 style={{
@@ -288,15 +245,16 @@ const SchoolPayment = () => {
                   control={<Radio />}
                   style={{ color: "black" }}
                   label="Mobile Money"
-                  
                 />{" "}
                 <BiMobileAlt style={{ color: "black" }} />
               </Box>
-              <Box style={{
+              <Box
+                style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                }}>
+                }}
+              >
                 <FormControlLabel
                   value=" Credit card"
                   control={<Radio />}
@@ -306,136 +264,113 @@ const SchoolPayment = () => {
                 <BiMobileAlt style={{ color: "black" }} />
               </Box>
             </RadioGroup>
-            {paymentMethod == 'Mobile Money' ? 
-            <>
-            <Typography
-              variant="span"
-              sx={{ color: "black", marginTop: "10px",fontWeight:'400' }}
-            >
-              Enter your Phone Number
-            </Typography>
-            
-            <Input
-              style={{
-                border: "1px solid #BB7696 ",
-                height: "35px",
-                backgroundColor: "white",
-                marginTop: "5px"
-              }}
-            />
-            </>
-            :
-            <>
-            <Typography
-              variant="span"
-              sx={{ color: "black", fontWeight:'300', marginTop: "10px" }}
-            >
-             Card Number
-            </Typography>
-            <Input
-              placeholder="+91"
-              style={{
-                border: "1px solid #BB7696 ",
-                height: "35px",
-                backgroundColor: "white",
-                marginTop: "5px"
-              }}
-            />
-            <Box sx={{display:'flex',marginTop: "10px", alignContent:'centre', justifyContent:'space-between'}}>
-              <Box>
-            <Typography
-              variant="span"
-              sx={{ color: "black", fontWeight:'300', marginTop: "5px" }}
-            >
-             Expiration Date
-            </Typography>
-            <Input
-              style={{
-                border: "1px solid #BB7696 ",
-                height: "35px",
-                backgroundColor: "white",
-                marginTop: "5px",
-                width:'98%'
-              }}
-            />
-            </Box>
-            <Box>
-            <Typography
-              variant="span"
-              sx={{ color: "black", fontWeight:'300', marginTop: "5px" }}
-            >
-             CVC code
-            </Typography>
-            <Input
-              style={{
-                border: "1px solid #BB7696 ",
-                height: "35px",
-                backgroundColor: "white",
-                marginTop: "5px",
-                width:'98%'
-              }}
-            />
-            </Box>
-            </Box>
-            </>
-            }
+            {paymentMethod == "Mobile Money" ? (
+              <>
+                <Typography
+                  className={styles.headingcontainer}
+                  variant="span"
+                  sx={{ marginTop: "10px", fontWeight: "400" }}
+                >
+                  Enter your Phone Number
+                </Typography>
 
+                <InputFeild text="+27" />
+              </>
+            ) : (
+              <>
+                <Typography
+                  className={styles.headingcontainer}
+                  variant="span"
+                  sx={{ marginTop: "10px" }}
+                >
+                  Card Number
+                </Typography>
+                <InputFeild />
+                <Box
+                  sx={{
+                    display: "flex",
+                    marginTop: "10px",
+                    alignContent: "centre",
+                    justifyContent: "space-between",
+                    width: "100%",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "48%",
+                    }}
+                  >
+                    <Typography
+                      className={styles.headingcontainer}
+                      variant="span"
+                      sx={{
+                        marginTop: "5px",
+                      }}
+                    >
+                      Expiration Date
+                    </Typography>
+
+                    <InputFeild />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "48%",
+                    }}
+                  >
+                    <Typography
+                      className={styles.headingcontainer}
+                      variant="span"
+                      sx={{
+                        marginTop: "5px",
+                      }}
+                    >
+                      CVC code
+                    </Typography>
+                    <InputFeild />
+                  </Box>
+                </Box>
+              </>
+            )}
           </Box>
           <Box>
             <Typography
+            className={styles.headingcontainer}
               variant="h6"
-              sx={{ color: "black", fontWeight: "100", marginTop: "10px" }}
+              sx={{ fontWeight: "100", marginTop: "10px" }}
             >
               Billing Address
             </Typography>
             <Box
+              className={styles.boxcontainer}
               sx={{
-                background: "#FFFFFF",
-                padding: "1rem",
-                boxShadow: "3px 3px 3px 0px #f1e9e9",
                 height: "200px",
                 width: "550px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
                 marginTop: "10px",
               }}
             >
               <Typography
+                className={styles.headingcontainer}
                 variant="p"
                 sx={{
-                  color: "black",
-                  fontWeight: "300",
-
                   marginTop: "5px",
                 }}
               >
                 Country
               </Typography>
-              <Input
-                style={{
-                  border: "1px solid #BB7696 ",
-                  height: "35px",
-                  backgroundColor: "white",
-                  marginTop: "5px",
-                }}
-              />
+              <InputFeild />
 
               <Typography
+                className={styles.headingcontainer}
                 variant="p"
-                sx={{ color: "black", fontWeight: "300", marginTop: "5px" }}
+                sx={{ marginTop: "5px" }}
               >
                 Region
               </Typography>
-              <Input
-                placeholder=""
-                style={{
-                  border: "1px solid #BB7696 ",
-                  height: "35px",
-                  backgroundColor: "white",
-                  marginTop: "5px",
-                }}
-              />
+              <InputFeild />
               <Box
                 style={{
                   marginTop: "10px",
@@ -449,29 +384,11 @@ const SchoolPayment = () => {
                 display: "flex",
                 alignItems: "center",
                 marginTop: "20px",
-                justifyContent:'center'
+                justifyContent: "center",
               }}
             >
-              <Button
-                sx={{
-                  backgroundColor: "#F33A10",
-                  color: "white",
-                  fontWeight: "500",
-                  marginRight: "10px",
-                }}
-              >
-                Pay Now
-              </Button>
-              <Button
-                sx={{
-                  backgroundColor: "#F33A10",
-                  color: "white",
-                  fontWeight: "500",
-                  marginRight: "10px",
-                }}
-              >
-                Cancel
-              </Button>
+              <Button className={styles.buttoncontainer}>Pay Now</Button>
+              <Button className={styles.buttoncontainer}>Cancel</Button>
             </Box>
             <Box>
               <Checkbox
@@ -479,8 +396,9 @@ const SchoolPayment = () => {
                 inputProps={{ "aria-label": "checkbox" }}
               />
               <Typography
+                className={styles.headingcontainer}
                 variant="p"
-                sx={{ color: "black", fontWeight: "400" }}
+                sx={{ fontWeight: "400" }}
               >
                 I agree to{" "}
                 <span style={{ color: "#F33A10" }}>kaino.africa </span>terms of
@@ -493,5 +411,4 @@ const SchoolPayment = () => {
     </>
   );
 };
-
 export default SchoolPayment;
