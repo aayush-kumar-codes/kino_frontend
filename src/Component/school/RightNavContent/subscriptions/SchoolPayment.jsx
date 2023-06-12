@@ -11,6 +11,7 @@ import styles from "@/styles/adminDashboardContent.module.css";
 import React, { useState } from "react";
 import { BiMobileAlt } from "react-icons/bi";
 import InputFeild from "./InputFeild";
+import BillPayment from "./BillPayment";
 
 const SchoolPayment = () => {
   const [paymentMethod, setPaymentMethod] = useState("Mobile Money");
@@ -19,8 +20,10 @@ const SchoolPayment = () => {
       <Box sx={{ display: "flex" }}>
         <Box>
           <Typography
-          className={styles.headingcontainer}
-           variant="h6" sx={{ fontWeight: "100" }}>
+            className={styles.headingcontainer}
+            variant="h6"
+            sx={{ fontWeight: "100" }}
+          >
             Order Summary
           </Typography>
           <Box>
@@ -88,14 +91,14 @@ const SchoolPayment = () => {
             </Box>
           </Box>
           <Typography
-          className={styles.headingcontainer}
+            className={styles.headingcontainer}
             variant="h6"
-            sx={{fontWeight: "100", marginTop: "50px" }}
+            sx={{ fontWeight: "100", marginTop: "50px" }}
           >
             Account Information
           </Typography>
           <Typography
-          className={styles.headingcontainer}
+            className={styles.headingcontainer}
             variant="p"
             sx={{ fontWeight: "100", marginTop: "20%" }}
           >
@@ -336,75 +339,21 @@ const SchoolPayment = () => {
               </>
             )}
           </Box>
-          <Box>
+          <BillPayment />
+          <Box sx={{ display: "flex" }}>
+            <Checkbox
+              color="primary"
+              inputProps={{ "aria-label": "checkbox" }}
+            />
             <Typography
-            className={styles.headingcontainer}
-              variant="h6"
-              sx={{ fontWeight: "100", marginTop: "10px" }}
+              className={styles.headingcontainer}
+              variant="span"
+              sx={{ fontWeight: "400", marginTop: "13px" }}
             >
-              Billing Address
+              I agree to <span style={{ color: "#F33A10" }}>kaino.africa </span>
+              terms of use &{" "}
+              <span style={{ color: "#F33A10" }}> privacy policy</span>
             </Typography>
-            <Box
-              className={styles.boxcontainer}
-              sx={{
-                height: "200px",
-                width: "550px",
-                marginTop: "10px",
-              }}
-            >
-              <Typography
-                className={styles.headingcontainer}
-                variant="p"
-                sx={{
-                  marginTop: "5px",
-                }}
-              >
-                Country
-              </Typography>
-              <InputFeild />
-
-              <Typography
-                className={styles.headingcontainer}
-                variant="p"
-                sx={{ marginTop: "5px" }}
-              >
-                Region
-              </Typography>
-              <InputFeild />
-              <Box
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  justifyContent: "centre",
-                }}
-              ></Box>
-            </Box>
-            <Box
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginTop: "20px",
-                justifyContent: "center",
-              }}
-            >
-              <Button className={styles.buttoncontainer}>Pay Now</Button>
-              <Button className={styles.buttoncontainer}>Cancel</Button>
-            </Box>
-            <Box>
-              <Checkbox
-                color="primary"
-                inputProps={{ "aria-label": "checkbox" }}
-              />
-              <Typography
-                className={styles.headingcontainer}
-                variant="p"
-                sx={{ fontWeight: "400" }}
-              >
-                I agree to{" "}
-                <span style={{ color: "#F33A10" }}>kaino.africa </span>terms of
-                use & <span style={{ color: "#F33A10" }}> privacy policy</span>
-              </Typography>
-            </Box>
           </Box>
         </Box>
       </Box>
@@ -412,3 +361,9 @@ const SchoolPayment = () => {
   );
 };
 export default SchoolPayment;
+
+
+
+
+
+
